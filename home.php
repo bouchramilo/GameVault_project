@@ -100,8 +100,11 @@
                             </div>
                         </div>
 
-                        <form action="" method="post" class="w-full flex justify-end">
+                        <form action="" method="post" class="w-full flex justify-end gap-2">
                             <input type="hidden" name="">
+                            <button class="h-8 w-20 text-white font-medium bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 rounded-sm shadow-lg">
+                                Ajouter
+                            </button>
                             <button class="h-8 w-20 text-white font-medium bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 rounded-sm shadow-lg">
                                 Détails
                             </button>
@@ -148,8 +151,11 @@
                             </div>
                         </div>
 
-                        <form action="" method="post" class="w-full flex justify-end">
+                        <form action="" method="post" class="w-full flex justify-end gap-2">
                             <input type="hidden" name="">
+                            <button class="h-8 w-20 text-white font-medium bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 rounded-sm shadow-lg">
+                                Ajouter
+                            </button>
                             <button class="h-8 w-20 text-white font-medium bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 rounded-sm shadow-lg">
                                 Détails
                             </button>

@@ -10,19 +10,22 @@
 
 <body class="bg-[#f9dbbd]">
     <!-- header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  -->
-    <!-- <?php include "header.php"; ?> -->
+
     <!-- header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  -->
 
-    <section class="relative h-screen overflow-hidden">
+
+
+
+    <section class="relative h-max min-h-screen overflow-hidden pb-10">
         <video
             class="absolute top-1/2 left-1/2 w-auto min-w-full min-h-full transform -translate-x-1/2 -translate-y-1/2 object-cover"
             autoplay loop muted playsinline>
             <source src="images/bg_1.mp4" type="video/mp4" />
         </video>
-        <div class="relative z-10 flex flex-row gap-4 h-full text-center text-white bg-black bg-opacity-30">
+        <div class="relative z-10 flex flex-row gap-4 h-max text-center text-white bg-black bg-opacity-30">
             <div class="w-1/5 h-full">
                 <nav
-                    class="bg-[#09090a] bg-opacity-75 shadow-lg h-screen fixed top-0 left-0 w-1/5 py-6 px-6 font-[sans-serif] flex flex-col gap-10 overflow-auto">
+                    class="bg-[#09090a] bg-opacity-75 shadow-lg h-full fixed top-0 left-0 w-1/5 py-6 px-6 font-[sans-serif] flex flex-col gap-10 overflow-auto">
 
                     <div class="flex flex-wrap items-center cursor-pointer">
                         <div class="relative">
@@ -38,20 +41,9 @@
                         </div>
                     </div>
 
-                    <!-- <div class="relative bg-[#1f1f22] px-4 py-3 rounded-md my-8">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 mr-3 inline fill-gray-300"
-                        viewBox="0 0 118.783 118.783">
-                        <path
-                            d="M115.97 101.597 88.661 74.286a47.75 47.75 0 0 0 7.333-25.488c0-26.509-21.49-47.996-47.998-47.996S0 22.289 0 48.798c0 26.51 21.487 47.995 47.996 47.995a47.776 47.776 0 0 0 27.414-8.605l26.984 26.986a9.574 9.574 0 0 0 6.788 2.806 9.58 9.58 0 0 0 6.791-2.806 9.602 9.602 0 0 0-.003-13.577zM47.996 81.243c-17.917 0-32.443-14.525-32.443-32.443s14.526-32.444 32.443-32.444c17.918 0 32.443 14.526 32.443 32.444S65.914 81.243 47.996 81.243z"
-                            data-original="#000000" />
-                    </svg>
-                    <input class="text-sm text-gray-300 outline-none bg-transparent px-1 max-w-[130px]"
-                        placeholder="Search..." />
-                </div> -->
-
                     <ul class="space-y-10 flex-1 mt-10 mb-10">
                         <li>
-                            <a href="javascript:void(0)"
+                            <a href="home.php"
                                 class="text-gray-300 hover:text-white text-sm flex items-center rounded-md">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                                     class="w-[18px] h-[18px] mr-4" viewBox="0 0 512 512">
@@ -63,7 +55,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="javascript:void(0)"
+                            <a href="statistique.php"
                                 class="text-gray-300 hover:text-white text-sm flex items-center rounded-md">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                                     class="w-[18px] h-[18px] mr-4" viewBox="0 0 16 16">
@@ -75,14 +67,14 @@
                             </a>
                         </li>
                         <li>
-                            <a href="javascript:void(0)"
+                            <a href="MesFavoris.php"
                                 class="text-gray-300 hover:text-white text-sm flex items-center rounded-md">
                                 <span class="text-white w-[18px] h-[18px] mr-4">&#10084;</span>
                                 <span>Mes Favoris</span>
                             </a>
                         </li>
                         <li>
-                            <a href="javascript:void(0)"
+                            <a href="myLibrary.php"
                                 class="text-gray-300 hover:text-white text-sm flex items-center rounded-md">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                                     class="w-[18px] h-[18px] mr-4" viewBox="0 0 511.414 511.414">
@@ -94,7 +86,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="javascript:void(0)"
+                            <a href="chat.php"
                                 class="text-gray-300 hover:text-white text-sm flex items-center rounded-md">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke='currentColor'
                                     class="w-[18px] h-[18px] mr-4" viewBox="0 0 682.667 682.667">
@@ -119,7 +111,7 @@
 
                     <ul>
                         <li>
-                            <a href="javascript:void(0)"
+                            <a href="home.php"
                                 class="text-gray-300 hover:text-white text-sm flex items-center rounded-md">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                                     class="w-[18px] h-[18px] mr-4" viewBox="0 0 6.35 6.35">
@@ -139,7 +131,7 @@
                 <div class="font-[sans-serif] overflow-x-auto h-full w-full flex flex-col gap-32 pt-20">
                     <h1 class="text-3xl font-bold md:text-5xl text-start">Ma Bibliothèque</h1>
 
-                    <table class="min-w-full bg-black bg-opacity-80">
+                    <table class="min-w-full h-max bg-black bg-opacity-80">
                         <thead class="whitespace-nowrap bg-black">
                             <tr>
                                 <th class="pl-4 w-10">
@@ -251,7 +243,7 @@
                                 </td>
                             </tr>
 
-                            <tr class="odd:bg-blue-50">
+                            <tr class="">
                                 <td class="pl-4 w-10">
                                     <form action="POST">
                                         <input type="hidden" name="btn_delete_from_biblio">
@@ -321,9 +313,7 @@
                                     </svg>
                                 </td>
                             </tr>
-                            
-                            
-                            
+
                             <tr class="">
                                 <td class="pl-4 w-10">
                                     <form action="POST">
@@ -395,6 +385,76 @@
                                 </td>
                             </tr>
 
+                            <tr class="">
+                                <td class="pl-4 w-10">
+                                    <form action="POST">
+                                        <input type="hidden" name="btn_delete_from_biblio">
+                                        <button><img src="images/icones/corbeille.png" alt="button delete game from biblio"></button>
+                                    </form>
+                                </td>
+                                <td class="p-4 text-sm text-white">
+                                    Louis Vuitton
+                                </td>
+                                <td class="p-4 text-sm text-white">
+                                    <span
+                                        class="w-[68px] block text-center py-1 border border-green-500 text-green-600 rounded text-xs">Active</span>
+                                </td>
+                                <td class="p-4 text-sm text-white">
+                                    Bravo
+                                </td>
+                                <td class="p-4 text-sm text-white">
+                                    &#10084;
+                                </td>
+                                <td class="p-4 text-sm text-white">
+                                    <div class="flex items-center cursor-pointer">
+                                        <img src='https://readymadeui.com/profile_4.webp'
+                                            class="w-7 h-7 rounded-full shrink-0" />
+                                        <div class="ml-4">
+                                            <p class="text-sm text-white">Gladys Jones</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="p-4">
+                                    <svg class="w-[18px] h-4 inline mr-1" viewBox="0 0 14 13" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z"
+                                            fill="#facc15" />
+                                    </svg>
+                                    <svg class="w-[18px] h-4 inline mr-1" viewBox="0 0 14 13" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z"
+                                            fill="#facc15" />
+                                    </svg>
+                                    <svg class="w-[18px] h-4 inline mr-1" viewBox="0 0 14 13" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z"
+                                            fill="#facc15" />
+                                    </svg>
+                                    <svg class="w-[18px] h-4 inline mr-1" viewBox="0 0 14 13" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z"
+                                            fill="#facc15" />
+                                    </svg>
+                                    <svg class="w-[18px] h-4 inline" viewBox="0 0 14 13" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z"
+                                            fill="#facc15" />
+                                    </svg>
+                                </td>
+                                <td class="p-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        class="w-5 h-5 cursor-pointer fill-gray-500 rotate-90" viewBox="0 0 24 24">
+                                        <circle cx="12" cy="12" r="2" data-original="#000000" />
+                                        <circle cx="4" cy="12" r="2" data-original="#000000" />
+                                        <circle cx="20" cy="12" r="2" data-original="#000000" />
+                                    </svg>
+                                </td>
+                            </tr>
 
                         </tbody>
                     </table>
@@ -403,6 +463,9 @@
         </div>
 
     </section>
+
+
+
 
 
 

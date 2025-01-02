@@ -48,23 +48,23 @@
     </div>
 
     <div class='flex items-center ml-auto space-x-6'>
-      <button class='px-4 py-2 text-sm rounded-sm font-bold text-white border-2 border-[#da627d] bg-transparent transition-all ease-in-out duration-300 hover:bg-[#da627d]'>
+      <!-- <button class='px-4 py-2 text-sm rounded-sm font-bold text-white border-2 border-[#da627d] bg-transparent transition-all ease-in-out duration-300 hover:bg-[#da627d]'>
         <a href='javascript:void(0)' class='text-[#da627d] hover:text-white hover:underline'>Login</a>
       </button>
       <button
         class='px-4 py-2 text-sm rounded-sm font-bold text-white border-2 border-[#da627d] bg-[#da627d] transition-all ease-in-out duration-300 hover:bg-transparent hover:text-[#da627d]'>
         Sign up
-      </button>
+      </button> -->
       <!-- cas de connexion  -->
 
 
-      <!-- <button class='px-4 py-2 text-sm rounded-sm font-bold text-white border-2 border-[#da627d] bg- bg-transparent transition-all ease-in-out duration-300 hover:bg-[#da627d]'>
+      <button class='px-4 py-2 text-sm rounded-sm font-bold text-white border-2 border-[#da627d] bg- bg-transparent transition-all ease-in-out duration-300 hover:bg-[#da627d]'>
         <a href='javascript:void(0)' class='text-[#da627d] hover:text-white hover:underline'>Logout</a>
       </button>
       <button
         class='px-4 py-2 text-sm rounded-sm font-bold text-white border-2 border-[#da627d] bg-[#da627d] transition-all ease-in-out duration-300 hover:bg-transparent hover:text-[#da627d]'>
         profil
-      </button> -->
+      </button>
 
 
 
