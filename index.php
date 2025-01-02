@@ -11,8 +11,6 @@
     <?php include "header.php" ; ?>
     <!-- header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  -->
 
-
-
     <h1>mon code ici !!!</h1>
 
     <!-- footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer -->
