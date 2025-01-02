@@ -1,39 +1,26 @@
 <?php
-$host = 'localhost';
-$dbname = 'gamevault_db';
-$username = 'root';
-$password = 'BouchraSamar_13';
-try {
-    $connexion = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-    if ($_SERVER["REQUEST_METHOD"] === "POST") {
-        $photo = $_POST["photo"] ?? '';
-        $fname = $_POST["fname"] ?? '';
-        $lname = $_POST["lname"] ?? '';
-        $bdate = $_POST["bdate"] ?? '';
-        $email = $_POST["email"] ?? '';
-        $pass = $_POST["pass"] ?? '';
-        $cpass = $_POST["cpass"] ?? '';
+require 'database.php';
+$db = new database();
+$message = '';
 
-        if ($pass !== $cpass) {
-            $error = "Les mots de passe ne sont pas identiques !";
-        } else {
-            $hashedPass = password_hash($pass, PASSWORD_BCRYPT);
-            $sql = "INSERT INTO personne (email, password_hash , first_name,last_name,date_naissance,photo) VALUES (:email, :hashedPass , :fname , :lname , :bdate , :photo)";
-            $stmt = $connexion->prepare($sql);
-            $stmt->bindParam(':email', $email);
-            $stmt->bindParam(':hashedPass', $hashedPass);
-            $stmt->bindParam(':fname', $fname);
-            $stmt->bindParam(':lname', $lname);
-            $stmt->bindParam(':bdate', $bdate);
-            $stmt->bindParam(':photo', $photo);
-            $stmt->execute();
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $photo = $_POST["photo"] ?? '';
+    $fname = $_POST["fname"] ?? '';
+    $lname = $_POST["lname"] ?? '';
+    $bdate = $_POST["bdate"] ?? '';
+    $email = $_POST["email"] ?? '';
+    $pass = $_POST["pass"] ?? '';
+    $cpass = $_POST["cpass"] ?? '';
 
-            $success = "Inscription reussie !";
-        }
+    $result = $db->sign_up($photo, $fname, $lname, $bdate, $email, $pass, $cpass);
+
+    if (isset($result['error'])) {
+        $message = $result['error'];
+    } elseif (isset($result['success'])) {
+        $message = $result['success'];
     }
-} catch (PDOException $e) {
-    die("Erreur de connexion a la base de donnees : " . $e->getMessage());
 }
+?>
 ?>
 
 <!DOCTYPE html>
@@ -46,7 +33,7 @@ try {
     <title>Sign Up</title>
 </head>
 
-<body class="bg-[#f9dbbd] h-[100vh] relative ">
+<body class="h-[100vh] relative ">
     <?php include "header.php"; ?>
     <div class="relative h-max py-20 overflow-hidden flex flex-row justify-center">
         <video
@@ -58,8 +45,7 @@ try {
             <source src="images/bg_1.mp4" type="video/mp4" />
         </video>
 
-        <div class="relative z-10 text-white text-center h-max flex flex-col gap-4 mx-auto rounded-[15px] p-4 w-[40%] py-6 self-center bg-black bg-opacity-75">
-            <!-- <img class="absolute top-0 left-0" src="images/BDLBzN2QSOW6Gd7Un7iKsw-removebg-preview.png" alt=""> -->
+        <div class="relative z-10 text-white text-center h-max flex flex-col gap-4 mx-auto border-0 rounded-[15px] p-4 w-[40%] py-6 self-center bg-black opacity-75 ">
              <!-- <img class="absolute top-0 left-0" src="images/BDLBzN2QSOW6Gd7Un7iKsw-removebg-preview.png" alt=""> -->
 
             <h1 class="text-2xl uppercase font-semibold mb-[40px]">Sign Up page </h1>
@@ -99,13 +85,13 @@ try {
                     <button type="button" class="icone "><img class="cursor-pointer absolute right-0 top-4 w-[20px] h-[20px]" src="images/icons8-closed-eye-48.png" alt="">
                     </button>
                 </div>
-                <?php if (!empty($error)): ?>
-                    <div class="error"><?= htmlspecialchars($error) ?></div>
+                <?php if (!empty($message)): ?>
+                    <div class="error"><?= htmlspecialchars($message) ?></div>
                 <?php endif; ?>
                 <div class="text-md flex gap-4 mx-auto items-center underline text-[#da627d]">
                     <a class="hover:text-[#450920]" href="">Forgot Password</a>
                 </div>
-                <button class=" px-4 py-2 text-white text-x1 w-[200px] mx-auto  transition-all ease-in-out duration-300 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 shadow-lg hover:border-2 hover:border-white rounded-sm border-2" name="sign">Sign Up</button>
+                <button class="bg-[#da627d] px-4 py-2 text-white text-x1 w-[200px] mx-auto  transition-all ease-in-out duration-300 hover:bg-[#fff] hover:text-[#da627d] hover:border-[#da627d] border-2" name="sign">Sign Up</button>
 
             </form>
         </div>

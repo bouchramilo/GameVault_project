@@ -1,39 +1,17 @@
 <?php
-session_start();
+require 'database.php';
+$db = new database();
+$message = '';
 
-$server = "localhost";
-$user = "root";
-$pass = "BouchraSamar_13";
-$dbname = "gamevault_db";
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $email = $_POST["email"] ?? '';
+    $password = $_POST["pass"] ?? '';
 
-try {
-    $connexion = new PDO("mysql:host=$server;dbname=$dbname", $user, $pass);
-    $connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $result = $db->login($email, $password);
 
-    $message = '';
-
-    if ($_SERVER["REQUEST_METHOD"] === "POST") {
-        $email = $_POST["email"] ?? '';
-        $password = $_POST["pass"] ?? '';
-
-        $sql = "SELECT * FROM personne WHERE email = :email";
-        $stmt = $connexion->prepare($sql);
-        $stmt->bindParam(':email', $email);
-        $stmt->execute();
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($user && password_verify($password, $user['password_hash'])) {
-            $_SESSION['id_user'] = $user['id_user'];
-            $_SESSION['last_name'] = $user['last_name'];
-            $_SESSION['email'] = $user['email'];
-
-            header("Location: index.php");
-            exit;
-        } else {
-            $message = "email ou mot de passe incorrect !";
-        }
+    if (isset($result['error'])) {
+        $message = $result['error'];
     }
-} catch (PDOException $e) {
-    $message = 'y a un prob ! ' . htmlspecialchars($e->getMessage());
 }
 ?>
 <!DOCTYPE html>
@@ -58,7 +36,7 @@ try {
             <source src="images/bg_1.mp4" type="video/mp4" />
         </video>
 
-        <div class="relative z-10 text-white text-center h-max flex flex-col gap-4 mx-auto border-0 rounded-[15px] p-4 w-[40%] py-6 self-center bg-black bg-opacity-75">
+        <div class="relative z-10 text-white text-center h-max flex flex-col gap-4 mx-auto border-0 rounded-[15px] p-4 w-[40%] py-6 self-center bg-black opacity-75">
             <!-- <img class="absolute top-0 left-0" src="images/BDLBzN2QSOW6Gd7Un7iKsw-removebg-preview.png" alt=""> -->
             <h1 class="text-2xl uppercase font-semibold">Login page </h1>
 
@@ -78,7 +56,7 @@ try {
                 <div class="text-md flex gap-4 mx-auto items-center underline text-[#da627d]">
                     <a class="hover:text-[#450920]" href="">Forgot Password</a>
                 </div>
-                <button class=" px-4 py-2 text-x1 w-[200px] mx-auto transition-all ease-in-out duration-300 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 shadow-lg hover:border-2 hover:border-white rounded-sm border-2">Login</button>
+                <button class="bg-[#da627d] px-4 py-2 text-x1 w-[200px] mx-auto transition-all ease-in-out duration-300 hover:bg-[#fff] hover:text-[#da627d] hover:border-[#da627d] border-2">Login</button>
             </form>
         </div>
         <img class="absolute z-10 bottom-0 left-0 w-[520px] h-[520px]" src="images/BDLBzN2QSOW6Gd7Un7iKsw-removebg-preview.png" alt="">
