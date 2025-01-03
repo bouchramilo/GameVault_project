@@ -47,8 +47,7 @@ CREATE TABLE library (
     id_lib INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     id_game INT NOT NULL,
     id_user INT NOT NULL,
-    isFavorite BOOLEAN DEFAULT FALSE,
-    personalNote VARCHAR(255),
+    personalNote INT DEFAULT 0 CHECK (personalNote >= 0 AND personalNote <= 5) ,
     playTime TIMESTAMP  DEFAULT CURRENT_TIMESTAMP,
     status ENUM('En cours', 'Terminé', 'Abandonné') NOT NULL,
     FOREIGN KEY (id_game) REFERENCES game(id_game) ON DELETE CASCADE,
@@ -76,6 +75,16 @@ CREATE TABLE notation (
     id_game INT NOT NULL,
     id_user INT NOT NULL,
     note INT DEFAULT 0 CHECK (note >= 0 AND note <= 5),
+    FOREIGN KEY (id_game) REFERENCES game(id_game) ON DELETE CASCADE,
+    FOREIGN KEY (id_user) REFERENCES personne(id_user) ON DELETE CASCADE,
+    UNIQUE (id_user, id_game)
+);
+
+-- Table favoris : 
+CREATE TABLE favoris (
+    id_favoris INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    id_game INT NOT NULL,
+    id_user INT NOT NULL,
     FOREIGN KEY (id_game) REFERENCES game(id_game) ON DELETE CASCADE,
     FOREIGN KEY (id_user) REFERENCES personne(id_user) ON DELETE CASCADE,
     UNIQUE (id_user, id_game)

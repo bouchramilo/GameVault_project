@@ -32,39 +32,40 @@
           </a>
         </li>
         <li class='max-lg:border-b max-lg:py-3 px-3'>
-          <a href='javascript:void(0)'
+          <a href='home.php'
             class='hover:text-[#da627d] text-[#da627d] block font-semibold text-[15px]'>Home</a>
         </li>
-        <li class='max-lg:border-b max-lg:py-3 px-3'><a href='javascript:void(0)'
-            class='hover:text-[#da627d] text-[#333] block font-semibold text-[15px]'>Team</a>
+        <li class='max-lg:border-b max-lg:py-3 px-3'>
+          <a href='myLibrary.php'
+            class='hover:text-[#da627d] text-[#333] block font-semibold text-[15px]'>Ma bibliothèque</a>
         </li>
-        <li class='max-lg:border-b max-lg:py-3 px-3'><a href='javascript:void(0)'
-            class='hover:text-[#da627d] text-[#333] block font-semibold text-[15px]'>Feature</a>
-        </li>
-        <li class='max-lg:border-b max-lg:py-3 px-3'><a href='javascript:void(0)'
-            class='hover:text-[#da627d] text-[#333] block font-semibold text-[15px]'>Blog</a>
+        <li class='max-lg:border-b max-lg:py-3 px-3'>
+          <a href='historique.php'
+            class='hover:text-[#da627d] text-[#333] block font-semibold text-[15px]'>Historique</a>
         </li>
       </ul>
     </div>
 
     <div class='flex items-center ml-auto space-x-6'>
-      <!-- <button class='px-4 py-2 text-sm rounded-sm font-bold text-white border-2 border-[#da627d] bg-transparent transition-all ease-in-out duration-300 hover:bg-[#da627d]'>
-        <a href='javascript:void(0)' class='text-[#da627d] hover:text-white hover:underline'>Login</a>
+      
+
+
+      <button class='px-4 py-2 text-sm font-bold text-white border-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 shadow-lg hover:border-2 hover:border-white rounded-sm'>
+        <a href='home.php' class='hover:text-white hover:underline'>Login</a>
       </button>
       <button
-        class='px-4 py-2 text-sm rounded-sm font-bold text-white border-2 border-[#da627d] bg-[#da627d] transition-all ease-in-out duration-300 hover:bg-transparent hover:text-[#da627d]'>
+        class='px-4 py-2 text-sm font-bold text-white border-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 shadow-lg hover:border-2 hover:border-white rounded-sm'>
         Sign up
-      </button> -->
-      <!-- cas de connexion  -->
+      </button>
 
 
-      <button class='px-4 py-2 text-sm rounded-sm font-bold text-white border-2 border-[#da627d] bg- bg-transparent transition-all ease-in-out duration-300 hover:bg-[#da627d]'>
-        <a href='javascript:void(0)' class='text-[#da627d] hover:text-white hover:underline'>Logout</a>
+      <!-- <button class='px-4 py-2 text-sm font-bold text-white border-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 shadow-lg hover:border-2 hover:border-white rounded-sm'>
+        <a href='home.php' class='hover:text-white hover:underline'>Logout</a>
       </button>
       <button
-        class='px-4 py-2 text-sm rounded-sm font-bold text-white border-2 border-[#da627d] bg-[#da627d] transition-all ease-in-out duration-300 hover:bg-transparent hover:text-[#da627d]'>
+        class='px-4 py-2 text-sm font-bold text-white border-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 shadow-lg hover:border-2 hover:border-white rounded-sm'>
         profil
-      </button>
+      </button> -->
 
 
 

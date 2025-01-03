@@ -1,19 +1,30 @@
 <?php
-require 'database.php';
-$db = new database();
+require_once 'classes/dataBase.Class.php';
+require_once 'classes/historique.Class.php';
+require_once 'classes/game.Class.php';
+require_once 'classes/library.Class.php';
+require_once 'classes/personne.Class.php';
+
+$db = new Database();
 $message = '';
+$personne = new personne();
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = $_POST["email"] ?? '';
     $password = $_POST["pass"] ?? '';
 
-    $result = $db->login($email, $password);
-
+    $result = $personne->login($email, $password);
     if (isset($result['error'])) {
         $message = $result['error'];
     }
 }
+
+
 ?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 

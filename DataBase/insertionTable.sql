@@ -1,9 +1,57 @@
+
+
+-- pour afficher les tables : 
+call AfficherTables();
+
+-- sypprimer les tables :
+
+-- call supprimerTables();
+
+
+
+
+
+
+
+SELECT 
+    g.*, 
+    AVG(n.note) AS average_note, 
+    CONCAT(p.first_name, ' ', p.last_name) AS nom_admin 
+FROM 
+    game g
+LEFT JOIN 
+    notation n ON g.id_game = n.id_game
+LEFT JOIN 
+    personne p ON g.id_admin = p.id_user
+GROUP BY 
+    g.id_game, g.title, g.genre, g.id_admin, g.details, g.releaseDate, g.screenshots, g.averageScore, 
+    p.first_name, p.last_name;
+
+
+-- 
+
+select * from library lb 
+left JOIN game g on lb.id_game = g.id_game
+left JOIN notation n on g.id_game = n.id_game
+left join personne p on g.id_admin = p.id_user
+left join favoris f on g.id_game = f.id_game
+where lb.id_user = 2 ;
+
+
+
+
+
+
+
+
+
+
 INSERT INTO personne (email, password_hash, first_name, last_name, date_naissance, role, banner)
 VALUES 
 ('admin1@example.com', 'hash12345', 'Admin', 'One', '1985-03-15', 'admin', FALSE),
 ('user1@example.com', 'hash67890', 'User', 'One', '1990-07-22', 'user', FALSE),
-('user2@example.com', 'hash54321', 'User', 'Two', '1992-11-08', 'user', FALSE),
-('admin2@example.com', 'hash98765', 'Admin', 'Two', '1987-02-25', 'admin', TRUE);
+('user2@example.com', 'hash54321', 'User', 'Two', '1992-11-08', 'user', TRUE),
+('admin2@example.com', 'hash98765', 'Admin', 'Two', '1987-02-25', 'admin', FALSE);
 
 
 
@@ -19,12 +67,12 @@ VALUES
 
 
 
-INSERT INTO library (id_game, id_user, isFavorite, personalNote, status)
+INSERT INTO library (id_game, id_user, personalNote, status)
 VALUES 
-(1, 2, TRUE, 'My favorite game of all time.', 'Terminé'),
-(2, 2, FALSE, 'Fun to play with friends.', 'En cours'),
-(3, 3, TRUE, 'Great creativity and freedom.', 'Abandonné'),
-(4, 3, FALSE, 'Challenging yet rewarding.', 'En cours');
+(1, 2, 2, 'Terminé'),
+(2, 2, 5, 'En cours'),
+(3, 3, 1, 'Abandonné'),
+(4, 3, 3, 'En cours');
 
 
 
@@ -48,6 +96,13 @@ VALUES
 (2, 2, 4),
 (3, 3, 3),
 (4, 3, 5);
+
+INSERT INTO favoris (id_game, id_user)
+VALUES 
+(2, 2),
+(2, 4),
+(3, 3),
+(3, 2);
 
 
 

@@ -1,7 +1,16 @@
 <?php
-require 'database.php';
-$db = new database();
+
+
+require_once 'classes/dataBase.Class.php';
+require_once 'classes/historique.Class.php';
+require_once 'classes/game.Class.php';
+require_once 'classes/library.Class.php';
+require_once 'classes/personne.Class.php';
+
+
+$db = new Database();
 $message = '';
+$personne = new personne();
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $photo = $_POST["photo"] ?? '';
@@ -12,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $pass = $_POST["pass"] ?? '';
     $cpass = $_POST["cpass"] ?? '';
 
-    $result = $db->sign_up($photo, $fname, $lname, $bdate, $email, $pass, $cpass);
+    $result = $personne->register($photo, $fname, $lname, $bdate, $email, $pass, $cpass);
 
     if (isset($result['error'])) {
         $message = $result['error'];
@@ -20,7 +29,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $message = $result['success'];
     }
 }
-?>
 ?>
 
 <!DOCTYPE html>

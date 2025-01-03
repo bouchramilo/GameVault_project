@@ -1,4 +1,7 @@
-<?php
+
+<!-- had le fichier khaso ythayd hit rah ktabt le code dyalo f classes -->
+
+<!-- <?php
 class database{
     private $connexion;
 
@@ -72,4 +75,4 @@ class database{
     
     
 }
-?>
+?> -->

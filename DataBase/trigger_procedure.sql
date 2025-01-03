@@ -1,4 +1,37 @@
 
+
+
+-- pour afficher les tables : 
+call AfficherTables();
+
+-- sypprimer les tables :
+
+call supprimerTables();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 -- trigger qui vérifier si l'insertion est le premier dans la table personne : si oui, le personne doit inserer comme un admin, sinon, le personne inserer comme les données de formulaire : 
 DELIMITER $$
 
