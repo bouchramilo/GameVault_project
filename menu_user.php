@@ -39,7 +39,7 @@ if (isset($_POST['deconnexion'])) {
         </div>
 
         <div class="ml-4">
-            <p class="text-sm text-gray-300"><?= $user->getRole(); ?></p>
+            <p class="text-sm text-gray-300"><?= $user->getNameP(); ?></p>
             <p class="text-xs text-gray-400 mt-0.5"><?= $user->getRole(); ?></p>
         </div>
     </div>

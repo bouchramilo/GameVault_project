@@ -8,7 +8,11 @@ require_once 'classes/library.Class.php';
 session_start();
 
 $biblio = new library();
-$jeux_biblio = $biblio->getMyLibrary(2);
+$jeux_biblio = $biblio->getMyLibrary();
+
+if (isset($_POST['btn_delete_from_biblio'])) {
+    $biblio->deleteFromMyLibrary($_POST['btn_delete_from_biblio']);
+}
 
 
 ?>
@@ -27,12 +31,6 @@ $jeux_biblio = $biblio->getMyLibrary(2);
 </head>
 
 <body class="bg-[#f9dbbd]">
-    <!-- header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  -->
-
-    <!-- header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  -->
-
-
-
 
     <section class="relative h-max min-h-screen overflow-hidden pb-10">
         <video
@@ -59,22 +57,22 @@ $jeux_biblio = $biblio->getMyLibrary(2);
                                         <button><img src="images/icones/corbeille.png" alt="button delete game from biblio"></button>
                                     </form>
                                 </th>
-                                <th class="p-4 text-left text-sm font-semibold text-white">
+                                <th class="p-4 text-center text-sm font-semibold text-white">
                                     Title
                                 </th>
-                                <th class="p-4 text-left text-sm font-semibold text-white">
+                                <th class="p-4 text-center text-sm font-semibold text-white">
                                     Status
                                 </th>
-                                <th class="p-4 text-left text-sm font-semibold text-white">
+                                <th class="p-4 text-center text-sm font-semibold text-white">
                                     Genre
                                 </th>
-                                <th class="p-4 text-left text-sm font-semibold text-white">
+                                <th class="p-4 text-center text-sm font-semibold text-white">
                                     Favoris
                                 </th>
-                                <th class="p-4 text-left text-sm font-semibold text-white">
+                                <th class="p-4 text-center text-sm font-semibold text-white">
                                     Créateur
                                 </th>
-                                <th class="p-4 text-left text-sm font-semibold text-white">
+                                <th class="p-4 text-center text-sm font-semibold text-white">
                                     Rating
                                     <svg xmlns="http://www.w3.org/2000/svg"
                                         class="w-3 h-3 fill-gray-500 inline cursor-pointer ml-2"
@@ -84,7 +82,7 @@ $jeux_biblio = $biblio->getMyLibrary(2);
                                             data-original="#000000" />
                                     </svg>
                                 </th>
-                                <th class="p-4 text-left text-sm font-semibold text-white">
+                                <th class="p-4 text-center text-sm font-semibold text-white">
                                     plus
                                 </th>
                             </tr>
@@ -92,42 +90,47 @@ $jeux_biblio = $biblio->getMyLibrary(2);
 
                         <tbody class="whitespace-nowrap">
 
-                        <?php foreach ($jeux_biblio as $game) :  ?>
-                            <tr class="">
-                                <td class="pl-4 w-10">
-                                    <form action="POST">
-                                        <input type="hidden" name="btn_delete_from_biblio">
-                                        <button><img src="images/icones/corbeille.png" alt="button delete game from biblio"></button>
-                                    </form>
-                                </td>
-                                <td class="p-4 text-sm text-white">
-                                <?php echo $game['title']; ?>
-                                </td>
-                                <td class="p-4 text-sm text-white">
-                                    <span
-                                        class="w-[68px] block text-center py-1 border border-green-500 text-green-600 rounded text-xs">Active</span>
-                                </td>
-                                <td class="p-4 text-sm text-white">
-                                <?php echo $game['genre']; ?>
-                                </td>
-                                <td class="p-4 text-sm text-white">
-                                    &#10084;
-                                </td>
-                                <td class="p-4 text-sm text-white">
-                                    <div class="flex items-center cursor-pointer">
-                                        <img src='https://readymadeui.com/profile_4.webp'
-                                            class="w-7 h-7 rounded-full shrink-0" />
-                                        <div class="ml-4">
-                                            <p class="text-sm text-white"><?php echo ($game['first_name'].' '.$game['last_name']); ?></p>
+                            <?php foreach ($jeux_biblio as $game) :  ?>
+                                <tr class="">
+                                    <td class="pl-4 w-10">
+                                        <form action="" method="POST">
+                                            <button name="btn_delete_from_biblio" value="<?= $game['id_lib']; ?>"><img src="images/icones/corbeille.png" alt="button delete game from biblio"></button>
+                                        </form>
+                                    </td>
+                                    <td class="p-4 text-sm text-center text-white">
+                                        <?php echo $game['game_title']; ?>
+                                    </td>
+                                    <td class="p-4 text-sm text-center text-white">
+                                        <?php if ($game['status'] === "En cours") :  ?>
+                                            <span class="w-[68px] block text-center py-1 border border-green-500 text-green-600 rounded text-xs">En cours</span>
+                                        <?php elseif ($game['status'] === "Terminé") :  ?>
+                                            <span class="w-[68px] block text-center py-1 border border-blue-500 text-blue-600 rounded text-xs">Terminé</span>
+                                        <?php elseif ($game['status'] === "Abandonné") :  ?>
+                                            <span class="w-[68px] block text-center py-1 border border-orange-500 text-orange-600 rounded text-xs">Abandonné</span>
+                                        <?php endif;  ?>
+                                    </td>
+                                    <td class="p-4 text-sm text-center text-white">
+                                        <?php echo $game['game_genre']; ?>
+                                    </td>
+                                    <td class="p-4 text-sm text-center text-white">
+                                        <form action="" method="post">
+                                            <button name="add_to_favoris" value="<?= $game['id_game'] ?>">&#10084;</button>
+                                        </form>
+                                    </td>
+                                    <td class="p-4 text-sm text-center text-white">
+                                        <div class="flex items-center cursor-pointer">
+                                            <img src='https://readymadeui.com/profile_4.webp'
+                                                class="w-7 h-7 rounded-full shrink-0" />
+                                            <div class="ml-4">
+                                                <p class="text-sm text-white"><?php echo ($game['admin_full_name']); ?></p>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                                <td class="p-4 text-center">
+                                    </td>
+                                    <td class="p-4 text-center">
                                         <?php
-                                        $note = $game['note']; // Note actuelle
-                                        $max_stars = 5; // Nombre total d'étoiles
+                                        $note = $game['note'];
+                                        $max_stars = 5;
 
-                                        // Boucle pour les étoiles jaunes
                                         for ($i = 0; $i < $note; $i++) {
                                             echo '<svg class="w-[18px] h-4 inline mr-1" viewBox="0 0 14 13" fill="none"
                                                             xmlns="http://www.w3.org/2000/svg">
@@ -137,7 +140,6 @@ $jeux_biblio = $biblio->getMyLibrary(2);
                                                     </svg>';
                                         }
 
-                                        // Boucle pour les étoiles blanches
                                         for ($i = 0; $i < ($max_stars - $note); $i++) {
                                             echo '<svg class="w-[18px] h-4 inline mr-1" viewBox="0 0 14 13" fill="none"
                                                             xmlns="http://www.w3.org/2000/svg">
@@ -148,228 +150,16 @@ $jeux_biblio = $biblio->getMyLibrary(2);
                                         }
                                         ?>
                                     </td>
-                                <td class="p-4">
-                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                        class="w-5 h-5 cursor-pointer fill-gray-500 rotate-90" viewBox="0 0 24 24">
-                                        <circle cx="12" cy="12" r="2" data-original="#000000" />
-                                        <circle cx="4" cy="12" r="2" data-original="#000000" />
-                                        <circle cx="20" cy="12" r="2" data-original="#000000" />
-                                    </svg>
-                                </td>
-                            </tr>
+                                    <td class="p-4">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            class="w-5 h-5 cursor-pointer fill-gray-500 rotate-90" viewBox="0 0 24 24">
+                                            <circle cx="12" cy="12" r="2" data-original="#000000" />
+                                            <circle cx="4" cy="12" r="2" data-original="#000000" />
+                                            <circle cx="20" cy="12" r="2" data-original="#000000" />
+                                        </svg>
+                                    </td>
+                                </tr>
                             <?php endforeach;  ?>
-                            <!-- <tr class="">
-                                <td class="pl-4 w-10">
-                                    <form action="POST">
-                                        <input type="hidden" name="btn_delete_from_biblio">
-                                        <button><img src="images/icones/corbeille.png" alt="button delete game from biblio"></button>
-                                    </form>
-                                </td>
-                                <td class="p-4 text-sm text-white">
-                                    Mitsubishi
-                                </td>
-                                <td class="p-4 text-sm text-white">
-                                    <span
-                                        class="w-[68px] block text-center py-1 border border-yellow-500 text-yellow-600 rounded text-xs">Terminé</span>
-                                </td>
-                                <td class="p-4 text-sm text-white">
-                                    Bravo
-                                </td>
-                                <td class="p-4 text-sm text-white">
-                                    &#10084;
-                                </td>
-                                <td class="p-4 text-sm text-white">
-                                    <div class="flex items-center cursor-pointer">
-                                        <img src='https://readymadeui.com/profile_3.webp'
-                                            class="w-7 h-7 rounded-full shrink-0" />
-                                        <div class="ml-4">
-                                            <p class="text-sm text-white">Jorge Black</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="p-4">
-                                    <svg class="w-[18px] h-4 inline mr-1" viewBox="0 0 14 13" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z"
-                                            fill="#facc15" />
-                                    </svg>
-                                    <svg class="w-[18px] h-4 inline mr-1" viewBox="0 0 14 13" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z"
-                                            fill="#facc15" />
-                                    </svg>
-                                    <svg class="w-[18px] h-4 inline mr-1" viewBox="0 0 14 13" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z"
-                                            fill="#facc15" />
-                                    </svg>
-                                    <svg class="w-[18px] h-4 inline mr-1" viewBox="0 0 14 13" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z"
-                                            fill="#CED5D8" />
-                                    </svg>
-                                    <svg class="w-[18px] h-4 inline" viewBox="0 0 14 13" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z"
-                                            fill="#CED5D8" />
-                                    </svg>
-                                </td>
-                                <td class="p-4">
-                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                        class="w-5 h-5 cursor-pointer fill-gray-500 rotate-90" viewBox="0 0 24 24">
-                                        <circle cx="12" cy="12" r="2" data-original="#000000" />
-                                        <circle cx="4" cy="12" r="2" data-original="#000000" />
-                                        <circle cx="20" cy="12" r="2" data-original="#000000" />
-                                    </svg>
-                                </td>
-                            </tr>
-
-                            <tr class="">
-                                <td class="pl-4 w-10">
-                                    <form action="POST">
-                                        <input type="hidden" name="btn_delete_from_biblio">
-                                        <button><img src="images/icones/corbeille.png" alt="button delete game from biblio"></button>
-                                    </form>
-                                </td>
-                                <td class="p-4 text-sm text-white">
-                                    Mitsubishi
-                                </td>
-                                <td class="p-4 text-sm text-white">
-                                    <span
-                                        class="w-[68px] block text-center py-1 border border-red-500 text-red-600 rounded text-xs">Abonndonné</span>
-                                </td>
-                                <td class="p-4 text-sm text-white">
-                                    Bravo
-                                </td>
-                                <td class="p-4 text-sm text-white">
-                                    &#10084;
-                                </td>
-                                <td class="p-4 text-sm text-white">
-                                    <div class="flex items-center cursor-pointer">
-                                        <img src='https://readymadeui.com/profile_3.webp'
-                                            class="w-7 h-7 rounded-full shrink-0" />
-                                        <div class="ml-4">
-                                            <p class="text-sm text-white">Jorge Black</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="p-4">
-                                    <svg class="w-[18px] h-4 inline mr-1" viewBox="0 0 14 13" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z"
-                                            fill="#facc15" />
-                                    </svg>
-                                    <svg class="w-[18px] h-4 inline mr-1" viewBox="0 0 14 13" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z"
-                                            fill="#facc15" />
-                                    </svg>
-                                    <svg class="w-[18px] h-4 inline mr-1" viewBox="0 0 14 13" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z"
-                                            fill="#facc15" />
-                                    </svg>
-                                    <svg class="w-[18px] h-4 inline mr-1" viewBox="0 0 14 13" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z"
-                                            fill="#CED5D8" />
-                                    </svg>
-                                    <svg class="w-[18px] h-4 inline" viewBox="0 0 14 13" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z"
-                                            fill="#CED5D8" />
-                                    </svg>
-                                </td>
-                                <td class="p-4">
-                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                        class="w-5 h-5 cursor-pointer fill-gray-500 rotate-90" viewBox="0 0 24 24">
-                                        <circle cx="12" cy="12" r="2" data-original="#000000" />
-                                        <circle cx="4" cy="12" r="2" data-original="#000000" />
-                                        <circle cx="20" cy="12" r="2" data-original="#000000" />
-                                    </svg>
-                                </td>
-                            </tr>
-
-                            <tr class="">
-                                <td class="pl-4 w-10">
-                                    <form action="POST">
-                                        <input type="hidden" name="btn_delete_from_biblio">
-                                        <button><img src="images/icones/corbeille.png" alt="button delete game from biblio"></button>
-                                    </form>
-                                </td>
-                                <td class="p-4 text-sm text-white">
-                                    Louis Vuitton
-                                </td>
-                                <td class="p-4 text-sm text-white">
-                                    <span
-                                        class="w-[68px] block text-center py-1 border border-green-500 text-green-600 rounded text-xs">Active</span>
-                                </td>
-                                <td class="p-4 text-sm text-white">
-                                    Bravo
-                                </td>
-                                <td class="p-4 text-sm text-white">
-                                    &#10084;
-                                </td>
-                                <td class="p-4 text-sm text-white">
-                                    <div class="flex items-center cursor-pointer">
-                                        <img src='https://readymadeui.com/profile_4.webp'
-                                            class="w-7 h-7 rounded-full shrink-0" />
-                                        <div class="ml-4">
-                                            <p class="text-sm text-white">Gladys Jones</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="p-4">
-                                    <svg class="w-[18px] h-4 inline mr-1" viewBox="0 0 14 13" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z"
-                                            fill="#facc15" />
-                                    </svg>
-                                    <svg class="w-[18px] h-4 inline mr-1" viewBox="0 0 14 13" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z"
-                                            fill="#facc15" />
-                                    </svg>
-                                    <svg class="w-[18px] h-4 inline mr-1" viewBox="0 0 14 13" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z"
-                                            fill="#facc15" />
-                                    </svg>
-                                    <svg class="w-[18px] h-4 inline mr-1" viewBox="0 0 14 13" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z"
-                                            fill="#facc15" />
-                                    </svg>
-                                    <svg class="w-[18px] h-4 inline" viewBox="0 0 14 13" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z"
-                                            fill="#facc15" />
-                                    </svg>
-                                </td>
-                                <td class="p-4">
-                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                        class="w-5 h-5 cursor-pointer fill-gray-500 rotate-90" viewBox="0 0 24 24">
-                                        <circle cx="12" cy="12" r="2" data-original="#000000" />
-                                        <circle cx="4" cy="12" r="2" data-original="#000000" />
-                                        <circle cx="20" cy="12" r="2" data-original="#000000" />
-                                    </svg>
-                                </td>
-                            </tr> -->
 
                         </tbody>
                     </table>
@@ -379,16 +169,6 @@ $jeux_biblio = $biblio->getMyLibrary(2);
 
     </section>
 
-
-
-
-
-
-
-
-    <!-- footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer -->
-    <!-- <?php include "footer.php"; ?> -->
-    <!-- footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer -->
 </body>
 
 <script src="js/header.js"></script>

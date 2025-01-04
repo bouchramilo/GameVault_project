@@ -28,18 +28,21 @@ class favoris extends dataBase
     }
     
     // fonction qui supprimer from mes favoris : ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public function deleteFromMesFavoris($id_favor){
+    public function deleteFromMesFavoris($id_favor) {
         try {
             $sql = "DELETE FROM favoris WHERE id_favoris = :id_favor;";
             $pdo = $this->getConnextion();
             $stmt = $pdo->prepare($sql);
             $stmt->execute(['id_favor' => $id_favor]);
-
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+            if ($stmt->rowCount() > 0) {
+                header('Location: mesFavoris.php');
+            }
         } catch (Exception $e) {
-            return "Erreur lors de la récupération des favoris : " . $e->getMessage();
+            return "Erreur lors de la suppression from favoris : " . $e->getMessage();
         }
     }
+    
     
     
     public function addToMesFavoris(){}

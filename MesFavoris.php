@@ -13,6 +13,11 @@ $favoris = new favoris();
 $Allfavoris = $favoris->showAllMesFavoris();
 
 
+if (isset($_POST['btn_delete_from_favor'])) {
+    $favoris->deleteFromMesFavoris($_POST['btn_delete_from_favor']);
+  }
+
+
 ?>
 
 
@@ -68,19 +73,19 @@ $Allfavoris = $favoris->showAllMesFavoris();
                     <table class="min-w-full h-max bg-black bg-opacity-80">
                         <thead class="whitespace-nowrap bg-black">
                             <tr>
-                                <th class="p-4 text-sm font-semibold text-white text-center">
+                                <th class="w-2/6 p-4 text-sm font-semibold text-white text-center">
                                     Title
                                 </th>
-                                <th class="p-4 text-sm font-semibold text-white text-center">
+                                <th class="w-1/6 p-4 text-sm font-semibold text-white text-center">
                                     Genre
                                 </th>
-                                <th class="p-4 text-sm font-semibold text-white text-center">
+                                <th class="w-1/6 p-4 text-sm font-semibold text-white text-center">
                                     Favoris
                                 </th>
-                                <th class="p-4 text-sm font-semibold text-white text-center">
+                                <th class="w-1/6 p-4 text-sm font-semibold text-white text-center">
                                     Rating
                                 </th>
-                                <th class="p-4 text-sm font-semibold text-white text-center">
+                                <th class="w-1/6 p-4 text-sm font-semibold text-white text-center">
                                     plus
                                 </th>
                             </tr>
@@ -89,18 +94,21 @@ $Allfavoris = $favoris->showAllMesFavoris();
                         <tbody class="whitespace-nowrap">
                             <?php foreach ($Allfavoris as $favor) :  ?>
                                 <tr class="">
-                                    <td class="p-4 text-sm text-white text-center">
+                                    <td class="w-2/6 p-4 text-sm text-white text-center">
                                         <?php echo $favor['title']; ?>
                                     </td>
 
 
-                                    <td class="p-4 text-sm text-white text-center">
+                                    <td class="w-1/6 p-4 text-sm text-white text-center">
                                         <?php echo $favor['genre']; ?>
                                     </td>
-                                    <td class="p-4 text-sm text-red-500 text-center">
-                                        &#10084;
+                                    <td class="w-1/6 p-4 text-sm text-red-500 text-center">
+                                        <form action="" method="post">
+                                            <button name="btn_delete_from_favor" value="<?= $favor['id_favoris']; ?>">&#10084;</button>
+                                        </form>
+                                        
                                     </td>
-                                    <td class="p-4 text-center">
+                                    <td class=" p-4 text-center">
                                         <?php
                                         $note = $favor['note']; // Note actuelle
                                         $max_stars = 5; // Nombre total d'étoiles
@@ -127,7 +135,7 @@ $Allfavoris = $favoris->showAllMesFavoris();
                                         ?>
                                     </td>
 
-                                    <td class="p-4 text-center flex justify-center">
+                                    <td class=" p-4 text-center flex justify-center">
                                         <svg xmlns="http://www.w3.org/2000/svg"
                                             class="w-5 h-5 cursor-pointer fill-gray-500 rotate-90" viewBox="0 0 24 24">
                                             <circle cx="12" cy="12" r="2" data-original="#000000" />
