@@ -1,3 +1,30 @@
+<?php
+
+
+require_once 'classes/dataBase.Class.php';
+require_once 'classes/historique.Class.php';
+require_once 'classes/game.Class.php';
+require_once 'classes/personne.Class.php';
+
+session_start();
+$user = new personne();
+
+if (isset($_POST['deconnexion'])) {
+  $user->logout();
+}
+
+// if (isset($_SESSION["ID_user"])) {
+//     echo $_SESSION["ID_user"];
+// } else {
+//     echo "Aucun utilisateur connecté.";
+// }
+?>
+
+
+
+
+
+
 <header
   class='flex shadow-lg py-4 px-4 sm:px-10 bg-white font-[sans-serif] min-h-[70px] tracking-wide relative z-50'>
   <div class='flex flex-wrap items-center justify-between gap-4 w-full'>
@@ -35,41 +62,58 @@
           <a href='home.php'
             class='hover:text-[#da627d] text-[#da627d] block font-semibold text-[15px]'>Home</a>
         </li>
-        <li class='max-lg:border-b max-lg:py-3 px-3'>
-          <a href='myLibrary.php'
-            class='hover:text-[#da627d] text-[#333] block font-semibold text-[15px]'>Ma bibliothèque</a>
-        </li>
-        <li class='max-lg:border-b max-lg:py-3 px-3'>
-          <a href='historique.php'
-            class='hover:text-[#da627d] text-[#333] block font-semibold text-[15px]'>Historique</a>
-        </li>
+        <?php if (!empty($_SESSION["ID_user"])): ?>
+          <li class='max-lg:border-b max-lg:py-3 px-3'>
+            <a href='myLibrary.php'
+              class='hover:text-[#da627d] text-[#333] block font-semibold text-[15px]'>Ma bibliothèque</a>
+          </li>
+          <li class='max-lg:border-b max-lg:py-3 px-3'>
+            <a href='historique.php'
+              class='hover:text-[#da627d] text-[#333] block font-semibold text-[15px]'>Historique</a>
+          </li>
+          <?php if ($user->getRole() === "admin") : ?>
+            <li class='max-lg:border-b max-lg:py-3 px-3'>
+              <a href='index.php'
+                class='hover:text-[#da627d] text-[#333] block font-semibold text-[15px]'>Dashboard</a>
+            </li>
+          <?php endif; ?>
+        <?php endif; ?>
       </ul>
     </div>
 
     <div class='flex items-center ml-auto space-x-6'>
-      
 
+      <!-- cas de connexion / déconnexion  -->
 
-      <button class='px-4 py-2 text-sm font-bold text-white border-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 shadow-lg hover:border-2 hover:border-white rounded-sm'>
-        <a href='home.php' class='hover:text-white hover:underline'>Login</a>
-      </button>
-      <button
-        class='px-4 py-2 text-sm font-bold text-white border-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 shadow-lg hover:border-2 hover:border-white rounded-sm'>
-        Sign up
-      </button>
+      <?php if (isset($_SESSION["ID_user"])) : ?>
+        <form action="" method="post">
+          <button value="<?= $_SESSION["ID_user"];  ?>" name="deconnexion" class='px-4 py-2 text-sm font-bold text-white border-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 shadow-lg hover:border-2 hover:border-white rounded-sm'>
+            Logout
+          </button>
+        </form>
+        <a href="profil.php">
+          <button
+            class='px-4 py-2 text-sm font-bold text-white border-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 shadow-lg hover:border-2 hover:border-white rounded-sm'>
+            profil
+          </button>
+        </a>
 
+      <?php else : ?>
 
-      <!-- <button class='px-4 py-2 text-sm font-bold text-white border-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 shadow-lg hover:border-2 hover:border-white rounded-sm'>
-        <a href='home.php' class='hover:text-white hover:underline'>Logout</a>
-      </button>
-      <button
-        class='px-4 py-2 text-sm font-bold text-white border-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 shadow-lg hover:border-2 hover:border-white rounded-sm'>
-        profil
-      </button> -->
+        <a href='login.php' class='hover:text-white hover:underline'>
+          <button class='px-4 py-2 text-sm font-bold text-white border-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 shadow-lg hover:border-2 hover:border-white rounded-sm'>
+            Login
+          </button>
+        </a>
+        <a href="signup.php">
+          <button
+            class='px-4 py-2 text-sm font-bold text-white border-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 shadow-lg hover:border-2 hover:border-white rounded-sm'>
+            Sign up
+          </button>
+        </a>
+      <?php endif; ?>
 
-
-
-      <!-- cas de connexion  -->
+      <!-- cas de connexion / déconnexion  -->
 
       <button id="toggleOpen" class='lg:hidden'>
         <svg class="w-7 h-7" fill="#333" viewBox="0 0 20 20"

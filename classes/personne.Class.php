@@ -2,8 +2,6 @@
 
 require_once 'dataBase.Class.php';
 
-
-
 class Personne extends Database
 {
 
@@ -71,34 +69,98 @@ class Personne extends Database
         header('Location: login.php');
     }
 
+    // fonction de login : ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public function login($email, $password)
     {
         try {
-            $sql = "SELECT * FROM personne WHERE email = :email AND password_hash = :passwd";
+            $sql = "SELECT * FROM personne WHERE email = :email";
             $pdo = $this->getConnextion();
             $stmt = $pdo->prepare($sql);
-            $stmt->execute([
-                'email' => $email,
-                'passwd' => $password
-            ]);
+            $stmt->execute(['email' => $email]);
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
-            // if ($user) {
-            $_SESSION["user_id"] = $user['id_user'];
-            // }
-            header('Location: home.php');
+
+            if ($user && password_verify($password, $user['password_hash'])) {
+                session_start();
+                $_SESSION["ID_user"] = $user['id_user'];
+                header('Location: home.php');
+                exit;
+            } else {
+                return "Email ou mot de passe incorrect.";
+            }
         } catch (Exception $e) {
-            die("Erreur lors de login !!!");
+            return "Erreur lors de login : " . $e->getMessage();
         }
     }
 
+    // fonction de logout : ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    public function logout()
+    {
+        try {
+            unset($_SESSION['ID_user']);
+            session_unset();
+            session_destroy();
+            header("Location: home.php");
+            exit();
+        } catch (Exception $e) {
+            return "Erreur lors de logout : " . $e->getMessage();
+        }
+    }
+
+    // fonction qui retourne le role d'un user (admin/user) : +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    public function getRole()
+    {
+        try {
+            $sql = "SELECT role FROM personne WHERE id_user = :id_user";
+            $pdo = $this->getConnextion();
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute(['id_user' => $_SESSION['ID_user']]);
+            $role = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $role['role'];
+        } catch (Exception $e) {
+            return "Erreur lors de récupération du role : " . $e->getMessage();
+        }
+    }
+    
+    // fonction qui retourne le nom de user (admin/user) : +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    public function getNameP()
+    {
+        try {
+            $sql = "SELECT CONCAT(first_name, ' ' , last_name) AS full_name FROM personne WHERE id_user = :id_user";
+            $pdo = $this->getConnextion();
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute(['id_user' => $_SESSION['ID_user']]);
+            $name = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $name['full_name'];
+        } catch (Exception $e) {
+            return "Erreur lors de récupération du full_name : " . $e->getMessage();
+        }
+    }
+    
+    // fonction qui retourne photo de user (admin/user) : +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    public function getPhoto()
+    {
+        try {
+            $sql = "SELECT photo FROM personne WHERE id_user = :id_user";
+            $pdo = $this->getConnextion();
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute(['id_user' => $_SESSION['ID_user']]);
+            $photo = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $photo['photo'];
+        } catch (Exception $e) {
+            return "Erreur lors de récupération du photo : " . $e->getMessage();
+        }
+    }
+
+
+    // fonction qui retourne _______ : +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public function getUser() {}
     public function updateProfile() {}
     public function deleteProfile() {}
-    public function addFavorite() {}
-    public function addGameToLib() {}
-    public function addNote() {}
-    public function deleteGameFromLib() {}
-    public function showStatistique() {}
-    public function discuter() {}
-    public function getHistory() {}
+    // public function addFavorite() {}
+    // public function addGameToLib() {}
+    // public function addNote() {}
+    // public function deleteGameFromLib() {}
+    // public function showStatistique() {}
+    // public function discuter() {}
+    // public function getHistory() {}
 }

@@ -2,10 +2,11 @@
 
 require_once 'classes/dataBase.Class.php';
 require_once 'classes/historique.Class.php';
+require_once 'classes/game.Class.php';
+require_once 'classes/personne.Class.php';
 
+session_start();
 
-// $db = new Database('localhost', 'gamevault_db', 'root', 'BouchraSamar_13');
-// $pdo = $db->getPDO();
 
 $historic = new historique();
 $historiques = $historic->consulter();

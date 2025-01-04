@@ -1,3 +1,27 @@
+<?php
+
+
+require_once 'classes/dataBase.Class.php';
+require_once 'classes/historique.Class.php';
+require_once 'classes/game.Class.php';
+require_once 'classes/personne.Class.php';
+
+// session_start();
+$user = new personne();
+
+if (isset($_POST['deconnexion'])) {
+    $user->logout();
+}
+
+// if (isset($_SESSION["ID_user"])) {
+//     echo $_SESSION["ID_user"];
+// } else {
+//     echo "Aucun utilisateur connecté.";
+// }
+?>
+
+
+
 
 
 <!-- menu de utilisateur +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
@@ -8,15 +32,15 @@
 
     <div class="flex flex-wrap items-center cursor-pointer">
         <div class="relative">
-            <img src='https://readymadeui.com/profile_2.webp'
+            <img src='images/<?= $user->getPhoto(); ?>'
                 class="w-12 h-12 rounded-full border-white" />
             <span
                 class="h-3 w-3 rounded-full bg-green-600 border-2 border-white block absolute bottom-0 right-0"></span>
         </div>
 
         <div class="ml-4">
-            <p class="text-sm text-gray-300">John Doe</p>
-            <p class="text-xs text-gray-400 mt-0.5">D.IN Medicine</p>
+            <p class="text-sm text-gray-300"><?= $user->getRole(); ?></p>
+            <p class="text-xs text-gray-400 mt-0.5"><?= $user->getRole(); ?></p>
         </div>
     </div>
 
@@ -34,7 +58,7 @@
             </a>
         </li>
         <li>
-            <a href="statistique.php"
+            <a href="statistique_user.php"
                 class="text-gray-300 hover:text-white text-sm flex items-center rounded-md">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                     class="w-[18px] h-[18px] mr-4" viewBox="0 0 16 16">
@@ -120,7 +144,9 @@
                         d="M3.172.53a.265.266 0 0 0-.262.268v2.127a.265.266 0 0 0 .53 0V.798A.265.266 0 0 0 3.172.53zm1.544.532a.265.266 0 0 0-.026 0 .265.266 0 0 0-.147.47c.459.391.749.973.749 1.626 0 1.18-.944 2.131-2.116 2.131A2.12 2.12 0 0 1 1.06 3.16c0-.65.286-1.228.74-1.62a.265.266 0 1 0-.344-.404A2.667 2.667 0 0 0 .53 3.158a2.66 2.66 0 0 0 2.647 2.663 2.657 2.657 0 0 0 2.645-2.663c0-.812-.363-1.542-.936-2.03a.265.266 0 0 0-.17-.066z"
                         data-original="#000000" />
                 </svg>
-                <span>Logout</span>
+                <form action="" method="post">
+                    <button name="deconnexion">Logout</button>
+                </form>
             </a>
         </li>
     </ul>

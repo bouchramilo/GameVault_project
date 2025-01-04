@@ -5,6 +5,8 @@ require_once 'classes/historique.Class.php';
 require_once 'classes/game.Class.php';
 require_once 'classes/library.Class.php';
 
+session_start();
+
 $biblio = new library();
 $jeux_biblio = $biblio->getMyLibrary(2);
 
@@ -120,38 +122,32 @@ $jeux_biblio = $biblio->getMyLibrary(2);
                                         </div>
                                     </div>
                                 </td>
-                                <td class="p-4">
-                                    <svg class="w-[18px] h-4 inline mr-1" viewBox="0 0 14 13" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z"
-                                            fill="#facc15" />
-                                    </svg>
-                                    <svg class="w-[18px] h-4 inline mr-1" viewBox="0 0 14 13" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z"
-                                            fill="#facc15" />
-                                    </svg>
-                                    <svg class="w-[18px] h-4 inline mr-1" viewBox="0 0 14 13" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z"
-                                            fill="#facc15" />
-                                    </svg>
-                                    <svg class="w-[18px] h-4 inline mr-1" viewBox="0 0 14 13" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z"
-                                            fill="#facc15" />
-                                    </svg>
-                                    <svg class="w-[18px] h-4 inline" viewBox="0 0 14 13" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z"
-                                            fill="#facc15" />
-                                    </svg>
-                                </td>
+                                <td class="p-4 text-center">
+                                        <?php
+                                        $note = $game['note']; // Note actuelle
+                                        $max_stars = 5; // Nombre total d'étoiles
+
+                                        // Boucle pour les étoiles jaunes
+                                        for ($i = 0; $i < $note; $i++) {
+                                            echo '<svg class="w-[18px] h-4 inline mr-1" viewBox="0 0 14 13" fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg">
+                                                            <path
+                                                                d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z"
+                                                                fill="#facc15" />
+                                                    </svg>';
+                                        }
+
+                                        // Boucle pour les étoiles blanches
+                                        for ($i = 0; $i < ($max_stars - $note); $i++) {
+                                            echo '<svg class="w-[18px] h-4 inline mr-1" viewBox="0 0 14 13" fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg">
+                                                            <path
+                                                                d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z"
+                                                                fill="#ffffff" />
+                                                    </svg>';
+                                        }
+                                        ?>
+                                    </td>
                                 <td class="p-4">
                                     <svg xmlns="http://www.w3.org/2000/svg"
                                         class="w-5 h-5 cursor-pointer fill-gray-500 rotate-90" viewBox="0 0 24 24">

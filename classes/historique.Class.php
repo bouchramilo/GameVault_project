@@ -1,6 +1,5 @@
 <?php
-require_once 'dataBase.Class.php';
-
+require_once 'classes/dataBase.Class.php';
 
 
 class Historique extends Database
@@ -14,10 +13,15 @@ class Historique extends Database
     // fonction qui retourner toutes les historique d'un utilisateur : +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public function consulter()
     {
-        $sql = "SELECT * FROM historique ;";
-        $pdo = $this->getConnextion();
+        try {
+            $sql = "SELECT * FROM historique WHERE id_user = :id_user;";
+            $pdo = $this->getConnextion();
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute(['id_user' => $_SESSION['ID_user']]);
 
-        $query = $pdo->query($sql);
-        return $query->fetchAll();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            return "Erreur lors de la récupération de l'historique : " . $e->getMessage();
+        }
     }
 }

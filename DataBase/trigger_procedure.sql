@@ -86,6 +86,8 @@ DELIMITER $$
 CREATE PROCEDURE supprimerTables()
 BEGIN
 
+   DROP TABLE favoris;
+
    DROP TABLE historique;
 
    DROP TABLE chat;
@@ -104,5 +106,9 @@ END$$
 DELIMITER ;
 
 
+-- drop procedure supprimerTables;
 
 call supprimerTables();
+
+
+show tables ;

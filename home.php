@@ -5,30 +5,34 @@ require_once 'classes/historique.Class.php';
 require_once 'classes/game.Class.php';
 require_once 'classes/personne.Class.php';
 
+// session_start();
 
 $jeu = new game();
 $games = $jeu->getAllGame();
 
-// echo $_SESSION["user_id"];
+
+// if (isset($_SESSION["ID_user"])) {
+//     echo $_SESSION["ID_user"];
+// } else {
+//     echo "Aucun utilisateur connecté.";
+// }
 
 ?>
 
-
-
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>GameVault - HOME</title>
-</head>
-
-<body class="bg-[#f9dbbd]">
-    <!-- header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  -->
-    <?php include "header.php"; ?>
-    <!-- header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  -->
+    
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <title>GameVault - HOME</title>
+    </head>
+    
+    <body class="bg-[#f9dbbd]">
+        <!-- header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  -->
+        <?php include "header.php"; ?>
+        <!-- header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  -->
 
     <section class="relative h-screen overflow-hidden">
         <video

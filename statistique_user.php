@@ -7,10 +7,7 @@
     <title>GameVault - Statistique</title>
 </head>
 <body class="bg-[#f9dbbd] flex flex-col gap-1 ">
-    <!-- header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  -->
-    <?php include "header.php" ; ?>
-    <!-- header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  -->
-
+    
 
     <section class="relative h-screen overflow-hidden">
         <video
@@ -34,9 +31,7 @@
 
 
 
-    <!-- footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer -->
-     <?php include "footer.php" ; ?>
-    <!-- footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer -->
+  
 </body>
 
 <script src="js/header.js"></script>
