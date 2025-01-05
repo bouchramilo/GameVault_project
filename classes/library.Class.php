@@ -13,11 +13,38 @@ class library extends dataBase
     private string $personalNote;
     private string $status;
     private DateTime $playTime;
-
-
-    public function ajouter() {}
+    
     public function content() {}
-
+    
+    // fonction pour ajouter un game à la bibliothèque d'un user +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    public function addGameToLibrary($id_jeu) {
+        
+        $pdo = $this->getConnextion();
+    
+        try {
+            $sqlSelet = "SELECT * FROM library WHERE id_user = :id_user AND id_game = :id_game";
+            $stmtSelect = $pdo->prepare($sqlSelet);
+            $stmtSelect->bindParam(':id_user', $_SESSION['ID_user']);
+            $stmtSelect->bindParam(':id_game', $id_jeu);
+            $stmtSelect->execute();
+    
+            if ($stmtSelect->rowCount() > 0) {
+                return "Le game est déjà dans votre bibliothèque.";
+            }
+    
+            $sqlInsert = "INSERT INTO library (id_user, id_game, status) VALUES (:id_user, :id_game, 'En cours')";
+            $stmtInsert = $pdo->prepare($sqlInsert);
+            $stmtInsert->bindParam(':id_user', $_SESSION['ID_user']);
+            $stmtInsert->bindParam(':id_game', $id_jeu);
+            $stmtInsert->execute();
+    
+            return "Le game a été ajouté à votre bibliothèque avec succès.";
+        } catch (PDOException $e) {
+            return "Erreur : " . $e->getMessage();
+        }
+    }
+    
+    
     // fonction qui retourn toutes les game d'un bibliothèque d'un user +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public function getMyLibrary()
     {
@@ -48,16 +75,16 @@ class library extends dataBase
                     lb.id_user = :id_user;";
 
 
-            $pdo = $this->getConnextion();
-            $stmt = $pdo->prepare($sql);
+$pdo = $this->getConnextion();
+$stmt = $pdo->prepare($sql);
 
-            $stmt->execute(['id_user' => $_SESSION['ID_user']]);
+$stmt->execute(['id_user' => $_SESSION['ID_user']]);
 
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (Exception $e) {
-            return "Erreur lors de la récupération de la bibliothèque : " . $e->getMessage();
-        }
-    }
+return $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (Exception $e) {
+    return "Erreur lors de la récupération de la bibliothèque : " . $e->getMessage();
+}
+}
 
 
     // fonction qui supprimer un game from la bibliotheque d'un user +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

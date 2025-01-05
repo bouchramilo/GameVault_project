@@ -4,15 +4,38 @@ require_once 'classes/dataBase.Class.php';
 require_once 'classes/historique.Class.php';
 require_once 'classes/game.Class.php';
 require_once 'classes/library.Class.php';
+require_once 'classes/favoris.Class.php';
 
 session_start();
 
 $biblio = new library();
 $jeux_biblio = $biblio->getMyLibrary();
 
+$favoris = new favoris();
+
+// delete game from biblio :
 if (isset($_POST['btn_delete_from_biblio'])) {
     $biblio->deleteFromMyLibrary($_POST['btn_delete_from_biblio']);
 }
+
+// delete game from favoris : 
+if (isset($_POST['delete_from_favoris'])) {
+    $delete = $favoris->deleteFromMesFavoris($_POST['delete_from_favoris']);
+    
+    if ($delete > 0) {
+        header('Location: myLibrary.php');
+    }
+}
+
+// add game to favoris : 
+if (isset($_POST['add_to_favoris'])) {
+    $addToF = $favoris->addToMesFavoris($_POST['add_to_favoris']);
+    
+    if ($addToF > 0) {
+        header('Location: myLibrary.php');
+    }
+}
+
 
 
 ?>
@@ -112,9 +135,13 @@ if (isset($_POST['btn_delete_from_biblio'])) {
                                     <td class="p-4 text-sm text-center text-white">
                                         <?php echo $game['game_genre']; ?>
                                     </td>
-                                    <td class="p-4 text-sm text-center text-white">
+                                    <td class="p-4 text-sm text-center">
                                         <form action="" method="post">
-                                            <button name="add_to_favoris" value="<?= $game['id_game'] ?>">&#10084;</button>
+                                            <?php if (!empty($game['favoris_id'])) : ?>
+                                                <button name="delete_from_favoris" value="<?= $game['favoris_id'] ?>" class="text-red-600">&#10084;</button>
+                                            <?php else :  ?>
+                                                <button name="add_to_favoris" value="<?= $game['id_game'] ?>" class="text-white">&#10084;</button>
+                                            <?php endif; ?>
                                         </form>
                                     </td>
                                     <td class="p-4 text-sm text-center text-white">

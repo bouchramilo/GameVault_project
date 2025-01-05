@@ -15,6 +15,8 @@ SELECT * FROM chat;
 
 SELECT * FROM historique;
 
+SELECT * FROM favoris;
+
 -- sypprimer les tables :
 
 -- call supprimerTables();
@@ -28,7 +30,7 @@ SELECT
                     lb.id_lib, 
                     lb.id_user, 
                     lb.id_game, 
-                    lb.personalNote, 
+                    lb.personalNote AS note, 
                     lb.status, 
                     lb.playTime,
                     g.id_game AS game_id, 
@@ -37,8 +39,7 @@ SELECT
                     g.releaseDate AS game_release_date, 
                     g.averageScore AS game_average_score,
                     CONCAT(p.first_name, ' ', p.last_name) AS admin_full_name,
-                    f.id_favoris AS favoris_id, 
-                    n.note AS user_note
+                    f.id_favoris AS favoris_id
                 FROM 
                     library lb
                 LEFT JOIN 
@@ -47,10 +48,8 @@ SELECT
                     personne p ON g.id_admin = p.id_user
                 LEFT JOIN 
                     favoris f ON lb.id_game = f.id_game AND lb.id_user = f.id_user
-                LEFT JOIN 
-                    notation n ON lb.id_game = n.id_game AND lb.id_user = n.id_user
                 WHERE 
-                    lb.id_user = 6;
+                    lb.id_user = 3;
 
 
 
@@ -207,9 +206,10 @@ VALUES (
 
 INSERT INTO
     library ( id_game, id_user, personalNote, status)
-VALUES  (1, 6, 2, 'Terminé'),
-        (2, 6, 5, 'En cours'),
-        (3, 6, 1, 'Abandonné'),
+VALUES  
+-- (1, 6, 2, 'Terminé'),
+        -- (2, 6, 5, 'En cours'),
+        -- (3, 6, 1, 'Abandonné'),
         (4, 6, 3, 'En cours');
 
 INSERT INTO

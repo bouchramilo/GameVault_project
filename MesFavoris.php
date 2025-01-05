@@ -14,8 +14,12 @@ $Allfavoris = $favoris->showAllMesFavoris();
 
 
 if (isset($_POST['btn_delete_from_favor'])) {
-    $favoris->deleteFromMesFavoris($_POST['btn_delete_from_favor']);
-  }
+    $delete = $favoris->deleteFromMesFavoris($_POST['btn_delete_from_favor']);
+    
+    if ($delete > 0) {
+        header('Location: mesFavoris.php');
+    }
+}
 
 
 ?>
@@ -106,7 +110,7 @@ if (isset($_POST['btn_delete_from_favor'])) {
                                         <form action="" method="post">
                                             <button name="btn_delete_from_favor" value="<?= $favor['id_favoris']; ?>">&#10084;</button>
                                         </form>
-                                        
+
                                     </td>
                                     <td class=" p-4 text-center">
                                         <?php

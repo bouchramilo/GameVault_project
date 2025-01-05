@@ -6,7 +6,7 @@ require_once 'classes/historique.Class.php';
 require_once 'classes/game.Class.php';
 require_once 'classes/personne.Class.php';
 
-session_start();
+// session_start();
 $user = new personne();
 
 if (isset($_POST['deconnexion'])) {

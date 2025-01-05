@@ -21,20 +21,25 @@ class Game extends Database
     public function updateStatus() {}
 
     // fonction qui retourne toutes les game dans la base de données : +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public function getAllGame(){
+    public function getAllGame()
+    {
         $sql = "SELECT 
                     g.*, 
                     AVG(n.note) AS average_note, 
-                    CONCAT(p.first_name, ' ', p.last_name) AS nom_admin 
+                    CONCAT(p.first_name, ' ', p.last_name) AS nom_admin,
+                    COUNT(f.id_favoris) AS Nbr_Favoris_total
                 FROM 
                     game g
                 LEFT JOIN 
                     notation n ON g.id_game = n.id_game
                 LEFT JOIN 
                     personne p ON g.id_admin = p.id_user
+                LEFT JOIN 
+                    favoris f ON g.id_game = f.id_game
                 GROUP BY 
-                    g.id_game, g.title, g.genre, g.id_admin, g.details, g.releaseDate, g.screenshots, g.averageScore, 
-                    p.first_name, p.last_name;
+                    g.id_game, 
+                    p.first_name, 
+                    p.last_name
                 ";
         $pdo = $this->getConnextion();
 

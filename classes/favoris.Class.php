@@ -35,9 +35,11 @@ class favoris extends dataBase
             $stmt = $pdo->prepare($sql);
             $stmt->execute(['id_favor' => $id_favor]);
     
-            if ($stmt->rowCount() > 0) {
-                header('Location: mesFavoris.php');
-            }
+            // if ($stmt->rowCount() > 0) {
+            //     header('Location: mesFavoris.php');
+            // }
+
+            return $stmt->rowCount() ;
         } catch (Exception $e) {
             return "Erreur lors de la suppression from favoris : " . $e->getMessage();
         }
@@ -45,6 +47,21 @@ class favoris extends dataBase
     
     
     
-    public function addToMesFavoris(){}
+    public function addToMesFavoris($id_game){
+        try {
+            $sql = "INSERT INTO favoris (id_user, id_game) VALUES (:id_user, :id_game);";
+            $pdo = $this->getConnextion();
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([
+                'id_user' => $_SESSION['ID_user'],
+                'id_game' => $id_game
+            ]);
+            return $stmt->rowCount() ;
+        }
+        catch(Exception $e){
+            return "Erreur lors de l'ajout from favoris : " . $e->getMessage();
+        }
+
+    }
     public function nbrFavorisForGame(){}
 }
