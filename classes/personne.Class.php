@@ -81,7 +81,7 @@ class Personne extends Database
 
             if ($user && password_verify($password, $user['password_hash'])) {
                 session_start();
-                $_SESSION["ID_user"] = $user['id_user'];
+                $_SESSION['ID_user'] = $user['id_user'];
                 header('Location: home.php');
                 exit;
             } else {
@@ -152,9 +152,56 @@ class Personne extends Database
     }
 
 
-    // fonction qui retourne _______ : +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public function getUser() {}
-    public function updateProfile() {}
+    // fonction qui retourne user infos_______ : +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    public function getUser() {
+        $query = "SELECT id_user, first_name, last_name, email, create_at, date_naissance FROM personne WHERE id_user = :id_user";
+        $pdo = $this->getConnextion();
+        $statement = $pdo->prepare($query);
+        $statement->bindParam(':id_user', $_SESSION['ID_user']);
+        $statement->execute();
+        return $statement->fetch(PDO::FETCH_ASSOC);
+    }
+    // 
+    
+    public function updateUser($first_name, $last_name, $email, $date_naissance) {
+        try {
+            $query = "UPDATE personne SET first_name = :first_name, last_name = :last_name, email = :email, date_naissance = :date_naissance WHERE id_user = :id_user";
+            $pdo = $this->getConnextion();
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(':first_name', $first_name);
+            $stmt->bindParam(':last_name', $last_name);
+            $stmt->bindParam(':email', $email);
+            $stmt->bindParam(':date_naissance', $date_naissance);
+            $stmt->bindParam(':id_user', $_SESSION['ID_user']);
+
+            if ($stmt->execute()) {
+                return "Les informations de user ont ete mises a jour avec succes";
+            } else {
+                return "Erreur !";
+            }
+        } catch (PDOException $e) {
+            return "Erreur : " . $e->getMessage();
+        }
+    }
+    
+    public function getProfile() {
+        $query = "SELECT photo FROM personne WHERE id_user = :id_user";
+        $pdo = $this->getConnextion();
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':id_user', $_SESSION['ID_user']);  
+        $stmt->execute();
+    
+        $image = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        if ($image) {
+            $profilePicture = $image['photo'];
+            $base64Image = base64_encode($profilePicture);
+            return 'data:image/jpeg;base64,' . $base64Image;
+        } else {
+            return 'images/image1-removebg-preview (1).png';
+        }
+    }
+
     public function deleteProfile() {}
     // public function addFavorite() {}
     // public function addGameToLib() {}

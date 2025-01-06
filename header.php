@@ -73,7 +73,7 @@ if (isset($_POST['deconnexion'])) {
           </li>
           <?php if ($user->getRole() === "admin") : ?>
             <li class='max-lg:border-b max-lg:py-3 px-3'>
-              <a href='index.php'
+              <a href="profil.php"
                 class='hover:text-[#da627d] text-[#333] block font-semibold text-[15px]'>Dashboard</a>
             </li>
           <?php endif; ?>

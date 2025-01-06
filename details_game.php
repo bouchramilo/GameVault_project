@@ -1,136 +1,109 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détails du Jeu</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>GameVault - Game</title>
+    <style>
+        .screenshots.active {
+            border: 3px solid#da627d;
+            transform: scale(1.1);
+        }
+        
+        .screenshots {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .screenshots:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 10px rgba(166, 47, 170, 0.5);
+        }
+    </style>
 </head>
 
-<body class="bg-[#f9dbbd]">
-    <!-- header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  -->
-    <?php include "header.php"; ?>
-    <!-- header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  -->
+<body class="bg-gray-900 text-white font-sans ">
+    <?php include 'menu_admin.php' ?>
+    <!-- <header class="relative bg-cover bg-center h-72" style="background-image: url('images/game-banner.jpg');">
+        <div class="absolute inset-0 bg-black bg-opacity-60 flex flex-col items-center justify-center text-[#da627d] text-center">
+            <h1 class="text-4xl font-bold">Nom du Jeu : Micraft</h1>
+            <p class="text-lg mt-2">ptit slogan</p>
+        </div>
+        </header> -->
 
-    <section class="relative h-max overflow-hidden">
-        <video
-            class="absolute top-1/2 left-1/2 w-auto min-w-full min-h-full transform -translate-x-1/2 -translate-y-1/2 object-cover"
-            autoplay
-            loop
-            muted
-            playsinline>
-            <source src="images/privacy_002.mp4" type="video/mp4" />
-        </video>
-        <!-- <img src="images/game_1.jpg" alt=""class="absolute top-1/2 left-1/2 w-auto min-w-full min-h-full transform -translate-x-1/2 -translate-y-1/2 "> -->
-        <div class="relative z-10 flex flex-col gap-4 h-full text-center text-white bg-black bg-opacity-50 p-4">
-            <h1 class="text-5xl text-start pl-4">Title de game</h1>
-            <div class="w-full h-max p-4 flex flex-row gap-4 ">
-
-                <div class="w-1/2 min-h-screen flex  text-white text-lg animate-fade-in">
-                    <table class="text-start bg-black w-full h-full bg-opacity-65 ">
-                        <tr>
-                            <td class="w-1/3 font-bold">Genre : </td>
-                            <td class="w-2/3 ">Action, genre 2 ..</td>
-                        </tr>
-                        <tr>
-                            <td class="w-1/3 font-bold">Créer par : </td>
-                            <td class="w-2/3 ">bou ba</td>
-                        </tr>
-                        <tr>
-                            <td class="w-1/3 font-bold">Average Score : </td>
-                            <td class="w-2/3 ">12</td>
-                        </tr>
-                        <tr>
-                            <td class="w-1/3 font-bold">Date de création : </td>
-                            <td class="w-2/3 ">02/01/2025</td>
-                        </tr>
-                        <tr>
-                            <td class="w-1/3 font-bold">Details : </td>
-                            <td class="w-2/3 ">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sed beatae expedita dicta aliquam, adipisci perspiciatis.</td>
-                        </tr>
-                        <tr>
-                            <td class="w-1/3 font-bold">Notation : </td>
-                            <td class="w-2/3 ">
-                                <svg class="w-[18px] h-4 inline mr-1" viewBox="0 0 14 13" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z"
-                                        fill="#facc15" />
-                                </svg>
-                                <svg class="w-[18px] h-4 inline mr-1" viewBox="0 0 14 13" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z"
-                                        fill="#facc15" />
-                                </svg>
-                                <svg class="w-[18px] h-4 inline mr-1" viewBox="0 0 14 13" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z"
-                                        fill="#facc15" />
-                                </svg>
-                                <svg class="w-[18px] h-4 inline mr-1" viewBox="0 0 14 13" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z"
-                                        fill="#CED5D8" />
-                                </svg>
-                                <svg class="w-[18px] h-4 inline" viewBox="0 0 14 13" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z"
-                                        fill="#CED5D8" />
-                                </svg>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="w-1/3 font-bold">Favoris :</td>
-                            <td class="w-2/3 "><span class="text-red-600">&#10084;</span> 15</td>
-                        </tr>
-                    </table>
-                </div>
-
-                <div class="w-1/2 min-h-screen  grid grid-cols-2 justify-items-center items-center gap-2">
-                    <div class="screenshot col-span-1 bg-gradient-to-r bg-transparent w-full h-full hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 shadow-lg hover:border-0 hover:border-white rounded-2xl hover:scale-[105%] p-1"><img src="images/game_1.jpg" alt="Image 1" class="w-full h-full  border-0 rounded-2xl "></div>
-                    <div class="screenshot col-span-1 bg-gradient-to-r bg-transparent w-full h-full hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 shadow-lg hover:border-0 hover:border-white rounded-2xl hover:scale-[105%] p-1"><img src="images/game_1.jpg" alt="Image 1" class="w-full h-full  border-0 rounded-2xl "></div>
-                    <div class="screenshot col-span-2 bg-gradient-to-r bg-transparent w-full h-full hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 shadow-lg hover:border-0 hover:border-white rounded-2xl hover:scale-[105%] p-1"><img src="images/game_1.jpg" alt="Image 1" class="w-full h-full  border-0 rounded-2xl "></div>
-                    <!-- <img src="images/game_1.jpg" alt="Image 2" class="w-full h-full screenshot col-span-1 border-0 rounded-2xl hover:scale-110">
-                    <img src="images/game_1.jpg" alt="Image 3" class="w-full h-full screenshot col-span-2 border-0 rounded-2xl hover:scale-110"> -->
-                </div>
+    <main class="container mx-auto p-6 bg-gray-800 rounded-lg shadow-lg mt-8 grid grid-cols-[84%] justify-end">
+        <section class="flex flex-wrap gap-6">
+            <div class="w-full sm:w-1/3">
+                <img src="images/Paner.jpg" alt="Image principale du jeu" class="w-full rounded-lg shadow-lg">
             </div>
 
+            <div class="flex-1">
+                <h2 class="text-3xl font-bold text-[#da627d] mb-4">Détails du Jeu</h2>
+                <ul class="space-y-2">
+                    <li><strong>Nom :</strong> Micraft</li>
+                    <li><strong>Catégorie :</strong> Action - Tactique </li>
+                    <li><strong>Date de sortie :</strong> 15 janvier 2025</li>
+                    <li><strong>Createur :</strong> Admin(......)</li>
+                    <li><strong>Prix :</strong> 50 DH</li>
+                </ul>
+                <p class="description mt-4">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam fugit obcaecati repellat, molestias reprehenderit sed saepe eligendi deleniti magni rem voluptatem, beatae doloremque nemo ipsum, reiciendis blanditiis eos nam voluptatibus!
+                </p>
+                <div class="mt-6 flex gap-4">
+                    <button class="bg-[#da627d] text-white py-2 px-4 rounded-md hover:bg-[#f9dbbd] hover:text-[#da627d]  transition">
+                        Jouer
+                    </button>
+                    <button class="bg-[#da627d] text-white py-2 px-4 rounded-md hover:bg-[#f9dbbd] hover:text-[#da627d]  transition">
+                        Acheter le Jeu
+                    </button>
+                    <button class="bg-[#da627d] text-white py-2 px-4 rounded-md hover:bg-[#f9dbbd] hover:text-[#da627d] transition">
+                        Ajouter au bibliotheque
+                    </button>
+                </div>
+            </div>
+        </section>
 
+        <section class="mt-12 text-center">
+            <h2 class="text-3xl font-bold text-[#da627d] mb-6">Screenshots</h2>
+            <div class="flex flex-col items-center gap-6">
+                <div class="relative w-[70%] h-[500px] rounded-lg overflow-hidden shadow-lg">
+                    <img id="current-screenshot" src="images/Paner.jpg" alt="Capture 1" class="w-full h-full object-[length:100%_100%]">
+                    <p id="screenshot-caption" class="absolute bottom-0 bg-black bg-opacity-75 text-2xl text-white w-full py-2 text-left px-4">
+                        Decrire 1 er Screen
+                    </p>
+                </div>
 
+                <div class="flex gap-6 overflow-x-auto  p-4">
+                    <img class="screenshots w-24 h-15 object-[length:100%_100%] rounded-md hover:scale-105 transition cursor-pointer" src="images/Paner.jpg" alt="" data-caption="Decrire 1 er Scren">
+                    <img class="screenshots w-24 h-15 object-[length:100%_100%] rounded-md hover:scale-105 transition cursor-pointer" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1928870/ss_4dba4e59eabcf5c3631e5c28b52ffcae46d3bad8.600x338.jpg?t=1717003087"
+                        alt="" data-caption="Decrire 2 eme Screen">
+                    <img class="screenshots w-24 h-15 object-[length:100%_100%] rounded-md hover:scale-105 transition cursor-pointer" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1928870/ss_65720eb73a2dd8fc993172cfbfcdc8fe40ec44c2.600x338.jpg?t=1717003087"
+                        alt="" data-caption="Decrire 3 eme Screen">
+                    <img class="screenshots w-24 h-15 object-[length:100%_100%] rounded-md hover:scale-105 transition cursor-pointer" src="images/Minecraft.jpg" alt="" data-caption="Decrire 4 eme Screen">
+                    <img class="screenshots w-24 h-15 object-[length:100%_100%] rounded-md hover:scale-105 transition cursor-pointer" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/230410/ss_2e4077f215eccde84171a4b8e0f2bc8a3264c776.600x338.jpg" alt=""
+                        data-caption="Decrire 5 eme Screen">
+                    <img class="screenshots w-24 h-15 object-[length:100%_100%] rounded-md hover:scale-105 transition cursor-pointer" src="images/Minecraft.jpg" alt="" data-caption="Decrire 6 eme Screen">
 
-        </div>
+                </div>
+            </div>
+        </section>
 
-    </section>
+    </main>
 
-
-    <section class="relative h-max overflow-hidden">
-        <video
-            class="absolute top-1/2 left-1/2 w-auto min-w-full min-h-full transform -translate-x-1/2 -translate-y-1/2 object-cover"
-            autoplay
-            loop
-            muted
-            playsinline>
-            <source src="images/bg_2.mp4" type="video/mp4" />
-        </video>
-        <!-- <img src="images/game_1.jpg" alt=""class="absolute top-1/2 left-1/2 w-auto min-w-full min-h-full transform -translate-x-1/2 -translate-y-1/2 "> -->
-        <div class="relative z-10 flex flex-col gap-4 h-full text-center text-white bg-black bg-opacity-50 p-4">
-        </div>
-
-
-    </section>
-
-
-    <!-- footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer -->
-    <?php include "footer.php"; ?>
-    <!-- footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer -->
-
+    <script>
+        const screenshots = document.querySelectorAll('.screenshots');
+        const mainImage = document.getElementById('current-screenshot');
+        const caption = document.getElementById('screenshot-caption');
+        screenshots.forEach((screenshot) => {
+            screenshot.addEventListener('click', () => {
+                mainImage.src = screenshot.src;
+                caption.textContent = screenshot.getAttribute('data-caption');
+                screenshots.forEach((scr) => scr.classList.remove('active'));
+                screenshot.classList.add('active');
+            });
+        });
+    </script>
 </body>
-
-<script src="js/header.js"></script>
 
 </html>
