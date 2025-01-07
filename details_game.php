@@ -1,3 +1,14 @@
+
+<?php
+require 'classes/admin.Class.php';
+require 'classes/game.Class.php';
+$admin = new Admin();
+if(isset($_GET['id_game'])){
+    echo 'azerty'.$_GET['id_game'];
+    $game = $admin->detailsGame($_GET['id_game']);
+}
+
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -41,15 +52,14 @@
             <div class="flex-1">
                 <h2 class="text-3xl font-bold text-[#da627d] mb-4">Détails du Jeu</h2>
                 <ul class="space-y-2">
-                    <li><strong>Nom :</strong> Micraft</li>
-                    <li><strong>Catégorie :</strong> Action - Tactique </li>
-                    <li><strong>Date de sortie :</strong> 15 janvier 2025</li>
-                    <li><strong>Createur :</strong> Admin(......)</li>
-                    <li><strong>Prix :</strong> 50 DH</li>
+                    <li><strong>Nom :</strong> <?= htmlspecialchars($game["title"]); ?></li>
+                    <li><strong>Catégorie :</strong> <?= htmlspecialchars($game["genre"]) ;?></li>
+                    <li><strong>Date de sortie :</strong> <?= htmlspecialchars($game["releaseDate"]) ?></li>
+                    <li><strong>Createur :</strong> <?= htmlspecialchars($game["id_admin"]) ?></li>
+                    <li><strong>Prix :</strong> <?= htmlspecialchars($game["price"]) ?> DH</li>
                 </ul>
                 <p class="description mt-4">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam fugit obcaecati repellat, molestias reprehenderit sed saepe eligendi deleniti magni rem voluptatem, beatae doloremque nemo ipsum, reiciendis blanditiis eos nam voluptatibus!
-                </p>
+                <?= htmlspecialchars($game["details"]) ?>                </p>
                 <div class="mt-6 flex gap-4">
                     <button class="bg-[#da627d] text-white py-2 px-4 rounded-md hover:bg-[#f9dbbd] hover:text-[#da627d]  transition">
                         Jouer

@@ -1,3 +1,21 @@
+
+<?php
+require 'classes/admin.Class.php';
+session_start();
+$admin = new Admin();
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['nom_game']) && isset($_POST['categorie_game']) && isset($_POST['desc_game']) && isset($_POST['prix_game']) && isset($_POST['image_game'])) {
+        $admin->addGame($_POST['nom_game'],$_POST['categorie_game'], $_POST['desc_game'],$_POST['prix_game'],$_POST['image_game']);
+    }
+    elseif(isset($_POST['id_game']) ){
+        $admin->deleteGame($_POST['id_game']);
+    }
+
+}
+
+$games=$admin->afficherGames();
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,26 +42,28 @@
           </button>
         </div>
         <div class="grid grid-cols-[25%_25%_25%_25%] gap-4">
+        <?php if (count($games) > 0): ?>
+            <?php foreach ($games as $game): ?>
             <div class="bg-white shadow-[0_4px_12px_-5px_rgba(0,0,0,0.4)] w-full h-[450px] py-6 max-w-[280px] rounded-lg font-[sans-serif] overflow-hidden mx-auto mt-4">
                 <div class="flex items-center gap-2 px-6">
-                    <h3 class="text-xl text-gray-800 font-bold flex-1"><a href="details_game.php">Mincraft</a></h3> 
+                    <h3 class="text-xl text-gray-800 font-bold flex-1"><a href="details_game.php?id_game=<?= htmlspecialchars($game["id_game"]) ?>"> <?= htmlspecialchars($game["title"]) ?></a></h3> 
                     <span>5</span>
                     <img class="comment w-[20px] h-[20px] hover:content-[url(images/icons8-comment.gif)]" src="images/icons8-comment-50.png " alt=" ">
                     <span>12</span>
                     <img class="adorer w-[20px] h-[20px] hover:content-[url(images/heart.gif)]" src="images/icons8-heart-50.png" alt="">
                 </div>
                 <div class="relative photo w-full h-[94%] group">
-                    <img src="images/Minecraft.jpg " class=" w-full h-[100%] my-6" />
+                    <img src="images/Minecraft.jpg" class=" w-full h-[100%] my-6" />
 
                     <div class="details bottom-0 left-0 absolute w-full hidden group-hover:block ">
                         <div class="px-6 bg-black opacity-75 ">
-                            <p class="text-sm text-white leading-relaxed pt-6">ptit description...</p>
+                            <p class="text-sm text-white leading-relaxed pt-6"> <?= htmlspecialchars($game["details"]) ?></p>
 
                             <div class="mt-8 flex items-center flex-wrap gap-4 ">
-                                <h3 class="text-xl text-white font-bold flex-1 ">50 DH</h3>
+                                <h3 class="text-xl text-white font-bold flex-1 "> <?= htmlspecialchars($game["price"]) ?>DH</h3>
                                 <br>
-                                <button type="button " class="updateform px-1 py-2.5 rounded-lg  bg-white outline-none "><img class="w-[22px] h-[22px] hover:content-[url(images/icons8-edit.gif)]" src="images/icons8-edit-50.png" alt=""></button>
-                                <button type="button " class="sprm px-1 py-2.5 rounded-lg bg-white outline-none "><img class="w-[22px] h-[22px] hover:content-[url(images/icons8-trash.gif)]" src="images/icons8-trash-50.png" alt=""></button>
+                                <button  class="updateform px-1 py-2.5 rounded-lg  bg-white outline-none "><img class="w-[22px] h-[22px] hover:content-[url(images/icons8-edit.gif)]" src="images/icons8-edit-50.png" alt=""></button>
+                                <button onclick="deletebtn('<?= $game['id_game'] ?>')" class=" text-white sprm px-1 py-2.5 rounded-lg bg-white outline-none "><img class="w-[22px] h-[22px] hover:content-[url(images/icons8-trash.gif)]" src="images/icons8-trash-50.png" alt=""></button>
 
                             </div>
                             <br/>
@@ -51,33 +71,13 @@
                     </div>
                 </div>
             </div>
-            <div class="bg-white shadow-[0_4px_12px_-5px_rgba(0,0,0,0.4)] w-full h-[450px] py-6 max-w-[280px] rounded-lg font-[sans-serif] overflow-hidden mx-auto mt-4">
-                <div class="flex items-center gap-2 px-6">
-                    <h3 class="text-xl text-gray-800 font-bold flex-1"><a href="details_game.php">Mincraft</a></h3>
-                    <span>5</span>
-                    <img class="comment w-[20px] h-[20px] hover:content-[url(images/icons8-comment.gif)]" src="images/icons8-comment-50.png " alt=" ">
-                    <span>12</span>
-                    <img class=" adorer w-[20px] h-[20px] hover:content-[url(images/heart.gif)]" src="images/icons8-heart-50.png" alt="">
-                </div>
-                <div class="relative photo w-full h-[94%] group">
-                    <img src="images/Minecraft.jpg " class=" w-full h-[100%] my-6" />
+            <?php endforeach; ?>
+                <?php else: ?>
+                    <h4> Aucun utilisateur trouvé</h4>
 
-                    <div class="details bottom-0 left-0 absolute w-full hidden group-hover:block ">
-                        <div class="px-6 bg-black opacity-75 ">
-                            <p class="text-sm text-white leading-relaxed pt-6">ptit description...</p>
+                    <?php endif; ?>
 
-                            <div class="mt-8 flex items-center flex-wrap gap-4 ">
-                                <h3 class="text-xl text-white font-bold flex-1 ">50 DH</h3>
-                                <br>
-                                <button type="button " class=" updateform px-1 py-2.5 rounded-lg  bg-white outline-none "><img class="w-[22px] h-[22px] hover:content-[url(images/icons8-edit.gif)]" src="images/icons8-edit-50.png" alt=""></button>
-                                <button type="button " class=" sprm px-1 py-2.5 rounded-lg bg-white outline-none "><img class="w-[22px] h-[22px] hover:content-[url(images/icons8-trash.gif)]" src="images/icons8-trash-50.png" alt=""></button>
-
-                            </div>
-                            <br/>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        
         </div>
     </div>
 
@@ -88,31 +88,31 @@
             <h2 class="text-2xl font-bold text-center">Modifier le jeu</h2>
             <form class="space-y-4 mt-8">
                 <div>
-                    <labe class="text-white text-sm mb-2 block">Name of the game</labe>
+                    <label class="text-white text-sm mb-2 block">Name of the game</label>
                     <input type="text" placeholder="Enter game name" class="px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-blue-600 focus:bg-transparent rounded-lg" />
                 </div>
 
                 <div>
-                    <labe class="text-white text-sm mb-2 block">Descriptions</labe>
+                    <label class="text-white text-sm mb-2 block">Descriptions</label>
                     <textarea placeholder='Write about the game' class="px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-blue-600 focus:bg-transparent rounded-lg" rows="3"></textarea>
                 </div>
 
                 <div>
-                    <labe class="text-white text-sm mb-2 block">Date_creation</labe>
+                    <label class="text-white text-sm mb-2 block">Date_creation</label>
                     <input type="date" placeholder="Enter quantity" class="px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-blue-600 focus:bg-transparent rounded-lg" />
                 </div>
 
                 <div>
-                    <labe class="text-white text-sm mb-2 block">Price</labe>
+                    <label class="text-white text-sm mb-2 block">Price</label>
                     <input type="number" placeholder="Enter price" class="px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-blue-600 focus:bg-transparent rounded-lg" />
                 </div>
 
                 <div>
-                    <labe class="text-white text-sm mb-2 block">Categorie</labe>
+                    <label class="text-white text-sm mb-2 block">Categorie</label>
                     <input type="text" placeholder="Enter product category" class="px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-blue-600 focus:bg-transparent rounded-lg" />
                 </div>
                 <div>
-                    <labe class="text-white text-sm mb-2 block">Add background image</labe>
+                    <label class="text-white text-sm mb-2 block">Add background image</label>
                     <input type="file" accept="image/*" class="px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-blue-600 focus:bg-transparent rounded-lg" />
                 </div>
                 <div class="flex justify-center h-12">
@@ -147,12 +147,15 @@
                 <path d="M11 17v-7a1 1 0 0 0-2 0v7a1 1 0 0 0 2 0Zm4 0v-7a1 1 0 0 0-2 0v7a1 1 0 0 0 2 0Z"
                     data-original="#000000" />
             </svg>
+            
                 <h4 class="text-gray-800 text-base font-semibold mt-4">Are you sure you want to delete it?</h4>
-
+                <form method="POST">
+                <input type="hidden" id="id_game" name="id_game">
                 <div class="text-center space-x-4 mt-8">
                     <button type="button" class="px-4 py-2 rounded-lg text-gray-800 text-sm bg-gray-200 hover:bg-gray-300 active:bg-gray-200">Cancel</button>
-                    <button type="button" class="px-4 py-2 rounded-lg text-white text-sm bg-red-600 hover:bg-red-700 active:bg-red-600">Delete</button>
+                    <button type="submit" class="px-4 py-2 rounded-lg text-white text-sm bg-red-600 hover:bg-red-700 active:bg-red-600">Delete</button>
                 </div>
+            </form>
             </div>
         </div>
     </div>
@@ -203,11 +206,35 @@
             </div>
         </div>
     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <!-- modal game  -->
     <div class="gamemodal hidden fixed inset-0 p-4 flex flex-wrap justify-center items-center w-full h-full z-[1000] before:fixed before:inset-0 before:w-full before:h-full before:bg-[rgba(0,0,0,0.5)] overflow-auto font-[sans-serif]">
         <div class="bg-[#1d1d1d] opacity-90 text-white p-6 flex flex-col gap-6 rounded-lg shadow-lg w-[60%] max-sm:w-full">
             <div class="flex items-center">
-                <h3 class="text-white text-2xl font-bold flex-1">Add New Product</h3>
+                <h3 class="text-white text-2xl font-bold flex-1">Ajouter un jeu</h3>
 
                 <svg xmlns="http://www.w3.org/2000/svg" class=" close w-3 ml-2 cursor-pointer shrink-0 fill-gray-400 hover:fill-red-500" viewBox="0 0 320.591 320.591">
                 <path
@@ -219,43 +246,60 @@
             </svg>
             </div>
 
-            <form class="space-y-4 mt-8">
+            <form class="space-y-4 mt-8" method="POST">
                 <div>
-                    <labe class="text-white text-sm mb-2 block">Name of the game</labe>
-                    <input type="text" placeholder="Enter game name" class="px-4 py-3 bg-gray-100 w-full text-white text-sm border-none focus:outline-blue-600 focus:bg-transparent rounded-lg" />
+                    <label  for="nom_game" class="text-white text-sm mb-2 block">Name of the game</label>
+                    <input name="nom_game" type="text" placeholder="Enter game name" class="px-4 py-3 bg-gray-100 w-full text-white text-sm border-none focus:outline-blue-600 focus:bg-transparent rounded-lg" />
                 </div>
 
                 <div>
-                    <labe class="text-white text-sm mb-2 block">Descriptions</labe>
-                    <textarea placeholder='Write about the game' class="px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-blue-600 focus:bg-transparent rounded-lg" rows="3"></textarea>
+                    <label for="desc_game" class="text-white text-sm mb-2 block">Descriptions</label>
+                    <textarea name="desc_game" placeholder='Write about the game' class="px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-blue-600 focus:bg-transparent rounded-lg" rows="3"></textarea>
+                </div>
+
+                <!-- <div>
+                    <label for="date_game" class="text-white text-sm mb-2 block">Date_creation</label>
+                    <input name="date_game" type="date" placeholder="Enter quantity" class="px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-blue-600 focus:bg-transparent rounded-lg" />
+                </div> -->
+
+                <div>
+                    <label for="prix_game" class="text-white text-sm mb-2 block">Price</label>
+                    <input  name="prix_game" type="number" placeholder="Enter price" class="px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-blue-600 focus:bg-transparent rounded-lg" />
                 </div>
 
                 <div>
-                    <labe class="text-white text-sm mb-2 block">Date_creation</labe>
-                    <input type="date" placeholder="Enter quantity" class="px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-blue-600 focus:bg-transparent rounded-lg" />
-                </div>
-
-                <div>
-                    <labe class="text-white text-sm mb-2 block">Price</labe>
-                    <input type="number" placeholder="Enter price" class="px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-blue-600 focus:bg-transparent rounded-lg" />
-                </div>
-
-                <div>
-                    <labe class="text-white text-sm mb-2 block">Categorie</labe>
-                    <input type="text" placeholder="Enter product category" class="px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-blue-600 focus:bg-transparent rounded-lg" />
+                    <label for="categorie_game" class="text-white text-sm mb-2 block">Categorie</label>
+                    <input name="categorie_game" type="text" placeholder="Enter product category" class="px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-blue-600 focus:bg-transparent rounded-lg" />
                 </div>
                 <div>
-                    <labe class="text-white text-sm mb-2 block">Add background image</labe>
-                    <input type="file" accept="image/*" class="px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-blue-600 focus:bg-transparent rounded-lg" />
+                    <label for="image_game" class="text-white text-sm mb-2 block">Add background image</label>
+                    <input name="image_game" type="file" accept="image/*" class="px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-blue-600 focus:bg-transparent rounded-lg" />
                 </div>
 
                 <div class="flex justify-end gap-4 !mt-8">
                     <button type="button" class="px-6 py-3 rounded-lg text-gray-800 text-sm border-none outline-none tracking-wide bg-gray-200 hover:bg-gray-300">Cancel</button>
-                    <button type="button" class="px-6 py-3 rounded-lg text-white text-sm border-none outline-none tracking-wide bg-blue-600 hover:bg-blue-700">Submit</button>
+                    <button type="submit" class="px-6 py-3 rounded-lg text-white text-sm border-none outline-none tracking-wide bg-blue-600 hover:bg-blue-700">Submit</button>
                 </div>
             </form>
         </div>
     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <!-- comment modal -->
 
     <div class=" commentmodal hidden  fixed inset-0 p-4 flex flex-wrap justify-center items-center w-full h-full z-[1000] before:fixed before:inset-0 before:w-full before:h-full before:bg-[rgba(0,0,0,0.5)] overflow-auto font-[sans-serif]">
@@ -357,6 +401,14 @@
         croixx.addEventListener('click', () => {
             commentmodal.classList.toggle('hidden');
         });
+
+
+
+        function deletebtn(id) {
+            document.getElementById('id_game').value = id;
+        }
+
+
     </script>
 
 </body>

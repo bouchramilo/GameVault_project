@@ -9,17 +9,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif (isset($_POST['id_user'])) {
         $admin->deleteUser($_POST['id_user']);
     }
+    elseif (isset($_POST['id_banner']) && isset($_POST['banner'])) {
+        $admin->updateBanner($_POST['id_banner'], $_POST['banner']);
+    }
 }
 
 $users = $admin->getUsers();
 ?>
-
-
-
-
-
-
-
 
 
 
@@ -97,6 +93,7 @@ $users = $admin->getUsers();
                     d="M303.85 138.388c-8.284 0-15 6.716-15 15v127.347c0 21.034-17.113 38.147-38.147 38.147H68.904c-21.035 0-38.147-17.113-38.147-38.147V100.413c0-21.034 17.113-38.147 38.147-38.147h131.587c8.284 0 15-6.716 15-15s-6.716-15-15-15H68.904C31.327 32.266.757 62.837.757 100.413v180.321c0 37.576 30.571 68.147 68.147 68.147h181.798c37.576 0 68.147-30.571 68.147-68.147V153.388c.001-8.284-6.715-15-14.999-15z"
                     data-original="#000000" />
                 </svg>
+                </button>
                 <form method="POST" onsubmit="return confirm('Voulez-vous vraiment supprimer cet utilisateur ?');" style="display:inline;">
         <input type="hidden" name="id_user" value="<?= $user['id_user'] ?>">
         <button type="submit" class="mr-4" title="Delete">
@@ -107,8 +104,11 @@ $users = $admin->getUsers();
                 <path d="M11 17v-7a1 1 0 0 0-2 0v7a1 1 0 0 0 2 0Zm4 0v-7a1 1 0 0 0-2 0v7a1 1 0 0 0 2 0Z"
                     data-original="#000000" />
             </svg>
-        </button>
+        </button> 
     </form>
+    <button name="banner" onclick="banner('<?= $user['id_user'] ?>', '<?= htmlspecialchars($user['banner']) ?>')">
+        <img src="images/icons8-unfriend-50.png "  class=" w-6 fill-blue-500 hover:fill-blue-700" alt="" >
+                </button>
                     </td>
                 </tr>
                 <?php endforeach; ?>
@@ -123,10 +123,37 @@ $users = $admin->getUsers();
         </table>
     </div>
 
-<!-- suppression ****************************************************************************************** -->
+<!-- banissement ****************************************************************************************** -->
 
 
+<div id="bannerModal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center hidden z-50">
+    <div class="bg-white rounded-lg shadow-lg max-w-md w-full p-6">
+        <h2 class="text-xl font-semibold text-gray-800 mb-4">Modifier le rôle :</h2>
 
+        <form method="POST" >
+            <input type="hidden" id="id_banner" name="id_banner">
+
+            <div class="mb-4">
+                <label for="banner" class="block text-sm font-medium text-gray-600 mb-1">
+                    Banissement:
+                </label>
+                <select id="banner" name="banner" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300">
+                    <option value="0">non banner</option>
+                    <option value="1">banner</option>
+                </select>
+            </div>
+
+            <div class="flex justify-end space-x-4">
+                <button type="button" class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400" onclick="closeModal()">
+                    Annuler
+                </button>
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                    Enregistrer
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
 
 
 
@@ -171,12 +198,9 @@ $users = $admin->getUsers();
         </form>
     </div>
 </div>
-
 <script>
 
-function deleteUser(userId) {
-    window.location.href = `delete.php?id=${userId}`;
-}
+
 
     function editUser(id, username, role) {
         document.getElementById('id_user').value = id;
@@ -185,10 +209,19 @@ function deleteUser(userId) {
 
         document.getElementById('roleModal').classList.remove('hidden');
     }
+    function banner(id,banner) {
+        document.getElementById('id_banner').value = id;
+        document.getElementById('banner').value = banner;
+
+        document.getElementById('bannerModal').classList.remove('hidden');
+    }
 
     function closeModal() {
         document.getElementById('roleModal').classList.add('hidden');
     }
+
+
+    
 </script>
     
 </body>

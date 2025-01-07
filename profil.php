@@ -1,7 +1,7 @@
 
 
 <?php
-require_once 'classes/personne.Class.php';
+require 'classes/personne.Class.php';
 // require_once 'classes/admin.Class.php'
 session_start();
 
