@@ -10,6 +10,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     elseif(isset($_POST['id_game']) ){
         $admin->deleteGame($_POST['id_game']);
     }
+    elseif(isset($_POST['idgame']) && isset($_POST['title']) && isset($_POST['details']) && isset($_POST['releaseDate']) && isset($_POST['price'])  && isset($_POST['genre'])  && isset($_POST['modifierphoto'])){
+    $admin->updateGame($_POST['idgame'],$_POST['title'], $_POST['details'],$_POST['releaseDate'],$_POST['price'],$_POST['genre'],$_POST['modifierphoto']);}
 
 }
 
@@ -62,7 +64,7 @@ $games=$admin->afficherGames();
                             <div class="mt-8 flex items-center flex-wrap gap-4 ">
                                 <h3 class="text-xl text-white font-bold flex-1 "> <?= htmlspecialchars($game["price"]) ?>DH</h3>
                                 <br>
-                                <button  class="updateform px-1 py-2.5 rounded-lg  bg-white outline-none "><img class="w-[22px] h-[22px] hover:content-[url(images/icons8-edit.gif)]" src="images/icons8-edit-50.png" alt=""></button>
+                                <button onclick="modifierbtn('<?= $game['id_game'] ?>','<?= $game['title'] ?>','<?= $game['details'] ?>','<?= $game['releaseDate']?>','<?= $game['price'] ?>','<?= $game['genre'] ?>')" class="updateform px-1 py-2.5 rounded-lg  bg-white outline-none "><img class="w-[22px] h-[22px] hover:content-[url(images/icons8-edit.gif)]" src="images/icons8-edit-50.png" alt=""></button>
                                 <button onclick="deletebtn('<?= $game['id_game'] ?>')" class=" text-white sprm px-1 py-2.5 rounded-lg bg-white outline-none "><img class="w-[22px] h-[22px] hover:content-[url(images/icons8-trash.gif)]" src="images/icons8-trash-50.png" alt=""></button>
 
                             </div>
@@ -86,37 +88,38 @@ $games=$admin->afficherGames();
     <div id="formContainerModifier" class="hidden fixed inset-0 p-4 flex flex-wrap justify-center items-center w-full h-full z-[1000] before:fixed before:inset-0 before:w-full overflow-auto font-[sans-serif]">
         <div class="bg-[#1d1d1d] opacity-90 text-white p-6 flex flex-col gap-6 rounded-lg shadow-lg w-[60%] max-sm:w-full">
             <h2 class="text-2xl font-bold text-center">Modifier le jeu</h2>
-            <form class="space-y-4 mt-8">
+            <form class="space-y-4 mt-8" method="POST">
                 <div>
                     <label class="text-white text-sm mb-2 block">Name of the game</label>
-                    <input type="text" placeholder="Enter game name" class="px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-blue-600 focus:bg-transparent rounded-lg" />
+                    <input id="idgame" type="hidden" name="idgame">
+                    <input  id="title" name="title" type="text" placeholder="Enter game name" class="px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-blue-600 focus:bg-transparent rounded-lg" />
                 </div>
 
                 <div>
                     <label class="text-white text-sm mb-2 block">Descriptions</label>
-                    <textarea placeholder='Write about the game' class="px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-blue-600 focus:bg-transparent rounded-lg" rows="3"></textarea>
+                    <textarea id="details"  name="details" placeholder='Write about the game' class="px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-blue-600 focus:bg-transparent rounded-lg" rows="3"></textarea>
                 </div>
 
                 <div>
                     <label class="text-white text-sm mb-2 block">Date_creation</label>
-                    <input type="date" placeholder="Enter quantity" class="px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-blue-600 focus:bg-transparent rounded-lg" />
+                    <input id="releaseDate" name="releaseDate" type="date" placeholder="Enter quantity" class="px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-blue-600 focus:bg-transparent rounded-lg" />
                 </div>
 
                 <div>
                     <label class="text-white text-sm mb-2 block">Price</label>
-                    <input type="number" placeholder="Enter price" class="px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-blue-600 focus:bg-transparent rounded-lg" />
+                    <input id="price" name="price" type="number" placeholder="Enter price" class="px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-blue-600 focus:bg-transparent rounded-lg" />
                 </div>
 
                 <div>
                     <label class="text-white text-sm mb-2 block">Categorie</label>
-                    <input type="text" placeholder="Enter product category" class="px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-blue-600 focus:bg-transparent rounded-lg" />
+                    <input id="genre" name="genre" type="text" placeholder="Enter product category" class="px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-blue-600 focus:bg-transparent rounded-lg" />
                 </div>
                 <div>
                     <label class="text-white text-sm mb-2 block">Add background image</label>
-                    <input type="file" accept="image/*" class="px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-blue-600 focus:bg-transparent rounded-lg" />
+                    <input id="modifierphoto" name="modifierphoto" type="file" accept="image/*" class="px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-blue-600 focus:bg-transparent rounded-lg" />
                 </div>
                 <div class="flex justify-center h-12">
-                    <button class="bg-[#d025a0] border-2 rounded-sm w-44 h-10 font-sans hover:bg-[#830c61] hover:text-white">
+                    <button type="submit" class="bg-[#d025a0] border-2 rounded-sm w-44 h-10 font-sans hover:bg-[#830c61] hover:text-white">
                               Save
                             </button>
                 </div>
@@ -406,6 +409,14 @@ $games=$admin->afficherGames();
 
         function deletebtn(id) {
             document.getElementById('id_game').value = id;
+        }
+        function modifierbtn(id,title,details,releaseDate,price,genre) {
+            document.getElementById('idgame').value = id;
+            document.getElementById('title').value = title;
+            document.getElementById('details').value = details;
+            document.getElementById('releaseDate').value = releaseDate;
+            document.getElementById('price').value = price;
+            document.getElementById('genre').value = genre;
         }
 
 

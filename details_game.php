@@ -23,6 +23,7 @@ if(isset($_GET['id_game'])){
             transform: scale(1.1);
         }
         
+        
         .screenshots {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
@@ -55,7 +56,7 @@ if(isset($_GET['id_game'])){
                     <li><strong>Nom :</strong> <?= htmlspecialchars($game["title"]); ?></li>
                     <li><strong>Catégorie :</strong> <?= htmlspecialchars($game["genre"]) ;?></li>
                     <li><strong>Date de sortie :</strong> <?= htmlspecialchars($game["releaseDate"]) ?></li>
-                    <li><strong>Createur :</strong> <?= htmlspecialchars($game["id_admin"]) ?></li>
+                    <li><strong>Createur :</strong> <?= htmlspecialchars($game["first_name"])." ". htmlspecialchars($game["last_name"])?></li>
                     <li><strong>Prix :</strong> <?= htmlspecialchars($game["price"]) ?> DH</li>
                 </ul>
                 <p class="description mt-4">
@@ -67,7 +68,7 @@ if(isset($_GET['id_game'])){
                     <button class="bg-[#da627d] text-white py-2 px-4 rounded-md hover:bg-[#f9dbbd] hover:text-[#da627d]  transition">
                         Acheter le Jeu
                     </button>
-                    <button class="bg-[#da627d] text-white py-2 px-4 rounded-md hover:bg-[#f9dbbd] hover:text-[#da627d] transition">
+                    <button class=" ajout bg-[#da627d] text-white py-2 px-4 rounded-md hover:bg-[#f9dbbd] hover:text-[#da627d] transition">
                         Ajouter au bibliotheque
                     </button>
                 </div>

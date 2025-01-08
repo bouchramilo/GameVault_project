@@ -1,4 +1,10 @@
 
+<?php
+$test=new personne();
+if (isset($_POST['deconnexion'])) {
+    $test->logout();
+}
+?>
 
  <nav class="bg-[#121e31] h-screen fixed top-0 left-0 min-w-[250px] py-6 px-4 font-[sans-serif] tracking-wide overflow-auto">
            <a href="profil.php"> <div class="flex flex-wrap items-center gap-4 cursor-pointer">

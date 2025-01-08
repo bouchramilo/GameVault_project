@@ -81,7 +81,7 @@ class Admin extends Personne {
         }
     }   
     public function afficherGames(){
-        $query = "SELECT id_game,title,genre,id_admin,details,releaseDate,photo,price FROM game";
+        $query = "SELECT game.id_game,game.title,game.genre,game.details,game.releaseDate,game.photo,game.price,game.id_admin,personne.first_name,personne.last_name FROM game INNER JOIN personne ON game.id_admin=personne.id_user";
         $pdo = $this->getConnextion();
         $stmt = $pdo->prepare($query);
         $stmt->execute();
@@ -105,7 +105,7 @@ class Admin extends Personne {
 
 
     public function detailsGame($id_game){
-        $query = "SELECT id_game,title,genre,id_admin,details,releaseDate,photo,price FROM game where id_game=:id_game";
+        $query = "SELECT game.id_game,game.title,game.genre,game.details,game.releaseDate,game.photo,game.price,game.id_admin,personne.first_name,personne.last_name FROM game INNER JOIN personne ON game.id_admin=personne.id_user where game.id_game=:id_game";
         $pdo = $this->getConnextion();
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(':id_game', $id_game);
@@ -114,8 +114,32 @@ class Admin extends Personne {
         return $stmt->fetch(PDO::FETCH_ASSOC);
         
     }
+
     
-    /**************************************************************** */
+    public function updateGame($id_game, $title,$details,$releaseDate,$price,$genre,$photo) {
+        $query = "UPDATE game SET title = :title, details=:details , releaseDate=:releaseDate , price=:price ,genre=:genre,photo=:photo WHERE id_game = :id_game";
+        $pdo = $this->getConnextion();
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':id_game', $id_game);
+        $stmt->bindParam(':title', $title);
+        $stmt->bindParam(':details', $details);
+        $stmt->bindParam(':releaseDate', $releaseDate);
+        $stmt->bindParam(':price', $price);
+        $stmt->bindParam(':genre', $genre);
+        $stmt->bindParam(':photo', $photo);
+
+        if ($stmt->execute()) {
+            header("Location: gererGame.php"); 
+            exit();
+        } else {
+            echo "Erreur  update game !";
+        }
+    }
+
+
+
+
+    /*****************************************************************/
     
     public function moderateContent(){}
 }
