@@ -115,7 +115,7 @@ class Admin extends Personne {
         
     }
     
-    
+    /**************************************************************** */
     
     public function moderateContent(){}
 }

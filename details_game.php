@@ -98,7 +98,6 @@ if(isset($_GET['id_game'])){
                 </div>
             </div>
         </section>
-
     </main>
 
     <script>
