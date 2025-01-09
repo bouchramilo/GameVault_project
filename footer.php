@@ -7,9 +7,9 @@
 
           <ul class="flex items-center justify-center flex-wrap gap-y-2 md:justify-end space-x-6">
             <li><a href="home.php" class="text-gray-300 hover:underline text-base">Home</a></li>
-            <li><a href="javascript:void(0)" class="text-gray-300 hover:underline text-base">About</a></li>
+            <!-- <li><a href="javascript:void(0)" class="text-gray-300 hover:underline text-base">About</a></li>
             <li><a href="javascript:void(0)" class="text-gray-300 hover:underline text-base">Services</a></li>
-            <li><a href="javascript:void(0)" class="text-gray-300 hover:underline text-base">Contact</a></li>
+            <li><a href="javascript:void(0)" class="text-gray-300 hover:underline text-base">Contact</a></li> -->
           </ul>
         </div>
 

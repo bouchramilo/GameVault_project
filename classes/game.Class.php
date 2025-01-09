@@ -25,6 +25,7 @@ class Game extends Database
     {
         $sql = "SELECT 
                     g.*, 
+                    DATE_FORMAT(g.releaseDate, '%d/%m/%Y') AS releaseDate , 
                     AVG(n.note) AS average_note, 
                     CONCAT(p.first_name, ' ', p.last_name) AS nom_admin,
                     COUNT(f.id_favoris) AS Nbr_Favoris_total

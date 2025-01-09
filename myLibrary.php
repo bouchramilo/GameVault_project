@@ -21,7 +21,7 @@ if (isset($_POST['btn_delete_from_biblio'])) {
 // delete game from favoris : 
 if (isset($_POST['delete_from_favoris'])) {
     $delete = $favoris->deleteFromMesFavoris($_POST['delete_from_favoris']);
-    
+
     if ($delete > 0) {
         header('Location: myLibrary.php');
     }
@@ -30,8 +30,27 @@ if (isset($_POST['delete_from_favoris'])) {
 // add game to favoris : 
 if (isset($_POST['add_to_favoris'])) {
     $addToF = $favoris->addToMesFavoris($_POST['add_to_favoris']);
-    
+
     if ($addToF > 0) {
+        header('Location: myLibrary.php');
+    }
+}
+
+// update status game from library : 
+if (isset($_POST['status_update'])) {
+    $updateLibStatus = $biblio->updateStatusGame($_POST['id_lib'], $_POST['status_update']);
+
+    if ($updateLibStatus > 0) {
+        header('Location: myLibrary.php');
+    }
+}
+// update status game from library : 
+if (isset($_POST['notation_update'])) {
+    $updateLibNota = $biblio->updateNoteGame($_POST['id_jeu'], $_POST['nota_update']);
+
+    echo "<script> alert('$updateLibNota');</script>";
+
+    if ($updateLibNota > 0) {
         header('Location: myLibrary.php');
     }
 }
@@ -113,34 +132,34 @@ if (isset($_POST['add_to_favoris'])) {
 
                         <tbody class="whitespace-nowrap">
 
-                            <?php foreach ($jeux_biblio as $game) :  ?>
+                            <?php foreach ($jeux_biblio as $gameBib) :  ?>
                                 <tr class="">
                                     <td class="pl-4 w-10">
                                         <form action="" method="POST">
-                                            <button name="btn_delete_from_biblio" value="<?= $game['id_lib']; ?>"><img src="images/icones/corbeille.png" alt="button delete game from biblio"></button>
+                                            <button name="btn_delete_from_biblio" value="<?= $gameBib['id_lib']; ?>"><img src="images/icones/corbeille.png" alt="button delete game from biblio"></button>
                                         </form>
                                     </td>
                                     <td class="p-4 text-sm text-center text-white">
-                                        <?php echo $game['game_title']; ?>
+                                        <?php echo $gameBib['game_title']; ?>
                                     </td>
-                                    <td class="p-4 text-sm text-center text-white">
-                                        <?php if ($game['status'] === "En cours") :  ?>
-                                            <span class="w-[68px] block text-center py-1 border border-green-500 text-green-600 rounded text-xs">En cours</span>
-                                        <?php elseif ($game['status'] === "Terminé") :  ?>
-                                            <span class="w-[68px] block text-center py-1 border border-blue-500 text-blue-600 rounded text-xs">Terminé</span>
-                                        <?php elseif ($game['status'] === "Abandonné") :  ?>
-                                            <span class="w-[68px] block text-center py-1 border border-orange-500 text-orange-600 rounded text-xs">Abandonné</span>
+                                    <td class="p-4 text-sm text-center text-white flex justify-center">
+                                        <?php if ($gameBib['status'] === "En cours") :  ?>
+                                            <button id="id_biblio" value="<?php echo ($gameBib['status']); ?>" onclick="editStatus(<?php echo ($gameBib['id_lib']); ?> )" class="w-[68px] block text-center py-1 border border-green-500 text-green-600 rounded text-xs"><?php echo ($gameBib['status']); ?></button>
+                                        <?php elseif ($gameBib['status'] === "Terminé") :  ?>
+                                            <button id="id_biblio" value="<?php echo ($gameBib['status']); ?>" onclick="editStatus(<?php echo ($gameBib['id_lib']); ?> )" class="w-[68px] block text-center py-1 border border-blue-500 text-blue-600 rounded text-xs"><?php echo ($gameBib['status']); ?></button>
+                                        <?php elseif ($gameBib['status'] === "Abandonné") :  ?>
+                                            <button id="id_biblio" value="<?php echo ($gameBib['status']); ?>" onclick="editStatus(<?php echo ($gameBib['id_lib']); ?> )" class="w-[68px] block text-center py-1 border border-orange-500 text-orange-600 rounded text-xs"><?php echo ($gameBib['status']); ?></button>
                                         <?php endif;  ?>
                                     </td>
                                     <td class="p-4 text-sm text-center text-white">
-                                        <?php echo $game['game_genre']; ?>
+                                        <?php echo $gameBib['game_genre']; ?>
                                     </td>
                                     <td class="p-4 text-sm text-center">
                                         <form action="" method="post">
-                                            <?php if (!empty($game['favoris_id'])) : ?>
-                                                <button name="delete_from_favoris" value="<?= $game['favoris_id'] ?>" class="text-red-600">&#10084;</button>
+                                            <?php if (!empty($gameBib['favoris_id'])) : ?>
+                                                <button name="delete_from_favoris" value="<?= $gameBib['favoris_id'] ?>" class="text-red-600">&#10084;</button>
                                             <?php else :  ?>
-                                                <button name="add_to_favoris" value="<?= $game['id_game'] ?>" class="text-white">&#10084;</button>
+                                                <button name="add_to_favoris" value="<?= $gameBib['id_game'] ?>" class="text-white">&#10084;</button>
                                             <?php endif; ?>
                                         </form>
                                     </td>
@@ -149,41 +168,47 @@ if (isset($_POST['add_to_favoris'])) {
                                             <img src='https://readymadeui.com/profile_4.webp'
                                                 class="w-7 h-7 rounded-full shrink-0" />
                                             <div class="ml-4">
-                                                <p class="text-sm text-white"><?php echo ($game['admin_full_name']); ?></p>
+                                                <p class="text-sm text-white"><?php echo ($gameBib['admin_full_name']); ?></p>
                                             </div>
                                         </div>
                                     </td>
                                     <td class="p-4 text-center">
-                                        <?php
-                                        $note = $game['note'];
-                                        $max_stars = 5;
+                                        <!-- <form action="" method="post"> -->
+                                        <button id="id_libra" value="<?php echo ($gameBib['note']); ?>" onclick="editNotation(<?= ($gameBib['id_game']); ?> )" class="">
+                                            <?php
+                                            $note = $gameBib['note'];
+                                            $max_stars = 5;
 
-                                        for ($i = 0; $i < $note; $i++) {
-                                            echo '<svg class="w-[18px] h-4 inline mr-1" viewBox="0 0 14 13" fill="none"
+                                            for ($i = 0; $i < $note; $i++) {
+                                                echo '<svg class="w-[18px] h-4 inline mr-1" viewBox="0 0 14 13" fill="none"
                                                             xmlns="http://www.w3.org/2000/svg">
                                                             <path
                                                                 d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z"
                                                                 fill="#facc15" />
                                                     </svg>';
-                                        }
+                                            }
 
-                                        for ($i = 0; $i < ($max_stars - $note); $i++) {
-                                            echo '<svg class="w-[18px] h-4 inline mr-1" viewBox="0 0 14 13" fill="none"
+                                            for ($i = 0; $i < ($max_stars - $note); $i++) {
+                                                echo '<svg class="w-[18px] h-4 inline mr-1" viewBox="0 0 14 13" fill="none"
                                                             xmlns="http://www.w3.org/2000/svg">
                                                             <path
                                                                 d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z"
                                                                 fill="#ffffff" />
                                                     </svg>';
-                                        }
-                                        ?>
+                                            }
+                                            ?>
+                                        </button>
+                                        <!-- </form> -->
                                     </td>
-                                    <td class="p-4">
-                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                            class="w-5 h-5 cursor-pointer fill-gray-500 rotate-90" viewBox="0 0 24 24">
-                                            <circle cx="12" cy="12" r="2" data-original="#000000" />
-                                            <circle cx="4" cy="12" r="2" data-original="#000000" />
-                                            <circle cx="20" cy="12" r="2" data-original="#000000" />
-                                        </svg>
+                                    <td class="p-4 flex justify-center">
+                                        <a href="details_game_User.php?id_game=<?= $gameBib["id_game"] ?>">
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                class="w-5 h-5 cursor-pointer fill-gray-500 rotate-90" viewBox="0 0 24 24">
+                                                <circle cx="12" cy="12" r="2" data-original="#000000" />
+                                                <circle cx="4" cy="12" r="2" data-original="#000000" />
+                                                <circle cx="20" cy="12" r="2" data-original="#000000" />
+                                            </svg>
+                                        </a>
                                     </td>
                                 </tr>
                             <?php endforeach;  ?>
@@ -196,8 +221,78 @@ if (isset($_POST['add_to_favoris'])) {
 
     </section>
 
+    <!-- modification de status           ************************************************************************ -->
+
+    <div id="statusModal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center hidden z-50">
+        <div class="bg-white rounded-lg shadow-lg max-w-md w-full p-6">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Modifier le rôle :</h2>
+
+            <form method="POST">
+                <input type="hidden" id="id_lib" name="id_lib" value="">
+
+                <div class="mb-4">
+                    <label for="status" class="block text-sm font-medium text-gray-600 mb-1">
+                        Nouveau rôle
+                    </label>
+                    <select id="status" name="status_update" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300">
+                        <option value="En cours">En cours</option>
+                        <option value="Terminé">Terminé</option>
+                        <option value="Abandonné">Abandonné</option>
+                    </select>
+                </div>
+
+
+                <div class="flex justify-end space-x-4">
+                    <button type="button" class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400" onclick="closeModal()">
+                        Annuler
+                    </button>
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                        Enregistrer
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- modification de note           ************************************************************************ -->
+    <div id="notationModal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center hidden z-50">
+        <div class="bg-white rounded-lg shadow-lg max-w-md w-full p-6">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Modifier le rôle :</h2>
+
+            <form method="POST">
+                <input type="hidden" id="id_jeu" name="id_jeu" value="">
+
+                <div class="mb-4">
+                    <label for="notation" class="block text-sm font-medium text-gray-600 mb-1">
+                        Nouveau notation
+                    </label>
+                    <select id="nota" name="nota_update" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+
+
+                <div class="flex justify-end space-x-4">
+                    <button type="button" class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400" onclick="closeModalN()">
+                        Annuler
+                    </button>
+                    <button name="notation_update" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                        Enregistrer
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
 </body>
 
 <script src="js/header.js"></script>
+<script src="js/status_note_form.js"></script>
 
 </html>

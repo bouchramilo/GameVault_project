@@ -32,6 +32,8 @@ CREATE TABLE personne (
 CREATE TABLE game (
     id_game INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(100) NOT NULL,
+    photo BLOB,
+    price FLOAT,
     genre VARCHAR(100) NOT NULL,
     id_admin INT NOT NULL,
     details VARCHAR(255),
@@ -47,7 +49,7 @@ CREATE TABLE library (
     id_lib INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     id_game INT NOT NULL,
     id_user INT NOT NULL,
-    personalNote INT DEFAULT 0 CHECK (personalNote >= 0 AND personalNote <= 5) ,
+    -- personalNote INT DEFAULT 0 CHECK (personalNote >= 0 AND personalNote <= 5) ,
     playTime TIMESTAMP  DEFAULT CURRENT_TIMESTAMP,
     status ENUM('En cours', 'Terminé', 'Abandonné') NOT NULL,
     FOREIGN KEY (id_game) REFERENCES game(id_game) ON DELETE CASCADE,
@@ -64,7 +66,8 @@ CREATE TABLE critique (
     content VARCHAR(255) NOT NULL,
     create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_game) REFERENCES game(id_game) ON DELETE CASCADE,
-    FOREIGN KEY (id_user) REFERENCES personne(id_user) ON DELETE CASCADE
+    FOREIGN KEY (id_user) REFERENCES personne(id_user) ON DELETE CASCADE,
+    UNIQUE (id_user, id_game)
 );
 
 
@@ -107,10 +110,10 @@ CREATE TABLE chat (
 
 CREATE TABLE historique (
     id_historique INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    id_game INT NOT NULL,
+    -- id_game INT NOT NULL,
     id_user INT NOT NULL,
     action VARCHAR(255),
     action_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_game) REFERENCES game(id_game) ON DELETE CASCADE,
+    -- FOREIGN KEY (id_game) REFERENCES game(id_game) ON DELETE CASCADE,
     FOREIGN KEY (id_user) REFERENCES personne(id_user) ON DELETE CASCADE
 );

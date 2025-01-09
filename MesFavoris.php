@@ -15,7 +15,7 @@ $Allfavoris = $favoris->showAllMesFavoris();
 
 if (isset($_POST['btn_delete_from_favor'])) {
     $delete = $favoris->deleteFromMesFavoris($_POST['btn_delete_from_favor']);
-    
+
     if ($delete > 0) {
         header('Location: mesFavoris.php');
     }
@@ -23,21 +23,6 @@ if (isset($_POST['btn_delete_from_favor'])) {
 
 
 ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 <!DOCTYPE html>
@@ -51,12 +36,6 @@ if (isset($_POST['btn_delete_from_favor'])) {
 </head>
 
 <body class="bg-[#f9dbbd]">
-    <!-- header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  -->
-
-    <!-- header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  -->
-
-
-
 
     <section class="relative h-max min-h-screen overflow-hidden pb-10">
         <video
@@ -66,7 +45,11 @@ if (isset($_POST['btn_delete_from_favor'])) {
         </video>
         <div class="relative z-10 flex flex-row gap-4 h-max text-center text-white bg-black bg-opacity-30">
             <div class="w-1/5 h-full">
+
+                <!-- header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  -->
                 <?php require_once "menu_user.php"; ?>
+                <!-- header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  -->
+
             </div>
             <!-- tableau ==================================================================================================================================================== -->
 
@@ -114,10 +97,9 @@ if (isset($_POST['btn_delete_from_favor'])) {
                                     </td>
                                     <td class=" p-4 text-center">
                                         <?php
-                                        $note = $favor['note']; // Note actuelle
-                                        $max_stars = 5; // Nombre total d'étoiles
+                                        $note = $favor['note'];
+                                        $max_stars = 5;
 
-                                        // Boucle pour les étoiles jaunes
                                         for ($i = 0; $i < $note; $i++) {
                                             echo '<svg class="w-[18px] h-4 inline mr-1" viewBox="0 0 14 13" fill="none"
                                                             xmlns="http://www.w3.org/2000/svg">
@@ -127,7 +109,6 @@ if (isset($_POST['btn_delete_from_favor'])) {
                                                     </svg>';
                                         }
 
-                                        // Boucle pour les étoiles blanches
                                         for ($i = 0; $i < ($max_stars - $note); $i++) {
                                             echo '<svg class="w-[18px] h-4 inline mr-1" viewBox="0 0 14 13" fill="none"
                                                             xmlns="http://www.w3.org/2000/svg">
@@ -140,35 +121,28 @@ if (isset($_POST['btn_delete_from_favor'])) {
                                     </td>
 
                                     <td class=" p-4 text-center flex justify-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                            class="w-5 h-5 cursor-pointer fill-gray-500 rotate-90" viewBox="0 0 24 24">
-                                            <circle cx="12" cy="12" r="2" data-original="#000000" />
-                                            <circle cx="4" cy="12" r="2" data-original="#000000" />
-                                            <circle cx="20" cy="12" r="2" data-original="#000000" />
-                                        </svg>
+                                        <a href="details_game_User.php?id_game=<?= $favor["id_game"] ?>">
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                class="w-5 h-5 cursor-pointer fill-gray-500 rotate-90" viewBox="0 0 24 24">
+                                                <circle cx="12" cy="12" r="2" data-original="#000000" />
+                                                <circle cx="4" cy="12" r="2" data-original="#000000" />
+                                                <circle cx="20" cy="12" r="2" data-original="#000000" />
+                                            </svg>
+                                        </a>
                                     </td>
                                 </tr>
                             <?php endforeach;  ?>
 
-
                         </tbody>
                     </table>
                 </div>
+
             </div>
         </div>
 
     </section>
 
 
-
-
-
-
-
-
-    <!-- footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer -->
-    <!-- <?php include "footer.php"; ?> -->
-    <!-- footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer -->
 </body>
 
 <script src="js/header.js"></script>
