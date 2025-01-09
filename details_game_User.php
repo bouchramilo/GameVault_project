@@ -1,15 +1,8 @@
 
 <?php
-require_once 'classes/dataBase.Class.php';
-require_once 'classes/historique.Class.php';
-require_once 'classes/game.Class.php';
-require_once 'classes/library.Class.php';
-require_once 'classes/favoris.Class.php';
-require_once 'classes/admin.Class.php';
-
-session_start();
-
-$admin = new admin();
+require 'classes/admin.Class.php';
+require 'classes/game.Class.php';
+$admin = new Admin();
 if(isset($_GET['id_game'])){
     echo 'azerty'.$_GET['id_game'];
     $game = $admin->detailsGame($_GET['id_game']);
@@ -30,6 +23,7 @@ if(isset($_GET['id_game'])){
             transform: scale(1.1);
         }
         
+        
         .screenshots {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
@@ -42,7 +36,7 @@ if(isset($_GET['id_game'])){
 </head>
 
 <body class="bg-gray-900 text-white font-sans ">
-    <?php include 'menu_user.php' ?>
+    <?php include 'menu_admin.php' ?>
     <!-- <header class="relative bg-cover bg-center h-72" style="background-image: url('images/game-banner.jpg');">
         <div class="absolute inset-0 bg-black bg-opacity-60 flex flex-col items-center justify-center text-[#da627d] text-center">
             <h1 class="text-4xl font-bold">Nom du Jeu : Micraft</h1>
@@ -62,7 +56,7 @@ if(isset($_GET['id_game'])){
                     <li><strong>Nom :</strong> <?= htmlspecialchars($game["title"]); ?></li>
                     <li><strong>Catégorie :</strong> <?= htmlspecialchars($game["genre"]) ;?></li>
                     <li><strong>Date de sortie :</strong> <?= htmlspecialchars($game["releaseDate"]) ?></li>
-                    <li><strong>Createur :</strong> <?= htmlspecialchars($game["id_admin"]) ?></li>
+                    <li><strong>Createur :</strong> <?= htmlspecialchars($game["first_name"])." ". htmlspecialchars($game["last_name"])?></li>
                     <li><strong>Prix :</strong> <?= htmlspecialchars($game["price"]) ?> DH</li>
                 </ul>
                 <p class="description mt-4">
@@ -74,7 +68,7 @@ if(isset($_GET['id_game'])){
                     <button class="bg-[#da627d] text-white py-2 px-4 rounded-md hover:bg-[#f9dbbd] hover:text-[#da627d]  transition">
                         Acheter le Jeu
                     </button>
-                    <button class="bg-[#da627d] text-white py-2 px-4 rounded-md hover:bg-[#f9dbbd] hover:text-[#da627d] transition">
+                    <button class=" ajout bg-[#da627d] text-white py-2 px-4 rounded-md hover:bg-[#f9dbbd] hover:text-[#da627d] transition">
                         Ajouter au bibliotheque
                     </button>
                 </div>

@@ -36,7 +36,7 @@ $games=$admin->afficherGames();
 
 
     <div class="font-[sans-serif] overflow-x-auto grid justify-end w-screen grid-cols-[84%]">
-        <h1 class="mx-6 text-3xl font-bold md:text-5xl text-start">Gestion des jeux</h1>
+        <h1 class="mx-6 mt-6 text-3xl font-bold md:text-5xl text-start">Gestion des jeux</h1>
         <div class="  font-[sans-serif] flex justify-end mx-[20px] my-[25px] gap-4">
             <button type="button" class=" addgame px-5 py-2.5 flex items-center justify-center rounded text-white text-sm tracking-wider font-medium border-none outline-none bg-[#da627d] hover:bg-[#f9dbbd] active:bg-[#da627d]">
             <span class="border-r border-white pr-3">Ajouter jeu</span>
