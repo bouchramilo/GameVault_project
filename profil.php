@@ -26,6 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $resultMessage = $profile->updateUser($firstName, $lastName, $email, $dateNaissance);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     if( isset($_FILES['upload-photo']) && is_uploaded_file($_FILES['upload-photo']['tmp_name']))
     {
@@ -48,6 +49,8 @@ echo "<script>
     </script>";
     exit;}
 =======
+=======
+>>>>>>> 8687629353c48c8b6df91f05bda98e5b3f87840d
     // echo "<script>
     //     alert('$resultMessage');
     //     window.location.href = 'profil.php';
@@ -83,6 +86,7 @@ if (!$user) {
 
 
 
+<<<<<<< HEAD
 <<<<<<< HEAD
         <div class="grid-cols-[84%] grid justify-end">
             <div class=" py-6">
@@ -151,11 +155,16 @@ if (!$user) {
                         <button class="w-full bg-yellow-500 text-white py-3 rounded hover:bg-yellow-400 transition">
                     ⚠️ Désactiver temporairement
 =======
+=======
+>>>>>>> 8687629353c48c8b6df91f05bda98e5b3f87840d
     <div class="grid-cols-[84%] grid justify-end">
         <div class=" py-6">
             <div class="container mx-auto flex justify-end items-center px-6">
                 <button id="darkmode" class="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700">
                     🌗 Mode Dark/Light
+<<<<<<< HEAD
+>>>>>>> 8687629353c48c8b6df91f05bda98e5b3f87840d
+=======
 >>>>>>> 8687629353c48c8b6df91f05bda98e5b3f87840d
                 </button>
             </div>
