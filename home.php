@@ -151,9 +151,9 @@ if (isset($_POST['btn_add_to_library'])) {
                                 <button name="btn_add_to_library" value="<?php echo $game['id_game']; ?>" class="h-8 w-20 text-white font-medium bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 rounded-sm shadow-lg">
                                     Ajouter
                                 </button>
-                                <button name="btn_show_more_details" value="<?php echo $game['id_game']; ?>" class="h-8 w-20 text-white font-medium bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 rounded-sm shadow-lg">
+                                <a href="details_game_User.php?id_game=<?= $game["id_game"] ?>" name="btn_show_more_details" value="<?php echo $game['id_game']; ?>" class="flex justify-center items-center h-8 w-20 text-white font-medium bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 rounded-sm shadow-lg">
                                     Détails
-                                </button>
+                                </a>
                             </form>
                         </div>
 

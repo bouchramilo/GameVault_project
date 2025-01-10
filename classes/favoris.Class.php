@@ -63,5 +63,16 @@ class favoris extends dataBase
         }
 
     }
-    public function nbrFavorisForGame(){}
+    public function nbrFavorisForGame($id_jeu){
+        try {
+            $sql = "SELECT COUNT(*) AS nbrFavorisForAGame  FROM favoris WHERE id_game = :id_game;";
+            $pdo = $this->getConnextion();
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute(['id_game' => $id_jeu]);
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            return "Erreur lors de la récupération des favoris : " . $e->getMessage();
+        }
+    }
 }

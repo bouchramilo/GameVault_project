@@ -223,9 +223,9 @@ public function alltermine() {
 
 
 
-public function addScreenshot( $id_game,$descri,$photo,$mimi)
+public function addScreenshot($id_game,$descri,$photo,$mimi)
 {
-    $query = "INSERT INTO screenshots (id_game,descri,photo,mimi) values (:id_game,:descri:photo,:mimi)";
+    $query = "INSERT INTO screenshots (id_game,descri,photo,mimi) values (:id_game,:descri,:photo,:mimi)";
     $pdo = $this->getConnextion();
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(':id_game', $id_game);
@@ -233,7 +233,7 @@ public function addScreenshot( $id_game,$descri,$photo,$mimi)
     $stmt->bindParam(':photo', $photo);
     $stmt->bindParam(':mimi', $mimi);
     if ($stmt->execute()) {
-        header("Location: details_game.php?id_game='$id_game'"); 
+        header("Location: details_game.php?id_game=$id_game"); 
 
         exit();
     } else {

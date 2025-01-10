@@ -6,18 +6,12 @@ require_once 'classes/historique.Class.php';
 require_once 'classes/game.Class.php';
 require_once 'classes/personne.Class.php';
 
-// session_start();
 $user = new personne();
 
 if (isset($_POST['deconnexion'])) {
     $user->logout();
 }
 
-// if (isset($_SESSION["ID_user"])) {
-//     echo $_SESSION["ID_user"];
-// } else {
-//     echo "Aucun utilisateur connecté.";
-// }
 ?>
 
 
@@ -30,7 +24,7 @@ if (isset($_POST['deconnexion'])) {
 <nav
     class="bg-[#09090a] bg-opacity-75 shadow-lg h-full fixed top-0 left-0 w-1/5 py-6 px-6 font-[sans-serif] flex flex-col gap-10 overflow-auto">
 
-    <div class="flex flex-wrap items-center cursor-pointer">
+    <a href="profil.php" class="flex flex-wrap items-center cursor-pointer">
         <div class="relative">
             <img src='images/<?= $user->getPhoto(); ?>'
                 class="w-12 h-12 rounded-full border-white" />
@@ -42,7 +36,7 @@ if (isset($_POST['deconnexion'])) {
             <p class="text-sm text-gray-300"><?= $user->getNameP(); ?></p>
             <p class="text-xs text-gray-400 mt-0.5"><?= $user->getRole(); ?></p>
         </div>
-    </div>
+    </a>
 
     <ul class="space-y-10 flex-1 mt-10 mb-10">
         <li>
