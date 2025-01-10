@@ -29,11 +29,6 @@ $historiques = $historic->consulter();
 </head>
 
 <body class="bg-[#f9dbbd]">
-    <!-- header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  -->
-
-    <!-- header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  -->
-
-
 
 
     <section class="relative h-max min-h-screen overflow-hidden pb-10">
@@ -96,10 +91,6 @@ $historiques = $historic->consulter();
 
 
 
-
-    <!-- footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer -->
-    <!-- <?php include "footer.php"; ?> -->
-    <!-- footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer  footer -->
 </body>
 
 <script src="js/header.js"></script>

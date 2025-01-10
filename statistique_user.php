@@ -5,21 +5,14 @@ require_once 'classes/historique.Class.php';
 require_once 'classes/game.Class.php';
 require_once 'classes/personne.Class.php';
 require_once 'classes/favoris.Class.php';
+require_once 'classes/user.Class.php';
 
 session_start();
 
 
-$favoris = new favoris();
-$Allfavoris = $favoris->showAllMesFavoris();
+$utilisateur = new user();
 
-
-if (isset($_POST['btn_delete_from_favor'])) {
-    $delete = $favoris->deleteFromMesFavoris($_POST['btn_delete_from_favor']);
-
-    if ($delete > 0) {
-        header('Location: mesFavoris.php');
-    }
-}
+$statistique = $utilisateur->getStatistique();
 
 
 ?>
@@ -55,31 +48,74 @@ if (isset($_POST['btn_delete_from_favor'])) {
 
             <div class="w-4/5 h-full pr-4">
                 <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
+
+
+                <div class="font-[sans-serif] overflow-x-auto h-full w-full flex flex-col gap-14 pt-20">
+                    <h1 class="text-3xl font-bold md:text-5xl text-start">Statistique</h1>
+
+                    <div class="grid grid-cols-2 gap-2 p-4 min-w-full  h-max bg-opacity-80">
+
+                        <div class="h-64 w-full bg-opacity-80 border-none rounded-2xl flex flex-col gap-2 p-2 justify-center items-center bg-black">
+                            <img src="images/controle-du-jeu.png" alt="statistique" class="w-10 ">
+                            <p> Game dans bibliothèque</p>
+                            <p class="font-bold text-3xl text-gray-500"><?= $statistique['totalGames'] ?></p>
+                        </div>
+                        <div class="h-64 w-full bg-opacity-80 border-none rounded-2xl flex flex-col gap-2 p-2 justify-center items-center bg-black">
+                            <img src="images/icons8-heart-50.png" alt="statistique" class="w-10 ">
+                            <p> Game favoris</p>
+                            <p class="font-bold text-3xl text-gray-500"><?= $statistique['totalFavorites'] ?></p>
+                        </div>
+                        <div class="h-64 w-full bg-opacity-80 border-none rounded-2xl flex flex-col gap-2 p-2 justify-center items-center bg-black">
+                            <img src="images/icones/star.png" alt="statistique" class="w-10 ">
+                            <p> Game noté</p>
+                            <p class="font-bold text-3xl text-gray-500"><?= $statistique['totalNota'] ?></p>
+                        </div>
+                        <div class="h-64 w-full bg-opacity-80 border-none rounded-2xl flex flex-col gap-2 p-2 justify-center items-center bg-black">
+                            <img src="images/icones/time.png" alt="statistique" class="w-10 ">
+                            <p> Time passé</p>
+                            <p class="font-bold text-3xl text-gray-500"><?= $statistique['totalPlayTime'] ?></p>
+                        </div>
+
+                    </div>
+                    <!-- <div class="flex gap-1 p-1 min-w-full  h-max bg-black bg-opacity-80">
+
+                        <div class="h-max w-full border-none rounded-2xl flex flex-col gap-2 p-2 justify-center items-center bg-gray-800">
+                            <canvas></canvas>
+                        </div>
+                        <div class="h-max w-full border-none rounded-2xl flex flex-col gap-2 p-2 justify-center items-center bg-gray-800">
+                            <canvas></canvas>
+                        </div>
+                        <div class="h-max w-1/4 border-none rounded-2xl flex flex-col gap-2 p-2 justify-center items-center bg-gray-800">
+                            <canvas></canvas>
+                        </div>
+                        <div class="h-max w-1/4 border-none rounded-2xl flex flex-col gap-2 p-2 justify-center items-center bg-gray-800">
+                            <canvas></canvas>
+                        </div>
+
+                    </div> -->
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
             </div>
         </div>

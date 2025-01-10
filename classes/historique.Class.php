@@ -14,7 +14,7 @@ class Historique extends Database
     public function consulter()
     {
         try {
-            $sql = "SELECT * FROM historique WHERE id_user = :id_user;";
+            $sql = "SELECT * FROM historique WHERE id_user = :id_user ORDER BY action_at DESC;";
             $pdo = $this->getConnextion();
             $stmt = $pdo->prepare($sql);
             $stmt->execute(['id_user' => $_SESSION['ID_user']]);

@@ -1,14 +1,37 @@
-
 <?php
 require 'classes/admin.Class.php';
 require 'classes/game.Class.php';
 $admin = new Admin();
-if(isset($_GET['id_game'])){
-    echo 'azerty'.$_GET['id_game'];
+if (isset($_GET['id_game'])) {
+    echo 'azerty' . $_GET['id_game'];
     $game = $admin->detailsGame($_GET['id_game']);
 }
 
 ?>
+
+
+
+<?php
+require_once 'classes/critique.Class.php';
+require_once 'classes/user.Class.php';
+
+$critic = new critique();
+$AllCritique = $critic->getAllCritiquesForGame($_GET['id_game']);
+
+$utilisateur = new user();
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btn_delete_critique'])) {
+    $critique = $critic->deleteCritique($_POST['btn_delete_critique']);
+
+    if($critique){
+        $id = $_POST['ID_GAME'];
+        header("Location: details_game.php?id_game=$id ");
+    }
+}
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -22,12 +45,12 @@ if(isset($_GET['id_game'])){
             border: 3px solid#da627d;
             transform: scale(1.1);
         }
-        
-        
+
+
         .screenshots {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        
+
         .screenshots:hover {
             transform: scale(1.1);
             box-shadow: 0 5px 10px rgba(166, 47, 170, 0.5);
@@ -54,13 +77,13 @@ if(isset($_GET['id_game'])){
                 <h2 class="text-3xl font-bold text-[#da627d] mb-4">Détails du Jeu</h2>
                 <ul class="space-y-2">
                     <li><strong>Nom :</strong> <?= htmlspecialchars($game["title"]); ?></li>
-                    <li><strong>Catégorie :</strong> <?= htmlspecialchars($game["genre"]) ;?></li>
+                    <li><strong>Catégorie :</strong> <?= htmlspecialchars($game["genre"]); ?></li>
                     <li><strong>Date de sortie :</strong> <?= htmlspecialchars($game["releaseDate"]) ?></li>
-                    <li><strong>Createur :</strong> <?= htmlspecialchars($game["first_name"])." ". htmlspecialchars($game["last_name"])?></li>
+                    <li><strong>Createur :</strong> <?= htmlspecialchars($game["first_name"]) . " " . htmlspecialchars($game["last_name"]) ?></li>
                     <li><strong>Prix :</strong> <?= htmlspecialchars($game["price"]) ?> DH</li>
                 </ul>
                 <p class="description mt-4">
-                <?= htmlspecialchars($game["details"]) ?>                </p>
+                    <?= htmlspecialchars($game["details"]) ?> </p>
                 <div class="mt-6 flex gap-4">
                     <button class="bg-[#da627d] text-white py-2 px-4 rounded-md hover:bg-[#f9dbbd] hover:text-[#da627d]  transition">
                         Jouer
@@ -99,6 +122,56 @@ if(isset($_GET['id_game'])){
                 </div>
             </div>
         </section>
+
+
+        <!-- critique -->
+        <section class="mt-12 text-center ">
+            <h2 class="text-3xl font-bold text-[#da627d] mb-6">Avis des Joueurs : </h2>
+            <div class="flex flex-col items-center gap-6 min-h-96 pb-6">
+                <!-- <div id="reviews-container" class="mt-6 space-y-4"> -->
+                <!-- <h3 class="text-xl font-semibold text-gray-800">Avis des Joueurs :</h3> -->
+                <!-- <form id="" method="post" class="space-y-4 w-3/4">
+                    <div>
+                        <label for="comment" class="block text-gray-300 text-start mb-2 font-medium">Ajouter votre critique</label>
+                        <textarea
+                            <?php if ($isBanner['banner'] === 1) {
+                                echo 'disabled';
+                            } ?>
+                            id="comment"
+                            name="critique"
+                            rows="4"
+                            class="w-full bg-gray-700 resize-none border-0 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#da627d]"
+                            placeholder="Votre avis sur le jeu..."
+                            required></textarea>
+                    </div>
+
+
+                    <button
+                        name="add_critique" <?php if ($isBanner['banner'] === 1) {
+                                                echo 'disabled';
+                                            } ?>
+                        class="w-2/4 bg-[#da627d] text-white py-2 px-4 rounded-md hover:bg-[#f9dbbd] hover:text-[#da627d] transition">
+                        Soumettre
+                    </button>
+                </form> -->
+                <?php foreach ($AllCritique as $critique): ?>
+                    <div class="bg-gray-700 rounded-lg p-4 shadow-md w-3/4">
+                        <div class="text-gray-300 flex justify-between gap-6 h-10 w-full ">
+                            <div class="flex gap-4">
+                                <img src="images/<?= $critique['photo'] ?>" alt="" class="w-10 border-none rounded-full">
+                                <span class="font-bold"><?= $critique['user_full_name'] ?></span>
+                                <span><?= $critique['create_at'] ?></span>
+                            </div>
+                            <form action="" method="post"><input type="hidden" name="ID_GAME" value="<?= $critique['id_game'] ?>"><button name="btn_delete_critique" value="<?= $critique['id_critique'] ?>" class="w-max h-max p-2 border-none rounded-xl bg-red-600">delete</button></form>
+                        </div>
+                        <p class="text-gray-300 pl-12 text-start"><?= $critique['content'] ?></p>
+                    </div>
+                <?php endforeach; ?>
+                <!-- </div> -->
+            </div>
+        </section>
+
+
     </main>
 
     <script>

@@ -54,6 +54,16 @@ if (isset($_POST['notation_update'])) {
         header('Location: myLibrary.php');
     }
 }
+// update status game from library : 
+if (isset($_POST['btn_time_update'])) {
+    $updateLibNota = $biblio->updateTimeGame($_POST['id_jeu_t'], $_POST['time_update']);
+
+    echo "<script> alert('$updateLibNota');</script>";
+
+    if ($updateLibNota > 0) {
+        header('Location: myLibrary.php');
+    }
+}
 
 
 
@@ -112,6 +122,9 @@ if (isset($_POST['notation_update'])) {
                                     Favoris
                                 </th>
                                 <th class="p-4 text-center text-sm font-semibold text-white">
+                                    Time play
+                                </th>
+                                <th class="p-4 text-center text-sm font-semibold text-white">
                                     Créateur
                                 </th>
                                 <th class="p-4 text-center text-sm font-semibold text-white">
@@ -162,6 +175,13 @@ if (isset($_POST['notation_update'])) {
                                                 <button name="add_to_favoris" value="<?= $gameBib['id_game'] ?>" class="text-white">&#10084;</button>
                                             <?php endif; ?>
                                         </form>
+                                    </td>
+                                    <td class="p-4 text-sm text-center">
+                                        <!-- <form action="" method="post"> -->
+                                        <button id="id_biblio_t" onclick="editTime(<?= ($gameBib['id_game']); ?> )" value="<?php echo $gameBib['Time_jouer'] ?>" class=""><?php echo $gameBib['Time_jouer'] ?></button>
+                                        <!-- <button id="id_libra" value="<?php echo ($gameBib['note']); ?>" onclick="editNotation(<?= ($gameBib['id_game']); ?> )" class=""> -->
+
+                                        <!-- </form> -->
                                     </td>
                                     <td class="p-4 text-sm text-center text-white">
                                         <div class="flex items-center cursor-pointer">
@@ -289,6 +309,51 @@ if (isset($_POST['notation_update'])) {
             </form>
         </div>
     </div>
+
+
+    <!-- modification de time jouer           ************************************************************************ -->
+    <div id="timeModal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center hidden z-50">
+        <div class="bg-white rounded-lg shadow-lg max-w-md w-full p-6">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Modifier le rôle :</h2>
+
+            <form method="POST">
+                <input type="hidden" id="id_jeu_t" name="id_jeu_t" value="">
+
+                <div class="mb-4">
+                    <label for="time" class="block text-sm font-medium text-gray-600 mb-1">
+                        Nouveau time
+                    </label>
+                    <input type="time" id="time" name="time_update" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300">
+
+                </div>
+
+
+                <div class="flex justify-end space-x-4">
+                    <button type="button" class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400" onclick="closeModalT()">
+                        Annuler
+                    </button>
+                    <button name="btn_time_update" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                        Enregistrer
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <script>
+        // for status
+        function editTime(id) {
+            document.getElementById('id_jeu_t').value = id;
+            document.getElementById('time').value = document.getElementById('id_biblio_t').value;
+
+            document.getElementById('timeModal').classList.remove('hidden');
+        }
+
+        function closeModalT() {
+            document.getElementById('timeModal').classList.add('hidden');
+        }
+    </script>
 
 </body>
 

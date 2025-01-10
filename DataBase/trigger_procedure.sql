@@ -1,5 +1,6 @@
 
 
+show tables ;
 
 -- pour afficher les tables : 
 call AfficherTables();
@@ -7,45 +8,6 @@ call AfficherTables();
 -- sypprimer les tables :
 
 call supprimerTables();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
--- trigger qui vérifier si l'insertion est le premier dans la table personne : si oui, le personne doit inserer comme un admin, sinon, le personne inserer comme les données de formulaire : 
-DELIMITER $$
-
-CREATE TRIGGER before_insert_personne
-BEFORE INSERT ON personne
-FOR EACH ROW
-BEGIN
-    IF (SELECT COUNT(*) FROM personne) = 0 THEN
-        SET NEW.role = 'admin';
-    END IF;
-END$$
-
-DELIMITER ;
-
 
 
 
@@ -110,5 +72,3 @@ DELIMITER ;
 
 call supprimerTables();
 
-
-show tables ;

@@ -12,10 +12,10 @@ session_start();
 $critic = new critique();
 if (isset($_POST['add_critique'])) {
   // echo 'azerty'.$_GET['id_game'];
-  $critique = $critic->addCritique(1, $_POST['critique']);
+  $critique = $critic->addCritique(3, $_POST['critique']);
 }
 
-$AllCritique = $critic->getAllCritiquesForGame(1);
+$AllCritique = $critic->getAllCritiquesForGame(3);
 
 ?>
 

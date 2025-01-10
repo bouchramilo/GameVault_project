@@ -13,9 +13,29 @@ class library extends dataBase
     private string $personalNote;
     private string $status;
     private DateTime $playTime;
-    
+
     // fonction pour ajouter un game à la bibliothèque d'un user +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public function updateStatusGame($id_libra, $newStatus) {
+    public function updateTimeGame($id_libra, $newtime)
+    {
+        $pdo = $this->getConnextion();
+        try {
+
+            $sql = "UPDATE library SET playTime = :newtime WHERE id_lib = :id_lib";
+            // $pdo->query($sql);
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindParam(':newtime', $newtime);
+            $stmt->bindParam(':id_lib', $id_libra);
+            $stmt->execute();
+            return "Le   time game a été modifier avec succès.";
+        } catch (PDOException $e) {
+            return "Erreur : " . $e->getMessage();
+        }
+    }
+
+
+    // fonction pour ajouter un game à la bibliothèque d'un user +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    public function updateStatusGame($id_libra, $newStatus)
+    {
         $pdo = $this->getConnextion();
         try {
 
@@ -30,12 +50,12 @@ class library extends dataBase
             return "Erreur : " . $e->getMessage();
         }
     }
-    
+
     // fonction pour ajouter un game à la bibliothèque d'un user +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public function updateNoteGame($id_jeu, $newNote) {
+    public function updateNoteGame($id_jeu, $newNote)
+    {
         $pdo = $this->getConnextion(); // Assurez-vous que cette méthode est correctement définie dans votre classe.
         try {
-            // Vérification de l'existence d'une note pour ce jeu et cet utilisateur
             $sqlSelect = "SELECT COUNT(*) as count FROM notation WHERE id_game = :id_game AND id_user = :id_user";
             $stmtSelect = $pdo->prepare($sqlSelect);
             $stmtSelect->execute([
@@ -43,9 +63,8 @@ class library extends dataBase
                 ':id_user' => $_SESSION['ID_user']
             ]);
             $result = $stmtSelect->fetch(PDO::FETCH_ASSOC);
-    
+
             if ($result['count'] > 0) {
-                // Mise à jour de la note existante
                 $sqlUpdate = "UPDATE notation SET note = :newNote WHERE id_game = :id_game AND id_user = :id_user";
                 $stmtUpdate = $pdo->prepare($sqlUpdate);
                 $stmtUpdate->execute([
@@ -55,7 +74,6 @@ class library extends dataBase
                 ]);
                 return "La notation du jeu a été mise à jour avec succès.";
             } else {
-                // Insertion d'une nouvelle note
                 $sqlInsert = "INSERT INTO notation (id_user, id_game, note) VALUES (:id_user, :id_game, :note)";
                 $stmtInsert = $pdo->prepare($sqlInsert);
                 $stmtInsert->execute([
@@ -66,11 +84,10 @@ class library extends dataBase
                 return "Une nouvelle notation a été ajoutée avec succès.";
             }
         } catch (PDOException $e) {
-            // Gestion des erreurs PDO
             return "Erreur lors de la mise à jour ou de l'insertion : " . $e->getMessage();
         }
     }
-    
+
 
     // fonction pour ajouter un game à la bibliothèque d'un user +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public function addGameToLibrary($id_jeu)
@@ -115,6 +132,7 @@ class library extends dataBase
                     g.id_game AS game_id, 
                     g.title AS game_title, 
                     g.genre AS game_genre, 
+                    lb.playTime AS Time_jouer,
                     g.releaseDate AS game_release_date, 
                     g.averageScore AS game_average_score,
                     CONCAT(p.first_name, ' ', p.last_name) AS admin_full_name,

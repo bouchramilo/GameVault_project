@@ -37,6 +37,7 @@ CREATE TABLE game (
     genre VARCHAR(100) NOT NULL,
     id_admin INT NOT NULL,
     details VARCHAR(255),
+    time_play TIME DEFAULT '00:00:00',
     releaseDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     screenshots LONGBLOB,
     averageScore FLOAT DEFAULT 0,
@@ -50,7 +51,7 @@ CREATE TABLE library (
     id_game INT NOT NULL,
     id_user INT NOT NULL,
     -- personalNote INT DEFAULT 0 CHECK (personalNote >= 0 AND personalNote <= 5) ,
-    playTime TIMESTAMP  DEFAULT CURRENT_TIMESTAMP,
+    playTime TIME DEFAULT '00:00:00',
     status ENUM('En cours', 'Terminé', 'Abandonné') NOT NULL,
     FOREIGN KEY (id_game) REFERENCES game(id_game) ON DELETE CASCADE,
     FOREIGN KEY (id_user) REFERENCES personne(id_user) ON DELETE CASCADE,
@@ -117,3 +118,18 @@ CREATE TABLE historique (
     -- FOREIGN KEY (id_game) REFERENCES game(id_game) ON DELETE CASCADE,
     FOREIGN KEY (id_user) REFERENCES personne(id_user) ON DELETE CASCADE
 );
+
+
+-- trigger qui vérifier si l'insertion est le premier dans la table personne : si oui, le personne doit inserer comme un admin, sinon, le personne inserer comme les données de formulaire : 
+DELIMITER $$
+
+CREATE TRIGGER before_insert_personne
+BEFORE INSERT ON personne
+FOR EACH ROW
+BEGIN
+    IF (SELECT COUNT(*) FROM personne) = 0 THEN
+        SET NEW.role = 'admin';
+    END IF;
+END$$
+
+DELIMITER ;

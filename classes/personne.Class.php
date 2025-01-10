@@ -120,7 +120,7 @@ class Personne extends Database
             return "Erreur lors de récupération du role : " . $e->getMessage();
         }
     }
-    
+
     // fonction qui retourne le nom de user (admin/user) : +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public function getNameP()
     {
@@ -135,7 +135,7 @@ class Personne extends Database
             return "Erreur lors de récupération du full_name : " . $e->getMessage();
         }
     }
-    
+
     // fonction qui retourne photo de user (admin/user) : +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public function getPhoto()
     {
@@ -153,7 +153,8 @@ class Personne extends Database
 
 
     // fonction qui retourne user infos_______ : +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public function getUser() {
+    public function getUser()
+    {
         $query = "SELECT id_user, first_name, last_name, email, create_at, date_naissance FROM personne WHERE id_user = :id_user";
         $pdo = $this->getConnextion();
         $statement = $pdo->prepare($query);
@@ -161,9 +162,10 @@ class Personne extends Database
         $statement->execute();
         return $statement->fetch(PDO::FETCH_ASSOC);
     }
-    // 
-    
-    public function updateUser($first_name, $last_name, $email, $date_naissance) {
+
+    // fonction updateUser : +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++    
+    public function updateUser($first_name, $last_name, $email, $date_naissance)
+    {
         try {
             $query = "UPDATE personne SET first_name = :first_name, last_name = :last_name, email = :email, date_naissance = :date_naissance WHERE id_user = :id_user";
             $pdo = $this->getConnextion();
@@ -183,16 +185,18 @@ class Personne extends Database
             return "Erreur : " . $e->getMessage();
         }
     }
-    
-    public function getProfile() {
+
+    // fonction getProfile : +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    public function getProfile()
+    {
         $query = "SELECT photo FROM personne WHERE id_user = :id_user";
         $pdo = $this->getConnextion();
         $stmt = $pdo->prepare($query);
-        $stmt->bindParam(':id_user', $_SESSION['ID_user']);  
+        $stmt->bindParam(':id_user', $_SESSION['ID_user']);
         $stmt->execute();
-    
+
         $image = $stmt->fetch(PDO::FETCH_ASSOC);
-    
+
         if ($image) {
             $profilePicture = $image['photo'];
             $base64Image = base64_encode($profilePicture);
@@ -203,11 +207,4 @@ class Personne extends Database
     }
 
     public function deleteProfile() {}
-    // public function addFavorite() {}
-    // public function addGameToLib() {}
-    // public function addNote() {}
-    // public function deleteGameFromLib() {}
-    // public function showStatistique() {}
-    // public function discuter() {}
-    // public function getHistory() {}
 }

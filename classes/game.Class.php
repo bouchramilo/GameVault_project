@@ -13,13 +13,6 @@ class Game extends Database
     private float $averageScore;
     private string $screenshots;
 
-
-    public function addGame() {}
-    public function deleteGame() {}
-    public function getDetails() {}
-    public function updateGame() {}
-    public function updateStatus() {}
-
     // fonction qui retourne toutes les game dans la base de données : +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public function getAllGame()
     {
@@ -46,5 +39,18 @@ class Game extends Database
 
         $query = $pdo->query($sql);
         return $query->fetchAll();
+    }
+
+    public function addGame() {
+        // dans la class admin 
+    }
+    public function deleteGame() {
+        // dans la class admin 
+    }
+    public function getDetails() {
+        // dans la class admin 
+    }
+    public function updateGame() {
+        // dans la class admin 
     }
 }
