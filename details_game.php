@@ -17,7 +17,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if (isset($_POST['mymessage'])) {
    $chat->sendMessage($_GET['id_game'],$_POST['mymessage']);
 
-  }}
+  }
+    if( isset($_FILES['screenImage']) && is_uploaded_file($_FILES['screenImage']['tmp_name']) && isset($_POST['screenCaption']))
+    {
+         
+     $image = file_get_contents($_FILES['screenImage']['tmp_name']);
+     $imagePath = $_FILES['screenImage']['tmp_name'];
+     $imagetype = getimagesize($imagePath);
+     if ($imagetype === false) {
+         echo "Ce fichier n est pas une image ";
+         exit;
+     }
+             $mimi = $imagetype['mime'];
+     $image = base64_encode($image);
+    $admin->addScreenshot( $_GET['id_game'],$_POST['screenCaption'],$image,$mimi);}
+  
+
+    }
+
  $chats= $chat->getMessage($_GET['id_game']);
 
 ?>
@@ -73,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <li><strong>Prix :</strong> <?= htmlspecialchars($game["price"]) ?> DH</li>
                 </ul>
                 <p class="description mt-4">
-                <?= htmlspecialchars($game["details"]) ?>                </p>
+                <?= htmlspecialchars($game["details"])?>                </p>
                 <div class="mt-6 flex gap-4">
                     <button class="bg-[#da627d] text-white py-2 px-4 rounded-md hover:bg-[#f9dbbd] hover:text-[#da627d]  transition">
                         Jouer
@@ -83,6 +100,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </button>
                     <button class=" ajout bg-[#da627d] text-white py-2 px-4 rounded-md hover:bg-[#f9dbbd] hover:text-[#da627d] transition">
                         Ajouter au bibliotheque
+                    </button>
+                    <button class=" ajout bg-[#da627d] text-white py-2 px-4 rounded-md hover:bg-[#f9dbbd] hover:text-[#da627d] transition">
+                        Ajouter une screen
                     </button>
                 </div>
             </div>
@@ -98,7 +118,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </p>
                 </div>
 
-                <div class="flex gap-6 overflow-x-auto  p-4">
+
+                <div class="flex gap-6 overflow-x-auto p-4">
+    <?php foreach ($screenshots as $screenshot): ?>
+        <img class="screenshots w-24 h-15 object-[length:100%_100%] rounded-md hover:scale-105 transition cursor-pointer"
+             src="<?= htmlspecialchars($screenshot['image_path']) ?>"
+             alt="<?= htmlspecialchars($screenshot['caption']) ?>"
+             data-caption="<?= htmlspecialchars($screenshot['caption']) ?>">
+    <?php endforeach; ?>
+</div>
+
+                <!-- <div class="flex gap-6 overflow-x-auto  p-4">
                     <img class="screenshots w-24 h-15 object-[length:100%_100%] rounded-md hover:scale-105 transition cursor-pointer" src="images/Paner.jpg" alt="" data-caption="Decrire 1 er Scren">
                     <img class="screenshots w-24 h-15 object-[length:100%_100%] rounded-md hover:scale-105 transition cursor-pointer" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1928870/ss_4dba4e59eabcf5c3631e5c28b52ffcae46d3bad8.600x338.jpg?t=1717003087"
                         alt="" data-caption="Decrire 2 eme Screen">
@@ -109,27 +139,89 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         data-caption="Decrire 5 eme Screen">
                     <img class="screenshots w-24 h-15 object-[length:100%_100%] rounded-md hover:scale-105 transition cursor-pointer" src="images/Minecraft.jpg" alt="" data-caption="Decrire 6 eme Screen">
 
-                </div>
+                </div> -->
             </div>
         </section>
-        <body class="bg-gray-100 min-h-screen flex items-center justify-center">
 
-  <!-- Chat Form -->
-  <div class="w-full max-w-md bg-white shadow-md rounded-lg p-4">
+
+
+
+
+
+
+
+<!-- Modal pour ajouter une screen -->
+<div id="addScreenModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg p-6 w-full max-w-lg">
+        <h3 class="text-2xl font-bold text-[#da627d] mb-4">Ajouter une capture d'écran</h3>
+        <form id="addScreenForm" action="" method="POST" enctype="multipart/form-data">
+            <div class="mb-4">
+                <label for="screenImage" class="block text-gray-700 font-semibold">Capture d'écran</label>
+                <input type="file" id="screenImage" name="screenImage" accept="image/*" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div class="mb-4">
+                <label for="screenCaption" class="block text-gray-700 font-semibold">Description</label>
+                <textarea id="screenCaption" name="screenCaption" rows="3" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+            </div>
+            <div class="flex justify-end gap-4">
+                <button type="button" id="closeModal" class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition">Annuler</button>
+                <button type="submit" class="bg-[#da627d] text-white px-4 py-2 rounded-lg hover:bg-[#f9dbbd] hover:text-[#da627d] transition">Ajouter</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="w-full max-w-md bg-white shadow-md rounded-lg p-4">
     <div id="chat-box" class="h-64 text-black overflow-y-auto border border-gray-300 rounded-lg p-4 mb-4 bg-gray-50">
-    <?php if (count($chats) > 0): ?>
-    <?php foreach ($chats as $chat): ?>
-        <div class="mb-4">
-                    <div class="flex items-center space-x-2 mb-1">
-                    <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm font-bold">
-      <p class="text-sm font-semibold text-gray-700"> <?= htmlspecialchars($_SESSION["ID_user"]) ?></p>
-      </div>
-      <div class="ml-10">
-      <p class="bg-blue-100 text-gray-800 rounded-lg px-3 py-2 text-sm mb-1"> <?= htmlspecialchars($chat["message_chat"]) ?> </p>
-      <span class="text-xs text-gray-500"> <?= htmlspecialchars($chat["massage_at"]) ?></span>
-      </div>
-      </div>
-      <?php endforeach; ?>
+        <?php if (count($chats) > 0): ?>
+            <?php foreach ($chats as $chat): ?>
+            <div class="mb-4">
+                <div class="flex items-center space-x-2 mb-1">
+                    <?php if($_SESSION["ID_user"] === $chat["id_user"] ):  ?>
+                        <div class="flex justify-start mb-4">
+                        <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm font-bold">
+                            <?= htmlspecialchars($_SESSION["ID_user"]) ?>
+                        </div>
+                        <div class="ml-2">
+                            <p class="bg-blue-100 text-gray-800 rounded-lg px-3 py-2 text-sm mb-1">
+                                <?= htmlspecialchars($chat["message_chat"]) ?>
+                            </p>
+                            <span class="text-xs text-gray-500">
+                                <?= htmlspecialchars($chat["massage_at"]) ?>
+                            </span>
+                        </div>
+                    </div>
+                    <?php else:  ?>
+                        <div class="flex justify-end mb-4">
+                        <div class="mr-2 text-right">
+                            <p class="bg-gray-100 text-gray-800 rounded-lg px-3 py-2 text-sm mb-1">
+                                <?= htmlspecialchars($chat["message_chat"]) ?>
+                            </p>
+                            <span class="text-xs text-gray-500">
+                                <?= htmlspecialchars($chat["massage_at"]) ?>
+                            </span>
+                        </div>
+                        <div class="w-8 h-8 rounded-full bg-gray-500 flex items-center justify-center text-white text-sm font-bold">
+                            <?= htmlspecialchars($chat["id_user"]) ?>
+                        </div>
+                    </div>
+                    <?php endif; ?>
+      
+                </div>
+            </div>
+      
+         <?php endforeach; ?>
     <?php else: ?>
         <div class="text-center text-gray-500 italic">
       <h4> Soiez le 1 ere dans le chat </h4>
@@ -169,6 +261,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 screenshot.classList.add('active');
             });
         });
+        document.querySelectorAll('.ajout').forEach(button => {
+        button.addEventListener('click', () => {
+            document.getElementById('addScreenModal').classList.remove('hidden');
+        });
+    });
+
+    document.getElementById('closeModal').addEventListener('click', () => {
+        document.getElementById('addScreenModal').classList.add('hidden');
+    });
+
+        
     </script>
 </body>
 

@@ -162,7 +162,6 @@ class Personne extends Database
         $statement->execute();
         return $statement->fetch(PDO::FETCH_ASSOC);
     }
-    // 
     
     public function updateUser($first_name, $last_name, $email, $date_naissance) {
         try {

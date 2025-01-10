@@ -32,4 +32,6 @@ class Chat extends dataBase
             echo "Erreur de l envoie de msg !";
         }
       
-    }}
+    }
+
+}

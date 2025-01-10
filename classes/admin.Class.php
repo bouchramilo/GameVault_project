@@ -136,6 +136,113 @@ class Admin extends Personne {
         }
     }
 
+public function allgames(){
+    $query = "SELECT COUNT(*) AS allgames FROM game where id_admin=:id_admin";
+    $pdo = $this->getConnextion();
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(':id_admin',$_SESSION['ID_user']);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result['allgames'];
+}
+
+
+public function allusers() {
+    $query = "SELECT COUNT(*) AS allusers FROM personne WHERE role = 'user'";
+    $pdo = $this->getConnextion();
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result['allusers'];
+}
+
+
+public function allfavoris() {
+    $query = "SELECT COUNT(*) AS allfavoris FROM favoris INNER JOIN game ON favoris.id_game=game.id_game where game.id_admin=:id_admin";
+    $pdo = $this->getConnextion();
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(':id_admin',$_SESSION['ID_user']);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result['allfavoris'];
+}
+
+
+public function allfavorisbygame() {
+    $query = "SELECT COUNT(*) AS allfavoris FROM favoris INNER JOIN game ON favoris.id_game=game.id_game where game.id_admin=:id_admin GROUP BY favoris.id_game";
+    $pdo = $this->getConnextion();
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(':id_admin',$_SESSION['ID_user']);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result['allfavoris'];
+}
+
+
+
+public function allbib() {
+    $query = "SELECT COUNT(*) AS allbib FROM library INNER JOIN game ON library.id_game=game.id_game where game.id_admin=:id_admin";
+    $pdo = $this->getConnextion();
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(':id_admin',$_SESSION['ID_user']);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result['allbib'];
+}
+
+public function allencours() {
+    $query = "SELECT COUNT(*) AS allencours FROM library INNER JOIN game ON library.id_game=game.id_game WHERE game.id_admin=:id_admin AND library.status='En cours'";
+    $pdo = $this->getConnextion();
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(':id_admin',$_SESSION['ID_user']);
+
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result['allencours'];
+}
+public function allabandonne() {
+    $query = "SELECT COUNT(*) AS allabandonne FROM library INNER JOIN game ON library.id_game=game.id_game WHERE game.id_admin=:id_admin AND library.status='Abandonné'";
+    $pdo = $this->getConnextion();
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(':id_admin',$_SESSION['ID_user']);
+
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result['allabandonne'];
+}
+public function alltermine() {
+    $query = "SELECT COUNT(*) AS alltermine FROM library INNER JOIN game ON library.id_game=game.id_game WHERE game.id_admin=:id_admin AND library.status='Terminé'";
+    $pdo = $this->getConnextion();
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(':id_admin',$_SESSION['ID_user']);
+
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result['alltermine'];
+}
+
+
+
+public function addScreenshot( $id_game,$descri,$photo,$mimi)
+{
+    $query = "INSERT INTO screenshots (id_game,descri,photo,mimi) values (:id_game,:descri:photo,:mimi)";
+    $pdo = $this->getConnextion();
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(':id_game', $id_game);
+    $stmt->bindParam(':descri', $descri);
+    $stmt->bindParam(':photo', $photo);
+    $stmt->bindParam(':mimi', $mimi);
+    if ($stmt->execute()) {
+        header("Location: details_game.php?id_game='$id_game'"); 
+
+        exit();
+    } else {
+        echo "Erreur lors d ajout de screen !";
+    }    
+}
+
+
+
 
 
 
