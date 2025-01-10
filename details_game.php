@@ -2,13 +2,26 @@
 <?php
 require 'classes/admin.Class.php';
 require 'classes/game.Class.php';
+require 'classes/chat.Class.php';
+session_start();
+
 $admin = new Admin();
 if(isset($_GET['id_game'])){
     echo 'azerty'.$_GET['id_game'];
     $game = $admin->detailsGame($_GET['id_game']);
 }
 
+$chat = new Chat();
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  if (isset($_POST['mymessage'])) {
+   $chat->sendMessage($_GET['id_game'],$_POST['mymessage']);
+
+  }}
+ $chats= $chat->getMessage($_GET['id_game']);
+
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -47,7 +60,7 @@ if(isset($_GET['id_game'])){
     <main class="container mx-auto p-6 bg-gray-800 rounded-lg shadow-lg mt-8 grid grid-cols-[84%] justify-end">
         <section class="flex flex-wrap gap-6">
             <div class="w-full sm:w-1/3">
-                <img src="images/Paner.jpg" alt="Image principale du jeu" class="w-full rounded-lg shadow-lg">
+                <img src="data:<?= $game['mimi'];?>;base64,<?= $game['photo']; ?>" alt="Image principale du jeu" class="w-full rounded-lg shadow-lg">
             </div>
 
             <div class="flex-1">
@@ -99,7 +112,50 @@ if(isset($_GET['id_game'])){
                 </div>
             </div>
         </section>
+        <body class="bg-gray-100 min-h-screen flex items-center justify-center">
+
+  <!-- Chat Form -->
+  <div class="w-full max-w-md bg-white shadow-md rounded-lg p-4">
+    <div id="chat-box" class="h-64 text-black overflow-y-auto border border-gray-300 rounded-lg p-4 mb-4 bg-gray-50">
+    <?php if (count($chats) > 0): ?>
+    <?php foreach ($chats as $chat): ?>
+        <div class="mb-4">
+                    <div class="flex items-center space-x-2 mb-1">
+                    <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm font-bold">
+      <p class="text-sm font-semibold text-gray-700"> <?= htmlspecialchars($_SESSION["ID_user"]) ?></p>
+      </div>
+      <div class="ml-10">
+      <p class="bg-blue-100 text-gray-800 rounded-lg px-3 py-2 text-sm mb-1"> <?= htmlspecialchars($chat["message_chat"]) ?> </p>
+      <span class="text-xs text-gray-500"> <?= htmlspecialchars($chat["massage_at"]) ?></span>
+      </div>
+      </div>
+      <?php endforeach; ?>
+    <?php else: ?>
+        <div class="text-center text-gray-500 italic">
+      <h4> Soiez le 1 ere dans le chat </h4>
+    </div>
+
+  <?php endif; ?>
+    </div>
+    <form id="chat-form" class="flex gap-2" method="POST">
+      <input name="mymessage"
+        type="text" 
+        id="chat-input" 
+        class="flex-1 border border-gray-300 text-black rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" 
+        placeholder="Type your message..." 
+        required
+      >
+      <button 
+        type="submit" 
+        class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300"
+      >
+        Send
+      </button>
+    </form>
+  </div>
+
     </main>
+    
 
     <script>
         const screenshots = document.querySelectorAll('.screenshots');

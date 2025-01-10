@@ -1,17 +1,20 @@
 
 <?php
+
 $test=new personne();
 if (isset($_POST['deconnexion'])) {
     $test->logout();
 }
+$user=$test->getUser();
 ?>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
  <nav class="bg-[#121e31] h-screen fixed top-0 left-0 min-w-[250px] py-6 px-4 font-[sans-serif] tracking-wide overflow-auto">
            <a href="profil.php"> <div class="flex flex-wrap items-center gap-4 cursor-pointer">
-                <img src='https://readymadeui.com/profile.webp' class="w-10 h-10 rounded-full border-2 border-white" />
+                <img src="data:<?= $user['mimi'];?>;base64,<?= $user['photo']; ?>" class="w-10 h-10 rounded-full border-2 border-white" />
                 <div>
-                    <p class="text-sm text-white">John Doe</p>
-                    <p class="text-xs text-gray-300 mt-0.5">johndoe23@gmail.com</p>
+                    <p class="text-sm text-white"><?= $test->getNameP(); ?></p>
+                    <p class="text-xs text-gray-300 mt-0.5"><?= $test->getRole(); ?></p>
                 </div>
             </div>
 </a>
@@ -47,7 +50,9 @@ if (isset($_POST['deconnexion'])) {
                 </li>
                 <li>
                     <a href="gererGame.php" class="text-white text-sm flex items-center hover:bg-gray-700 rounded px-4 py-3 transition-all">
-                        <img src="images/video-games.png" class="w-[22px] h-[22px] mr-4" alt="">
+                    <div class="w-[22px] h-[22px] mr-4">
+                    <i class="fas fa-gamepad" style="color: white; font-size: 1.25rem;" ></i>
+                    </div>
                         <span>Games</span>
                     </a>
                 </li>

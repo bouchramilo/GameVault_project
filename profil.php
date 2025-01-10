@@ -18,7 +18,6 @@ if (isset($_POST['deconnexion'])) {
 }
 
 $user = $profile->getUser();
-$imagesource = $profile->getProfile();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $userId = $_SESSION['ID_user'];
     $firstName = trim($_POST['first_name']);
@@ -28,12 +27,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $resultMessage = $profile->updateUser( $firstName, $lastName, $email, $dateNaissance);
 
-    echo "<script>
+
+    if( isset($_FILES['upload-photo']) && is_uploaded_file($_FILES['upload-photo']['tmp_name']))
+    {
+         
+     $image = file_get_contents($_FILES['upload-photo']['tmp_name']);
+     $imagePath = $_FILES['upload-photo']['tmp_name'];
+     $imagetype = getimagesize($imagePath);
+     if ($imagetype === false) {
+         echo "Ce fichier n est pas une image ";
+         exit;
+     }
+             $mimi = $imagetype['mime'];
+     $image = base64_encode($image);
+     $profile->updatephoto($image,$mimi);
+    
+}
+echo "<script>
         alert('$resultMessage');
         window.location.href = 'profil.php';
     </script>";
-    exit;
-}
+    exit;}
 if (!$user) {
     echo "Utilisateur introuvable.";
     exit();
@@ -74,39 +88,41 @@ if (!$user) {
             <div class="container mx-auto mt-10 px-6">
                 <!-- Profile Card -->
                 <section class="bg-gray-800 p-8 rounded-lg shadow-lg relative hover-card transition transform duration-300">
+                <form id="myprofil" class="space-y-6" method="POST" enctype="multipart/form-data">
+
                     <div class="absolute -top-14 left-1/2 transform -translate-x-1/2">
+
                         <div class="relative w-28 h-28 rounded-full border-4 border-[#da627d] overflow-hidden">
-                            <img src="<?php echo htmlspecialchars($imagesource); ?>"alt="Photo de profil" class="w-full h-full object-cover">
+                            <img src="data:<?= $user['mimi'];?>;base64,<?= $user['photo']; ?>"alt="Photo de profil" class="w-full h-full object-cover">
                             <label for="upload-photo" class="absolute bottom-0 right-0 bg-[#da627d] text-white p-2 rounded-full cursor-pointer ">
                         📷
                     </label>
-                            <input type="file" accept="image/*" id="upload-photo" class="hidden">
+                            <input type="file" accept="image/*" id="upload-photo" name="upload-photo" class="hidden">
                         </div>
                     </div>
                     <h2 class="text-center text-2xl font-bold mb-20 mt-20"><?php echo htmlspecialchars($user['first_name'] . ' ' . $user['last_name']); ?></h2>
                     <div class="mt-6 space-y-4">
                         <!-- Profile Info -->
-                        <form id="myprofil" class="space-y-6" method="POST">
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
-                                    <label for="first_name" class="block text-sm font-medium">Prénom :</label>
+                                    <label for="first_name" class="block text-sm font-medium pb-2">Prénom :</label>
                                     <input type="text"  id="first_name" name="first_name" value="<?php echo htmlspecialchars($user['first_name']); ?>" class="w-full p-3 rounded bg-gray-700 border border-gray-600 text-white focus:ring-2 focus:ring-blue-500" disabled>
                                 </div>
                                 <div>
-                                    <label for="last_name" class="block text-sm font-medium">Nom :</label>
+                                    <label for="last_name" class="block text-sm font-medium pb-2">Nom :</label>
                                     <input type="text" id="last_name" name="last_name" value="<?php echo htmlspecialchars($user['last_name']); ?>" class="w-full p-3 rounded bg-gray-700 border border-gray-600 text-white focus:ring-2 focus:ring-blue-500" disabled>
                                 </div>
                             </div>
                             <div>
-                                <label for="email" class="block text-sm font-medium">Email:</label>
+                                <label for="email" class="block text-sm font-medium pb-2">Email:</label>
                                 <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($user['email']); ?>"  class="w-full p-3 rounded bg-gray-700 border border-gray-600 text-white focus:ring-2 focus:ring-blue-500" disabled>
                             </div>
                             <div>
-                                <label for="create_at" class="block text-sm font-medium">Membre depuis :</label>
+                                <label for="create_at" class="block text-sm font-medium pb-2">Membre depuis :</label>
                                 <input type="text" id="create_at" name="create_at" value="<?php echo htmlspecialchars($user['create_at']); ?>" readonly class="w-full p-3 rounded bg-gray-700 border border-gray-600 text-gray-400">
                             </div>
                             <div>
-                                <label for="date_naissance" class="block text-sm font-medium">Date de naissance :</label>
+                                <label for="date_naissance" class="block text-sm font-medium pb-2">Date de naissance :</label>
                                 <input type="date" id="date_naissance" name="date_naissance" value="<?php echo htmlspecialchars($user['date_naissance']); ?>"  class="w-full p-3 rounded bg-gray-700 border border-gray-600 text-white focus:ring-2 focus:ring-blue-500" disabled>
                             </div>
                             <button type="button" id="modifier" class="w-full bg-blue-600 text-white py-3 rounded hover:bg-blue-500 transition">

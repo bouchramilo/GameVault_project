@@ -39,7 +39,7 @@ class Personne extends Database
     }
 
     // fonction de signup : ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public function register($photo, $first_name, $last_name, $bdate, $email, $pass, $cpass)
+    public function register($photo, $first_name, $last_name, $bdate, $email, $pass, $cpass,$mimi)
     {
         $validationResult = $this->valideDonnees($first_name, $last_name, $bdate, $email, $pass, $cpass);
         if ($validationResult !== true) {
@@ -51,7 +51,7 @@ class Personne extends Database
 
             $pass_hash = password_hash($pass, PASSWORD_BCRYPT);
 
-            $sql = "INSERT INTO personne (first_name, last_name, email, date_naissance, password_hash, photo ) VALUES (:first_name, :last_name, :email, :bdate, :pass, :photo)";
+            $sql = "INSERT INTO personne (first_name, last_name, email, date_naissance, password_hash, photo, mimi ) VALUES (:first_name, :last_name, :email, :bdate, :pass, :photo , :mimi)";
             $pdo = $this->getConnextion();
             $stmt = $pdo->prepare($sql);
             $stmt->execute([
@@ -60,7 +60,8 @@ class Personne extends Database
                 'email' => $email,
                 'bdate' => $bdate,
                 'pass' => $pass_hash,
-                'photo' => $photo
+                'photo' => $photo,
+                'mimi' => $mimi
             ]);
         } catch (Exception $e) {
             die("erreur lors de l'insertion des données de new user !!!");
@@ -154,7 +155,7 @@ class Personne extends Database
 
     // fonction qui retourne user infos_______ : +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public function getUser() {
-        $query = "SELECT id_user, first_name, last_name, email, create_at, date_naissance FROM personne WHERE id_user = :id_user";
+        $query = "SELECT id_user, first_name, last_name, email, create_at, date_naissance,photo,mimi FROM personne WHERE id_user = :id_user";
         $pdo = $this->getConnextion();
         $statement = $pdo->prepare($query);
         $statement->bindParam(':id_user', $_SESSION['ID_user']);
@@ -184,22 +185,21 @@ class Personne extends Database
         }
     }
     
-    public function getProfile() {
-        $query = "SELECT photo FROM personne WHERE id_user = :id_user";
+    public function updatephoto($photo,$mimi) {
+        $query = "UPDATE personne SET photo = :photo, mimi=:mimi where id_user=:id_user ";
         $pdo = $this->getConnextion();
         $stmt = $pdo->prepare($query);
-        $stmt->bindParam(':id_user', $_SESSION['ID_user']);  
-        $stmt->execute();
-    
-        $image = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-        if ($image) {
-            $profilePicture = $image['photo'];
-            $base64Image = base64_encode($profilePicture);
-            return 'data:image/jpeg;base64,' . $base64Image;
+        $stmt->bindParam(':id_user', $_SESSION['ID_user']);
+        $stmt->bindParam(':photo', $photo);
+        $stmt->bindParam(':mimi', $mimi);
+        if ($stmt->execute()) {
+            header("Location: profil.php"); 
+            exit();
         } else {
-            return 'images/image1-removebg-preview (1).png';
+            echo "Erreur  update game !";
         }
+        
+    
     }
 
     public function deleteProfile() {}

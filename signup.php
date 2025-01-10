@@ -13,15 +13,27 @@ $message = '';
 $personne = new personne();
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $photo = $_POST["photo"] ?? '';
     $fname = $_POST["fname"] ?? '';
     $lname = $_POST["lname"] ?? '';
     $bdate = $_POST["bdate"] ?? '';
     $email = $_POST["email"] ?? '';
     $pass = $_POST["pass"] ?? '';
     $cpass = $_POST["cpass"] ?? '';
+   if( isset($_FILES['photo_log']) && is_uploaded_file($_FILES['photo_log']['tmp_name']))
+   {
+        
+    $image = file_get_contents($_FILES['photo_log']['tmp_name']);
+    $imagePath = $_FILES['photo_log']['tmp_name'];
+    $imagetype = getimagesize($imagePath);
+    if ($imagetype === false) {
+        echo "Ce fichier n est pas une image ";
+        exit;
+    }
+            $mimi = $imagetype['mime'];
+    $image = base64_encode($image);
+    $result = $personne->register($image, $fname, $lname, $bdate, $email, $pass, $cpass,$mimi);
+    } 
 
-    $result = $personne->register($photo, $fname, $lname, $bdate, $email, $pass, $cpass);
 
     if (isset($result['error'])) {
         $message = $result['error'];
@@ -59,10 +71,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <h1 class="text-2xl uppercase font-semibold mb-[40px]">Sign Up page </h1>
 
 
-            <form class="flex flex-col gap-4" method="POST" action="">
+            <form class="flex flex-col gap-4" method="POST" action="" enctype="multipart/form-data">
                 <div class="grid grid-cols-[30%_70%] gap-4 w-[75%] mx-auto">
                     <label class="text-x1 font-semibold text-right pr-[15px] " for="">Photo:</label>
-                    <input class="outline-none px-4 py-2 rounded-full bg-transparent border-2 text-white" name="photo" id="photo" accept="image/*" type="file">
+                    <input class="outline-none px-4 py-2 rounded-full bg-transparent border-2 text-white" name="photo_log" id="photo" accept="image/*" type="file">
                 </div>
 
                 <div class="grid grid-cols-[30%_70%] gap-4  w-[75%] mx-auto">
@@ -94,7 +106,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     </button>
                 </div>
                 <?php if (!empty($message)): ?>
-                    <div class="error"><?= htmlspecialchars($message) ?></div>
+                    <div class="error "><?= htmlspecialchars($message) ?></div>
                 <?php endif; ?>
                 <div class="text-md flex gap-4 mx-auto items-center underline text-[#da627d]">
                     <a class="hover:text-[#450920]" href="">Forgot Password</a>

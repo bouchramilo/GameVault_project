@@ -1,6 +1,8 @@
 
 <?php
 require_once 'classes/admin.Class.php';
+session_start();
+
 $admin = new Admin();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

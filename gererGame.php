@@ -4,15 +4,41 @@ require 'classes/admin.Class.php';
 session_start();
 $admin = new Admin();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['nom_game']) && isset($_POST['categorie_game']) && isset($_POST['desc_game']) && isset($_POST['prix_game']) && isset($_POST['image_game'])) {
-        $admin->addGame($_POST['nom_game'],$_POST['categorie_game'], $_POST['desc_game'],$_POST['prix_game'],$_POST['image_game']);
-    }
+    if (
+        isset($_POST['nom_game'], $_POST['categorie_game'], $_POST['desc_game'], $_POST['prix_game']) &&
+        isset($_FILES['image_game']) && is_uploaded_file($_FILES['image_game']['tmp_name'])
+    ) {
+        
+        $image = file_get_contents($_FILES['image_game']['tmp_name']);
+        $imagePath = $_FILES['image_game']['tmp_name'];
+        $imagetype = getimagesize($imagePath);
+        if ($imagetype === false) {
+            echo "Ce fichier n est pas une image ";
+            exit;
+        }
+                $mimi = $imagetype['mime'];
+        $image = base64_encode($image);
+        $admin->addGame($_POST['nom_game'],$_POST['categorie_game'],$_POST['desc_game'],$_POST['prix_game'], $image,$mimi);} 
+       
     elseif(isset($_POST['id_game']) ){
         $admin->deleteGame($_POST['id_game']);
     }
-    elseif(isset($_POST['idgame']) && isset($_POST['title']) && isset($_POST['details']) && isset($_POST['releaseDate']) && isset($_POST['price'])  && isset($_POST['genre'])  && isset($_POST['modifierphoto'])){
-    $admin->updateGame($_POST['idgame'],$_POST['title'], $_POST['details'],$_POST['releaseDate'],$_POST['price'],$_POST['genre'],$_POST['modifierphoto']);}
-
+    elseif(
+        isset($_POST['idgame']) && isset($_POST['title']) && isset($_POST['details']) && isset($_POST['releaseDate']) && isset($_POST['price'])  && isset($_POST['genre'])  && isset($_FILES['modifierphoto']) && is_uploaded_file($_FILES['modifierphoto']['tmp_name'])
+    )
+    
+    {
+        $imagemod = file_get_contents($_FILES['modifierphoto']['tmp_name']);
+        $imagePatht = $_FILES['modifierphoto']['tmp_name'];
+        $imagetyype = getimagesize($imagePatht);
+        if ($imagetyype === false) {
+            echo "Ce fichier n est pas une image ";
+            exit;
+        }
+                $mimii = $imagetyype['mime'];
+        $imagemod = base64_encode($imagemod);
+    $admin->updateGame($_POST['idgame'],$_POST['title'], $_POST['details'],$_POST['releaseDate'],$_POST['price'],$_POST['genre'],$imagemod,$mimii);
+}
 }
 
 $games=$admin->afficherGames();
@@ -34,7 +60,6 @@ $games=$admin->afficherGames();
     <?php include 'menu_admin.php' ?>
 
 
-
     <div class="font-[sans-serif] overflow-x-auto grid justify-end w-screen grid-cols-[84%]">
         <h1 class="mx-6 text-3xl font-bold md:text-5xl text-start">Gestion des jeux</h1>
         <div class="  font-[sans-serif] flex justify-end mx-[20px] my-[25px] gap-4">
@@ -43,7 +68,7 @@ $games=$admin->afficherGames();
             <img class=" ml-4 w-[28px] h-[28px] " src="images/controle-du-jeu.png" alt="">
           </button>
         </div>
-        <div class="grid grid-cols-[25%_25%_25%_25%] gap-4">
+        <div class="grid grid-cols-[23%_23%_23%_23%] justify-center gap-4">
         <?php if (count($games) > 0): ?>
             <?php foreach ($games as $game): ?>
             <div class="bg-white shadow-[0_4px_12px_-5px_rgba(0,0,0,0.4)] w-full h-[450px] py-6 max-w-[280px] rounded-lg font-[sans-serif] overflow-hidden mx-auto mt-4">
@@ -55,7 +80,7 @@ $games=$admin->afficherGames();
                     <img class="adorer w-[20px] h-[20px] hover:content-[url(images/heart.gif)]" src="images/icons8-heart-50.png" alt="">
                 </div>
                 <div class="relative photo w-full h-[94%] group">
-                    <img src="images/Minecraft.jpg" class=" w-full h-[100%] my-6" />
+                    <img src="data:<?= $game['mimi'];?>;base64,<?= $game['photo']; ?>" class=" w-full h-[100%] my-6" />
 
                     <div class="details bottom-0 left-0 absolute w-full hidden group-hover:block ">
                         <div class="px-6 bg-black opacity-75 ">
@@ -75,7 +100,7 @@ $games=$admin->afficherGames();
             </div>
             <?php endforeach; ?>
                 <?php else: ?>
-                    <h4> Aucun utilisateur trouvé</h4>
+                    <h4> Aucun game trouvé</h4>
 
                     <?php endif; ?>
 
@@ -88,7 +113,7 @@ $games=$admin->afficherGames();
     <div id="formContainerModifier" class="hidden fixed inset-0 p-4 flex flex-wrap justify-center items-center w-full h-full z-[1000] before:fixed before:inset-0 before:w-full overflow-auto font-[sans-serif]">
         <div class="bg-[#1d1d1d] opacity-90 text-white p-6 flex flex-col gap-6 rounded-lg shadow-lg w-[60%] max-sm:w-full">
             <h2 class="text-2xl font-bold text-center">Modifier le jeu</h2>
-            <form class="space-y-4 mt-8" method="POST">
+            <form class="space-y-4 mt-8" method="POST" enctype="multipart/form-data">
                 <div>
                     <label class="text-white text-sm mb-2 block">Name of the game</label>
                     <input id="idgame" type="hidden" name="idgame">
@@ -249,7 +274,7 @@ $games=$admin->afficherGames();
             </svg>
             </div>
 
-            <form class="space-y-4 mt-8" method="POST">
+            <form class="space-y-4 mt-8" method="POST" enctype="multipart/form-data">
                 <div>
                     <label  for="nom_game" class="text-white text-sm mb-2 block">Name of the game</label>
                     <input name="nom_game" type="text" placeholder="Enter game name" class="px-4 py-3 bg-gray-100 w-full text-white text-sm border-none focus:outline-blue-600 focus:bg-transparent rounded-lg" />
