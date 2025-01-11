@@ -6,35 +6,31 @@ require_once 'classes/historique.Class.php';
 require_once 'classes/game.Class.php';
 require_once 'classes/personne.Class.php';
 
-$user = new personne();
-
+$test = new personne();
 if (isset($_POST['deconnexion'])) {
-    $user->logout();
+    $test->logout();
 }
+$user = $test->getUser();
 
 ?>
 
 
-
-
-
 <!-- menu de utilisateur +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 
-
 <nav
-    class="bg-[#09090a] bg-opacity-75 shadow-lg h-full fixed top-0 left-0 w-1/5 py-6 px-6 font-[sans-serif] flex flex-col gap-10 overflow-auto">
+    class="bg-[#09090a] bg-opacity-75 shadow-lg h-full fixed top-0 left-0 w-1/6 py-6 px-6 font-[sans-serif] flex flex-col gap-10 overflow-auto">
 
     <a href="profil.php" class="flex flex-wrap items-center cursor-pointer">
         <div class="relative">
-            <img src='images/<?= $user->getPhoto(); ?>'
-                class="w-12 h-12 rounded-full border-white" />
+            <img src="data:<?= $user['mimi']; ?>;base64,<?= $user['photo']; ?>" class="w-10 h-10 rounded-full border-2 border-white" />
+
             <span
                 class="h-3 w-3 rounded-full bg-green-600 border-2 border-white block absolute bottom-0 right-0"></span>
         </div>
 
         <div class="ml-4">
-            <p class="text-sm text-gray-300"><?= $user->getNameP(); ?></p>
-            <p class="text-xs text-gray-400 mt-0.5"><?= $user->getRole(); ?></p>
+            <p class="text-sm text-gray-300"><?= $test->getNameP(); ?></p>
+            <p class="text-xs text-gray-400 mt-0.5"><?= $test->getRole(); ?></p>
         </div>
     </a>
 
@@ -70,7 +66,7 @@ if (isset($_POST['deconnexion'])) {
                 <span>Mes Favoris</span>
             </a>
         </li>
-        
+
         <li>
             <a href="statistique_user.php"
                 class="text-gray-300 hover:text-white text-sm flex items-center rounded-md">
@@ -83,28 +79,6 @@ if (isset($_POST['deconnexion'])) {
                 <span>Statistique</span>
             </a>
         </li>
-        <!-- <li>
-            <a href="chat.php"
-                class="text-gray-300 hover:text-white text-sm flex items-center rounded-md">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke='currentColor'
-                    class="w-[18px] h-[18px] mr-4" viewBox="0 0 682.667 682.667">
-                    <defs>
-                        <clipPath id="a" clipPathUnits="userSpaceOnUse">
-                            <path d="M0 512h512V0H0Z" data-original="#000000" />
-                        </clipPath>
-                    </defs>
-                    <g clip-path="url(#a)" transform="matrix(1.33 0 0 -1.33 0 682.667)">
-                        <path fill="none" stroke-miterlimit="10" stroke-width="40"
-                            d="M452 444H60c-22.091 0-40-17.909-40-40v-39.446l212.127-157.782c14.17-10.54 33.576-10.54 47.746 0L492 364.554V404c0 22.091-17.909 40-40 40Z"
-                            data-original="#000000" />
-                        <path
-                            d="M472 274.9V107.999c0-11.027-8.972-20-20-20H60c-11.028 0-20 8.973-20 20V274.9L0 304.652V107.999c0-33.084 26.916-60 60-60h392c33.084 0 60 26.916 60 60v196.653Z"
-                            data-original="#000000" />
-                    </g>
-                </svg>
-                <span>Chat</span>
-            </a>
-        </li> -->
         <li>
             <a href="historique.php"
                 class="text-gray-300 hover:text-white text-sm flex items-center rounded-md ">

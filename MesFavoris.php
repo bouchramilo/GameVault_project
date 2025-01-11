@@ -8,10 +8,8 @@ require_once 'classes/favoris.Class.php';
 
 session_start();
 
-
 $favoris = new favoris();
 $Allfavoris = $favoris->showAllMesFavoris();
-
 
 if (isset($_POST['btn_delete_from_favor'])) {
     $delete = $favoris->deleteFromMesFavoris($_POST['btn_delete_from_favor']);
@@ -21,10 +19,9 @@ if (isset($_POST['btn_delete_from_favor'])) {
     }
 }
 
-
 ?>
 
-
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -51,6 +48,7 @@ if (isset($_POST['btn_delete_from_favor'])) {
                 <!-- header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  -->
 
             </div>
+            <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
             <!-- tableau ==================================================================================================================================================== -->
 
             <div class="w-4/5 h-full pr-4">

@@ -5,11 +5,6 @@ require_once 'dataBase.Class.php';
 
 class favoris extends dataBase
 {
-
-    private int $id_favoris;
-    private int $id_user;
-    private int $id_game;
-
     // fonction qui afficher toutes les favoris d'un user : +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public function showAllMesFavoris()
     {

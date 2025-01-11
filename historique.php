@@ -7,17 +7,12 @@ require_once 'classes/personne.Class.php';
 
 session_start();
 
-
 $historic = new historique();
 $historiques = $historic->consulter();
 
-
 ?>
 
-
-
-
-
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,6 +36,7 @@ $historiques = $historic->consulter();
             <div class="w-1/5 h-full">
                 <?php require_once "menu_user.php"; ?>
             </div>
+            <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
             <!-- tableau ==================================================================================================================================================== -->
 
             <div class="w-4/5 h-full pr-4">
@@ -64,19 +60,14 @@ $historiques = $historic->consulter();
                             <?php foreach ($historiques as $historique) {  ?>
                                 <tr class="text-left">
                                     <td class="p-4 text-sm text-white w-1/4">
-                                    <?php echo $historique['action_at'] ; ?>
+                                        <?php echo $historique['action_at']; ?>
                                     </td>
-                                    
+
                                     <td class="p-4 text-sm text-white h-max w-3/4">
-                                        <p><?php echo $historique['action'] ; ?> </p>
+                                        <p><?php echo $historique['action']; ?> </p>
                                     </td>
                                 </tr>
-                                <?php }  ?>
-
-
-
-
-
+                            <?php }  ?>
                         </tbody>
                     </table>
                 </div>
@@ -84,12 +75,6 @@ $historiques = $historic->consulter();
         </div>
 
     </section>
-
-
-
-
-
-
 
 </body>
 

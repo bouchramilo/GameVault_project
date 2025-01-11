@@ -4,15 +4,6 @@ require_once 'dataBase.Class.php';
 
 class Game extends Database
 {
-
-    private int $id_game;
-    private string $title;
-    private string $genre;
-    private string $details;
-    private string $releaseDate;
-    private float $averageScore;
-    private string $screenshots;
-
     // fonction qui retourne toutes les game dans la base de données : +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public function getAllGame()
     {
@@ -41,16 +32,27 @@ class Game extends Database
         return $query->fetchAll();
     }
 
-    public function addGame() {
+    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    public function addGame()
+    {
         // dans la class admin 
     }
-    public function deleteGame() {
+
+    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    public function deleteGame()
+    {
         // dans la class admin 
     }
-    public function getDetails() {
+
+    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    public function getDetails()
+    {
         // dans la class admin 
     }
-    public function updateGame() {
+
+    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    public function updateGame()
+    {
         // dans la class admin 
     }
 }
