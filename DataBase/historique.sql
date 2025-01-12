@@ -1,3 +1,4 @@
+-- Active: 1733819346903@@127.0.0.1@3306@gamevault_db
 -- le trigger d'ajout dans la table historique :++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 -- drop trigger insert_into_biblio;
 
