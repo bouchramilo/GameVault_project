@@ -179,7 +179,7 @@ if (isset($_POST['btn_time_update'])) {
                                         </form>
                                     </td>
                                     <td class="p-4 text-sm text-center">
-                                        <button id="id_biblio_t" onclick="editTime(<?= ($gameBib['id_game']); ?> )" value="<?php echo $gameBib['Time_jouer'] ?>" class=""><?php echo $gameBib['Time_jouer'] ?></button>
+                                        <button id="id_biblio_t" onclick="editTime(<?= ($gameBib['id_lib']); ?>)" value="<?php echo $gameBib['Time_jouer'] ?>" class=""><?php echo $gameBib['Time_jouer'] ?></button>
 
                                     </td>
                                     <td class="p-4 text-sm text-center text-white">
