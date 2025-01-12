@@ -65,13 +65,11 @@ if (isset($_POST['btn_time_update'])) {
     }
 }
 
-
-
 ?>
 
 
 
-
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -91,9 +89,13 @@ if (isset($_POST['btn_time_update'])) {
             <source src="images/bg_1.mp4" type="video/mp4" />
         </video>
         <div class="relative z-10 flex flex-row gap-4 h-max text-center text-white bg-black bg-opacity-30">
+
+            <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
             <div class="w-1/5 h-full">
                 <?php require_once "menu_user.php"; ?>
             </div>
+            <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
             <!-- tableau ==================================================================================================================================================== -->
 
             <div class="w-4/5 h-full pr-4">
@@ -177,11 +179,8 @@ if (isset($_POST['btn_time_update'])) {
                                         </form>
                                     </td>
                                     <td class="p-4 text-sm text-center">
-                                        <!-- <form action="" method="post"> -->
                                         <button id="id_biblio_t" onclick="editTime(<?= ($gameBib['id_game']); ?> )" value="<?php echo $gameBib['Time_jouer'] ?>" class=""><?php echo $gameBib['Time_jouer'] ?></button>
-                                        <!-- <button id="id_libra" value="<?php echo ($gameBib['note']); ?>" onclick="editNotation(<?= ($gameBib['id_game']); ?> )" class=""> -->
 
-                                        <!-- </form> -->
                                     </td>
                                     <td class="p-4 text-sm text-center text-white">
                                         <div class="flex items-center cursor-pointer">
@@ -193,7 +192,6 @@ if (isset($_POST['btn_time_update'])) {
                                         </div>
                                     </td>
                                     <td class="p-4 text-center">
-                                        <!-- <form action="" method="post"> -->
                                         <button id="id_libra" value="<?php echo ($gameBib['note']); ?>" onclick="editNotation(<?= ($gameBib['id_game']); ?> )" class="">
                                             <?php
                                             $note = $gameBib['note'];
@@ -218,7 +216,6 @@ if (isset($_POST['btn_time_update'])) {
                                             }
                                             ?>
                                         </button>
-                                        <!-- </form> -->
                                     </td>
                                     <td class="p-4 flex justify-center">
                                         <a href="details_game_User.php?id_game=<?= $gameBib["id_game"] ?>">
@@ -241,6 +238,7 @@ if (isset($_POST['btn_time_update'])) {
 
     </section>
 
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
     <!-- modification de status           ************************************************************************ -->
 
     <div id="statusModal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center hidden z-50">
@@ -275,6 +273,7 @@ if (isset($_POST['btn_time_update'])) {
     </div>
 
 
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
     <!-- modification de note           ************************************************************************ -->
     <div id="notationModal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center hidden z-50">
         <div class="bg-white rounded-lg shadow-lg max-w-md w-full p-6">
@@ -296,8 +295,6 @@ if (isset($_POST['btn_time_update'])) {
                         <option value="5">5</option>
                     </select>
                 </div>
-
-
                 <div class="flex justify-end space-x-4">
                     <button type="button" class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400" onclick="closeModalN()">
                         Annuler
@@ -310,7 +307,7 @@ if (isset($_POST['btn_time_update'])) {
         </div>
     </div>
 
-
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
     <!-- modification de time jouer           ************************************************************************ -->
     <div id="timeModal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center hidden z-50">
         <div class="bg-white rounded-lg shadow-lg max-w-md w-full p-6">
@@ -339,21 +336,6 @@ if (isset($_POST['btn_time_update'])) {
             </form>
         </div>
     </div>
-
-
-    <script>
-        // for status
-        function editTime(id) {
-            document.getElementById('id_jeu_t').value = id;
-            document.getElementById('time').value = document.getElementById('id_biblio_t').value;
-
-            document.getElementById('timeModal').classList.remove('hidden');
-        }
-
-        function closeModalT() {
-            document.getElementById('timeModal').classList.add('hidden');
-        }
-    </script>
 
 </body>
 

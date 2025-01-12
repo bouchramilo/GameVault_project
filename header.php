@@ -1,30 +1,18 @@
 <?php
-
-
 require_once 'classes/dataBase.Class.php';
 require_once 'classes/historique.Class.php';
 require_once 'classes/game.Class.php';
 require_once 'classes/personne.Class.php';
 
-// session_start();
 $user = new personne();
 
 if (isset($_POST['deconnexion'])) {
   $user->logout();
 }
 
-// if (isset($_SESSION["ID_user"])) {
-//     echo $_SESSION["ID_user"];
-// } else {
-//     echo "Aucun utilisateur connecté.";
-// }
 ?>
 
-
-
-
-
-
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 <header
   class='flex shadow-lg py-4 px-4 sm:px-10 bg-white font-[sans-serif] min-h-[70px] tracking-wide relative z-50'>
   <div class='flex flex-wrap items-center justify-between gap-4 w-full'>

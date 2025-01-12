@@ -21,7 +21,8 @@ CREATE TABLE personne (
     last_name VARCHAR(100) NOT NULL,
     create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     date_naissance TIMESTAMP DEFAULT NULL,
-    photo BLOB DEFAULT NULL,
+    photo LONGBLOB,
+    mimi VARCHAR(250),
     role ENUM('admin', 'user') DEFAULT 'user',
     banner BOOLEAN DEFAULT FALSE
 );
@@ -33,13 +34,14 @@ CREATE TABLE game (
     id_game INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(100) NOT NULL,
     photo BLOB,
+    mimi VARCHAR(250),
     price FLOAT,
     genre VARCHAR(100) NOT NULL,
     id_admin INT NOT NULL,
     details VARCHAR(255),
     time_play TIME DEFAULT '00:00:00',
     releaseDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    screenshots LONGBLOB,
+    -- screenshots LONGBLOB,
     averageScore FLOAT DEFAULT 0,
     FOREIGN KEY (id_admin) REFERENCES personne(id_user) ON DELETE CASCADE
 );
@@ -118,6 +120,22 @@ CREATE TABLE historique (
     -- FOREIGN KEY (id_game) REFERENCES game(id_game) ON DELETE CASCADE,
     FOREIGN KEY (id_user) REFERENCES personne(id_user) ON DELETE CASCADE
 );
+
+-- Table screenshorts : 
+
+CREATE TABLE screenshorts (
+    id_screen INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    id_game INT NOT NULL,
+    -- id_user INT NOT NULL,
+    descri varchar(250),
+    mimi VARCHAR(250),
+    photo LONGBLOB,
+    action_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_game) REFERENCES game(id_game) ON DELETE CASCADE
+    -- FOREIGN KEY (id_user) REFERENCES personne(id_user) ON DELETE CASCADE
+);
+
+
 
 
 -- trigger qui vérifier si l'insertion est le premier dans la table personne : si oui, le personne doit inserer comme un admin, sinon, le personne inserer comme les données de formulaire : 

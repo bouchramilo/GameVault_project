@@ -5,12 +5,7 @@ require_once 'dataBase.Class.php';
 
 class Critique extends dataBase
 {
-
     private int $id_critique;
-    private int $id_user;
-    private int $id_game;
-    private string $content;
-    private DateTime $create_at;
 
     // nbrCritique ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public function nbrCritique($id_game)
@@ -62,19 +57,33 @@ class Critique extends dataBase
     }
 
     // deleteCritique ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public function deleteCritique($id_critic) {
-        // echo "<script>alert('passe');</script>";
+    public function deleteCritique($id_critic)
+    {
         try {
             $sql = "DELETE FROM critique WHERE id_critique = :id_critic;";
             $pdo = $this->getConnextion();
             $stmt = $pdo->prepare($sql);
             $stmt->execute(['id_critic' => $id_critic]);
-            return $stmt->rowCount() ;
-
+            return $stmt->rowCount();
         } catch (Exception $e) {
             return "Erreur lors de la suppression from critique : " . $e->getMessage();
         }
     }
 
     // deleteCritique ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    public function isAlreadyCritique($id_game)
+    {
+        $pdo = $this->getConnextion();
+
+        $sql = "SELECT COUNT(*) as count FROM critique WHERE id_user = :id_user AND id_game = :id_game";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([
+            'id_user' => $_SESSION['ID_user'],
+            'id_game' => $id_game
+        ]);
+
+        $result = $stmt->fetch();
+
+        return $result['count'];
+    }
 }

@@ -19,12 +19,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 }
 
-
 ?>
 
 
 
-
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,7 +35,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </head>
 
 <body class="bg-[#f9dbbd] h-max relative flex flex-col ">
+
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
     <?php include "header.php"; ?>
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+
     <div class="relative h-screen overflow-hidden flex flex-row justify-center">
         <video
             class="absolute top-1/2 left-1/2 w-auto min-w-full min-h-full transform -translate-x-1/2 -translate-y-1/2 object-cover"
@@ -47,8 +51,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <source src="images/bg_1.mp4" type="video/mp4" />
         </video>
 
+        <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
         <div class="relative z-10 text-white text-center h-max flex flex-col gap-4 mx-auto border-0 rounded-[15px] p-4 w-[40%] py-6 self-center bg-black opacity-75">
-            <!-- <img class="absolute top-0 left-0" src="images/BDLBzN2QSOW6Gd7Un7iKsw-removebg-preview.png" alt=""> -->
             <h1 class="text-2xl uppercase font-semibold">Login page </h1>
 
             <form class="flex flex-col gap-6 " method="POST" action="">
@@ -72,7 +76,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         </div>
         <img class="absolute z-10 bottom-0 left-0 w-[520px] h-[520px]" src="images/BDLBzN2QSOW6Gd7Un7iKsw-removebg-preview.png" alt="">
     </div>
+
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
     <?php include "footer.php"; ?>
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             let icone = document.querySelector(".icone");

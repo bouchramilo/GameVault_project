@@ -9,15 +9,13 @@ require_once 'classes/user.Class.php';
 
 session_start();
 
-
 $utilisateur = new user();
 
 $statistique = $utilisateur->getStatistique();
 
-
 ?>
 
-
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -44,12 +42,9 @@ $statistique = $utilisateur->getStatistique();
                 <!-- header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  -->
 
             </div>
-            <!-- tableau ==================================================================================================================================================== -->
 
+            <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
             <div class="w-4/5 h-full pr-4">
-                <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-
-
                 <div class="font-[sans-serif] overflow-x-auto h-full w-full flex flex-col gap-14 pt-20">
                     <h1 class="text-3xl font-bold md:text-5xl text-start">Statistique</h1>
 
@@ -77,46 +72,7 @@ $statistique = $utilisateur->getStatistique();
                         </div>
 
                     </div>
-                    <!-- <div class="flex gap-1 p-1 min-w-full  h-max bg-black bg-opacity-80">
-
-                        <div class="h-max w-full border-none rounded-2xl flex flex-col gap-2 p-2 justify-center items-center bg-gray-800">
-                            <canvas></canvas>
-                        </div>
-                        <div class="h-max w-full border-none rounded-2xl flex flex-col gap-2 p-2 justify-center items-center bg-gray-800">
-                            <canvas></canvas>
-                        </div>
-                        <div class="h-max w-1/4 border-none rounded-2xl flex flex-col gap-2 p-2 justify-center items-center bg-gray-800">
-                            <canvas></canvas>
-                        </div>
-                        <div class="h-max w-1/4 border-none rounded-2xl flex flex-col gap-2 p-2 justify-center items-center bg-gray-800">
-                            <canvas></canvas>
-                        </div>
-
-                    </div> -->
                 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
             </div>
         </div>
 

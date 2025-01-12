@@ -6,14 +6,6 @@ require_once 'dataBase.Class.php';
 class library extends dataBase
 {
 
-    private int $id_lib;
-    private int $id_user;
-    private int $id_game;
-    private bool $isFavorite;
-    private string $personalNote;
-    private string $status;
-    private DateTime $playTime;
-
     // fonction pour ajouter un game à la bibliothèque d'un user +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public function updateTimeGame($id_libra, $newtime)
     {
@@ -21,7 +13,6 @@ class library extends dataBase
         try {
 
             $sql = "UPDATE library SET playTime = :newtime WHERE id_lib = :id_lib";
-            // $pdo->query($sql);
             $stmt = $pdo->prepare($sql);
             $stmt->bindParam(':newtime', $newtime);
             $stmt->bindParam(':id_lib', $id_libra);
@@ -31,7 +22,6 @@ class library extends dataBase
             return "Erreur : " . $e->getMessage();
         }
     }
-
 
     // fonction pour ajouter un game à la bibliothèque d'un user +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public function updateStatusGame($id_libra, $newStatus)
@@ -54,7 +44,7 @@ class library extends dataBase
     // fonction pour ajouter un game à la bibliothèque d'un user +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public function updateNoteGame($id_jeu, $newNote)
     {
-        $pdo = $this->getConnextion(); // Assurez-vous que cette méthode est correctement définie dans votre classe.
+        $pdo = $this->getConnextion();
         try {
             $sqlSelect = "SELECT COUNT(*) as count FROM notation WHERE id_game = :id_game AND id_user = :id_user";
             $stmtSelect = $pdo->prepare($sqlSelect);
@@ -92,7 +82,6 @@ class library extends dataBase
     // fonction pour ajouter un game à la bibliothèque d'un user +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public function addGameToLibrary($id_jeu)
     {
-
         $pdo = $this->getConnextion();
 
         try {
@@ -151,7 +140,6 @@ class library extends dataBase
                 WHERE 
                     lb.id_user = :id_user;";
 
-
             $pdo = $this->getConnextion();
             $stmt = $pdo->prepare($sql);
 
@@ -162,7 +150,6 @@ class library extends dataBase
             return "Erreur lors de la récupération de la bibliothèque : " . $e->getMessage();
         }
     }
-
 
     // fonction qui supprimer un game from la bibliotheque d'un user +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public function deleteFromMyLibrary($id_biblio)
